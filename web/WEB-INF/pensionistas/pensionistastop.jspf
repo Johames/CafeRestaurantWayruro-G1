@@ -1,0 +1,74 @@
+<%@page import="proy.modelo.daoImpl.PersonadaoImpl"%>
+<%@page import="proy.modelo.dao.Personadao"%>
+<%@page import="proy.modelo.daoImpl.PensionistadoaImpl"%>
+<%@page import="proy.modelo.dao.Pensionistadao"%>
+<%@page import="proy.modelo.entidad.Persona"%>
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="recursos/ico/favicon.ico">
+        <title>Café Restaurant "Wayruro"</title>
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/dashboard.css" rel="stylesheet">
+        <script src="bootstrap/js/ie-emulation-modes-warning.js"></script>
+    </head>
+
+    <body>
+        <%
+            Personadao persona = new PersonadaoImpl();
+            Persona person = new Persona();
+        
+            String buscarpen = request.getParameter("buscarpen"); buscarpen = buscarpen == null?"":buscarpen;
+            String nombres = request.getParameter("nombres"); nombres = nombres == null?"":nombres;
+            String apellidos = request.getParameter("apellidos"); apellidos = apellidos == null?"":apellidos;
+            String dni = request.getParameter("dni"); dni = dni == null?"":dni;
+            String NCelular = request.getParameter("NCelular"); NCelular = NCelular == null?"":NCelular;
+            String direccion = request.getParameter("direccion"); direccion = direccion == null?"":direccion;
+            
+            if(!buscarpen.equals("")){
+                person = persona.BuscarPensionista(dni);
+                if(persona!=null){
+                    nombres = person.getNombres();
+                    apellidos = person.getApellidos();
+                    dni = person.getDni();
+                    NCelular = person.getNCelular();
+                    direccion = person.getDireccion();                    
+                }
+            }
+        %>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="pensionistas.jsp">Café Restaurant "Wayruro"</a>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="active"><a href="index.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
+                    </ul>  
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <form class="navbar-form navbar-right">
+                        <label for="buscar" class="sr-only">Buscar</label>
+                        <div class="col-lg-pull-0">
+                            <div class="input-group">
+                                <input type="text" name="buscarpen" class="form-control" title="Solo Números (8 en total)" pattern="[0-9]{8}" placeholder="Buscar Pensionista por DNI" size="21">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                    <form class="navbar-form navbar-right">
+                        <a class="btn btn-primary" href="agregar.jsp" role="button">Agregar &emsp;<i class="glyphicon glyphicon-floppy-disk"></i></a>
+                    </form>
+                </div>
+            </div>
+        </nav>

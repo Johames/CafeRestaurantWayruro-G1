@@ -1,0 +1,14 @@
+ <hr class="featurette-divider">
+
+      <footer>
+            <p class="pull-right"><a class="btn btn-primary" href="#" role="button">Subir</a></p>
+            <p><u><i>Realizado por:</i></u><br> <br><b>Antony G. Amasifen Pimentel,  Leydi M. Bernal Ticlla,  Johann J. Valles Paz.</b></p>  
+      </footer>
+
+    </div>
+
+    <script src="jquery/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="bootstrap/js/holder_1.js"></script>
+    <script src="bootstrap/js/ie10-viewport-bug-workaround.js"></script>
+  

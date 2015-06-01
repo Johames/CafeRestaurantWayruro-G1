@@ -1,0 +1,22 @@
+body {
+    background-color: #2aabd2; 
+}
+
+h1 {
+    text-align: center;
+}
+
+.tipo {
+    font-family: QueensLand;
+    text-decoration: none;
+    text-align: center;
+}
+
+.title {
+    text-align: center;
+}
+
+.formu {
+    text-align: center;
+    margin-left: -2px;
+}

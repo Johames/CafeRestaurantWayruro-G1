@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/05/2015 08:11:50 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="proy.modelo.entidad.Persona" table="PERSONA" schema="ADMIN" optimistic-lock="version">
+        <id name="idPersona" type="short">
+            <column name="ID_PERSONA" precision="4" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombres" type="string">
+            <column name="NOMBRES" length="25" />
+        </property>
+        <property name="apellidos" type="string">
+            <column name="APELLIDOS" length="30" />
+        </property>
+        <property name="dni" type="string">
+            <column name="DNI" length="8" />
+        </property>
+        <property name="NCelular" type="string">
+            <column name="N_CELULAR" length="20" />
+        </property>
+        <property name="direccion" type="string">
+            <column name="DIRECCION" length="40" />
+        </property>
+        <one-to-one name="usuario" class="proy.modelo.entidad.Usuario"></one-to-one>
+        <set name="ventas" table="VENTA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_PERSONA" precision="4" scale="0" />
+            </key>
+            <one-to-many class="proy.modelo.entidad.Venta" />
+        </set>
+        <set name="contratoPensionistas" table="CONTRATO_PENSIONISTA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_PERSONA" precision="4" scale="0" />
+            </key>
+            <one-to-many class="proy.modelo.entidad.ContratoPensionista" />
+        </set>
+    </class>
+</hibernate-mapping>

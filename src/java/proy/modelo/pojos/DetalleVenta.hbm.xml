@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/05/2015 08:11:50 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="proy.modelo.entidad.DetalleVenta" table="DETALLE_VENTA" schema="ADMIN" optimistic-lock="version">
+        <composite-id name="id" class="proy.modelo.entidad.DetalleVentaId">
+            <key-property name="idVenta" type="short">
+                <column name="ID_VENTA" precision="4" scale="0" />
+            </key-property>
+            <key-property name="idProducto" type="short">
+                <column name="ID_PRODUCTO" precision="4" scale="0" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="producto" class="proy.modelo.entidad.Producto" update="false" insert="false" fetch="select">
+            <column name="ID_PRODUCTO" precision="4" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="venta" class="proy.modelo.entidad.Venta" update="false" insert="false" fetch="select">
+            <column name="ID_VENTA" precision="4" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="precioUnitario" type="string">
+            <column name="PRECIO_UNITARIO" length="20" />
+        </property>
+        <property name="cantPlato" type="string">
+            <column name="CANT_PLATO" length="20" />
+        </property>
+        <property name="precioTotal" type="string">
+            <column name="PRECIO_TOTAL" length="20" />
+        </property>
+    </class>
+</hibernate-mapping>

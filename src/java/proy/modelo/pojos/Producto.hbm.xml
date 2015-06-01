@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/05/2015 08:11:50 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="proy.modelo.entidad.Producto" table="PRODUCTO" schema="ADMIN" optimistic-lock="version">
+        <id name="idProducto" type="short">
+            <column name="ID_PRODUCTO" precision="4" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="usuario" class="proy.modelo.entidad.Usuario" fetch="select">
+            <column name="ID_USUARIO" precision="4" scale="0" />
+        </many-to-one>
+        <many-to-one name="categoria" class="proy.modelo.entidad.Categoria" fetch="select">
+            <column name="ID_CATEGORIA" precision="4" scale="0" />
+        </many-to-one>
+        <property name="nombreProducto" type="string">
+            <column name="NOMBRE_PRODUCTO" length="25" />
+        </property>
+        <property name="precioPensionista" type="string">
+            <column name="PRECIO_PENSIONISTA" length="20" />
+        </property>
+        <property name="precioAVarios" type="string">
+            <column name="PRECIO_A_VARIOS" length="20" />
+        </property>
+        <property name="stock" type="string">
+            <column name="STOCK" length="20" />
+        </property>
+        <set name="detalleVentas" table="DETALLE_VENTA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_PRODUCTO" precision="4" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="proy.modelo.entidad.DetalleVenta" />
+        </set>
+    </class>
+</hibernate-mapping>
