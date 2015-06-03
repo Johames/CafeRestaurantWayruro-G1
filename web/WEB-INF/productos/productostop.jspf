@@ -1,0 +1,88 @@
+<%@page import="proy.modelo.daoImpl.ProductodaoImpl"%>
+<%@page import="proy.modelo.dao.Productodao"%>
+<%@page import="proy.modelo.entidad.Producto"%>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="recursos/ico/favicon.ico">
+        <title>Café Restaurant "Wayruro"</title>
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/dashboard.css" rel="stylesheet">
+        <script src="bootstrap/js/ie-emulation-modes-warning.js"></script>
+    </head>
+
+    <body>
+        <%
+            Productodao productodao = new ProductodaoImpl();
+            Producto producto = new Producto();
+
+        %>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="pensionistas.jsp">Café Restaurant "Wayruro"</a>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="active"><a href="index.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
+                    </ul>  
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <form class="navbar-form navbar-right">
+                        <label for="buscar" class="sr-only">Buscar</label>
+                        <div class="col-lg-pull-0">
+                            <div class="input-group">
+                                <input type="text" name="" class="form-control" placeholder="Buscar Producto" size="15">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                    <form class="navbar-form navbar-right">
+                        <a class="btn btn-primary" href="addproducto.jsp" title="Agregar un Producto" role="button">Agregar &emsp;<i class="glyphicon glyphicon-floppy-disk"></i></a>
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar">
+                    <li><a href="platos.jsp">Platos<span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Café<span class="sr-only">(current)</span></a></li>
+                    <li><a href="bebidas.jsp">Bebidas Frías<span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Empanadas<span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Sándwich<span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Ensalada<span class="sr-only">(current)</span></a></li>
+                    <li><a href="postres.jsp">Postres y Tortas<span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Licores y Cocteles<span class="sr-only">(current)</span></a></li>
+                </ul>
+            </div>
+            <%                
+                String opcion = request.getParameter("opcion");
+                opcion = opcion == null ? "" : opcion;
+                String id = request.getParameter("id");
+                id = id == null ? "" : id;
+                String mensaje = "";
+
+                if (opcion.equals("delete")) {
+
+                    if (productodao.EliminarProducto(Integer.parseInt(id))) {
+
+                        mensaje = "Se elimino correctamente";
+
+                    } else {
+
+                        mensaje = "Ocurrio un error al Eliminar";
+
+                    }
+                }
+            %>

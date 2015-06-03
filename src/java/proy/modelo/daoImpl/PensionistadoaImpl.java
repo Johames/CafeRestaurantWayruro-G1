@@ -2,6 +2,7 @@
 package proy.modelo.daoImpl;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,22 +88,37 @@ public class PensionistadoaImpl implements Pensionistadao {
         return flat;
     }
 
+
     @Override
-    public Persona BuscarPensionista(String dni) {
-        Persona persona = null;
-        SessionFactory sf = null;
-        Session session = null;
-        try {
-            sf = HibernateUtil.getSessionFactory();
-            session = sf.openSession();
-            Query query = session.createQuery("FROM Persona where dni = '" + dni + "' ");
-            persona = (Persona)query.uniqueResult();
-            session.close();
-        } catch (Exception e) {
+    public List<Persona> buscarPensionista(String dni) {
+    List<Persona> lista=new ArrayList<Persona>();
+        Persona u=null;
+        Statement st=null;
+        ResultSet rs=null;
+        String query="SELECT p.nombres,p.apellidos,p.dni,p.N_CELULAR FROM PERSONA  WHERE dni='"+dni+"'";
+         try {
+            st=abrirConexion().createStatement();
+            rs=st.executeQuery(query);
+             while (rs.next()) {
+                 u=new Persona();
+                 u.setNombres(rs.getString("nombreS"));
+                 u.setApellidos(rs.getString("apellidos"));                 
+                 u.setDni(rs.getString("dni"));
+                 u.setNCelular(rs.getString("ncelular"));
+                 u.setDireccion(rs.getString("Direccion"));
+                 lista.add(u);
+             }
+             abrirConexion().close();
+        } 
+         catch (Exception e) {
             e.printStackTrace();
-            session.close();
+             try {
+                  abrirConexion().close(); 
+             } catch (Exception ex) {
+               
+             }
         }
-        return persona;
+         return lista;   
     }
 
 }

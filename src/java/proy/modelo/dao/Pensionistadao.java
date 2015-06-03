@@ -16,5 +16,6 @@ public interface Pensionistadao {
     
     public List<Persona> ListarPensionista();
     public boolean agregarpensionista(Persona persona);
-    public Persona BuscarPensionista(String dni);
+    //public Persona BuscarPensionista(String dni);
+    public List<Persona> buscarPensionista(String dni);
 }
