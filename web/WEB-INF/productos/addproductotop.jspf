@@ -1,7 +1,6 @@
-
-<%@page import="proy.modelo.entidad.Persona"%>
-<%@page import="proy.modelo.daoImpl.PensionistadoaImpl"%>
-<%@page import="proy.modelo.dao.Pensionistadao"%>
+<%@page import="proy.modelo.entidad.Producto"%>
+<%@page import="proy.modelo.daoImpl.ProductodaoImpl"%>
+<%@page import="proy.modelo.dao.Productodao"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,33 +19,25 @@
     </head>
     <body>
         <%
-            Pensionistadao pensionistadao = new PensionistadoaImpl();
-            Persona persona = new Persona();
+            Productodao productodao = new ProductodaoImpl();
+            Producto producto = new Producto();
             
-            String nombres = request.getParameter("nombres"); nombres = nombres == null?"":nombres;
-            String apellidos = request.getParameter("apellidos"); apellidos = apellidos == null?"":apellidos;
-            String dni = request.getParameter("dni"); dni = dni == null?"":dni;
-            String ncelular = request.getParameter("ncelular"); ncelular = ncelular == null?"":ncelular;
-            String direccion = request.getParameter("direccion"); direccion = direccion == null?"":direccion;
+            String nombreprod = request.getParameter("nombreProducto"); nombreprod = nombreprod == null?"":nombreprod;
+            String preciopen = request.getParameter("precioPencionista"); preciopen = preciopen == null?"":preciopen;
+            String preciovarios = request.getParameter("precioVarios"); preciovarios = preciovarios == null?"":preciovarios;
+            String categoria = request.getParameter("categoria"); categoria = categoria == null?"":categoria;
             String mensaje = "";
-            int i=0;
             
-             i++;
-            
-            
-            if(!nombres.equals("") & !apellidos.equals("") & !dni.equals("") &!ncelular.equals("") & !direccion.equals("")){
-                persona.setNombres(nombres);
-                persona.setApellidos(apellidos);
-                persona.setDni(dni);
-                persona.setNCelular(ncelular);
-                persona.setDireccion(direccion);
-                if(pensionistadao.agregarpensionista(persona)){
-                   
-                    response.sendRedirect("pensionistas.jsp");
+            if(!nombreprod.equals("") & !preciopen.equals("") & !preciovarios.equals("") & !categoria.equals("")){
+                producto.setNombreProducto(nombreprod);
+                producto.setPrecioPensionista(preciopen);
+                producto.setPrecioAVarios(preciovarios);
+                //producto.setCategoria(categoria);
+                if(productodao.AgregarProducto(producto)){
+                    response.sendRedirect("javascript:history.back(-1);");
                 }else {
-                    mensaje = "No se Pudo Agregar el Nuevo Pensionista";
+                    mensaje = "No se Pudo Agregar el Producto";
                 }
-            
             }
             
         %>
@@ -66,7 +57,7 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <form class="navbar-form navbar-right">
-                        <a class="btn btn-primary" href="pensionistas.jsp" role="button">Ir a la Lista &emsp;<i class="glyphicon glyphicon-list-alt"></i></a>
+                        <a class="btn btn-primary" href="javascript:history.back(-1);" title="Ir la página anterior" title="Ir la página anterior" role="button">Volver a la Lista &emsp;<i class="glyphicon glyphicon-list-alt"></i></a>
                     </form>
                 </div>
             </div>

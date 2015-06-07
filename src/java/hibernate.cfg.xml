@@ -9,13 +9,6 @@
     <property name="hibernate.connection.password">admin</property>
     <mapping resource="proy/modelo/pojos/Categoria.hbm.xml"/>
     <mapping resource="proy/modelo/pojos/Persona.hbm.xml"/>
-    <mapping resource="proy/modelo/pojos/Producto.hbm.xml"/>
-    <mapping resource="proy/modelo/pojos/Usuario.hbm.xml"/>
-    <mapping resource="proy/modelo/pojos/Venta.hbm.xml"/>
-    <mapping resource="proy/modelo/pojos/DetalleVenta.hbm.xml"/>
-    <mapping resource="proy/modelo/pojos/ControlPensionista.hbm.xml"/>
-    <mapping resource="proy/modelo/pojos/ContratoPensionista.hbm.xml"/>
-    <mapping resource="proy/modelo/pojos/Movimiento.hbm.xml"/>
     <mapping resource="proy/modelo/pojos/Rol.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

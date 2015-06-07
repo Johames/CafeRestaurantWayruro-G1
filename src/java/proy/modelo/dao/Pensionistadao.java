@@ -6,6 +6,8 @@
 package proy.modelo.dao;
 
 import java.util.List;
+import proy.modelo.entidad.ContratoPensionista;
+import proy.modelo.entidad.Listar_pensionista;
 import proy.modelo.entidad.Persona;
 
 /**
@@ -14,8 +16,9 @@ import proy.modelo.entidad.Persona;
  */
 public interface Pensionistadao {
     
-    public List<Persona> ListarPensionista();
+    public List<Listar_pensionista> ListarPensionista();
+    public boolean EliminarPensionista(int id);
     public boolean agregarpensionista(Persona persona);
     //public Persona BuscarPensionista(String dni);
-    public List<Persona> buscarPensionista(String dni);
+    public List<Listar_pensionista> buscarPensionista(String dni);
 }

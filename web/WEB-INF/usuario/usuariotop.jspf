@@ -1,9 +1,6 @@
-<%@page import="proy.modelo.daoImpl.PersonadaoImpl"%>
-<%@page import="proy.modelo.dao.Personadao"%>
-<%@page import="proy.modelo.daoImpl.PensionistadoaImpl"%>
-<%@page import="proy.modelo.dao.Pensionistadao"%>
-<%@page import="proy.modelo.entidad.Persona"%>
-<!DOCTYPE html>
+<%@page import="proy.modelo.entidad.Usuario"%>
+<%@page import="proy.modelo.daoImpl.UsuariodaoImpl"%>
+<%@page import="proy.modelo.dao.Usuariodao"%>
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,6 +15,25 @@
     </head>
 
     <body>
+        <%
+            Usuariodao usuariodao = new UsuariodaoImpl();
+            Usuario usuario = new Usuario();
+
+            String buscarpen = request.getParameter("buscarpen");
+            buscarpen = buscarpen == null ? "" : buscarpen;
+            String nombres = request.getParameter("nombres");
+            nombres = nombres == null ? "" : nombres;
+            String apellidos = request.getParameter("apellidos");
+            apellidos = apellidos == null ? "" : apellidos;
+            String dni = request.getParameter("dni");
+            dni = dni == null ? "" : dni;
+            String NCelular = request.getParameter("NCelular");
+            NCelular = NCelular == null ? "" : NCelular;
+            String direccion = request.getParameter("direccion");
+            direccion = direccion == null ? "" : direccion;
+
+
+        %>
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -34,20 +50,8 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <form class="navbar-form navbar-right">
-                        <label for="buscar" class="sr-only">Buscar</label>
-                        <div class="col-lg-pull-0">
-                            <div class="input-group">
-                                <input type="text" name="buscarpen" class="form-control" title="Solo Números (8 en total)" pattern="[0-9]{8}" placeholder="Buscar Pensionista por DNI" size="21">
-                                <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i></button>
-                                </span>
-                            </div>
-                        </div>
-                    </form>
-                    <form class="navbar-form navbar-right">
-                        <a class="btn btn-primary" href="agregar.jsp" role="button">Agregar &emsp;<i class="glyphicon glyphicon-floppy-disk"></i></a>
+                        <a class="btn btn-primary" href="agregarusuario.jsp" role="button">Agregar &emsp;<i class="glyphicon glyphicon-floppy-disk"></i></a>
                     </form>
                 </div>
             </div>
         </nav>
-        

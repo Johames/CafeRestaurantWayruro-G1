@@ -59,8 +59,10 @@ public class UsuariodaoImpl  implements Usuariodao{
             user = (Usuario)query.uniqueResult();
             session.close();
         } catch (Exception e) {
+            System.out.println("Error"+e.getMessage());
             e.printStackTrace();
             session.close();
+            
         }
         return user;
     }

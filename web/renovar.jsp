@@ -14,7 +14,7 @@
                     <div class="form-group">
                         <label class="control-label col-xs-3">Nombres:</label>
                         <div class="col-xs-6">
-                            <input type="tex" class="form-control" id="inputEmail" placeholder="Nombres" readonly="">
+                            <input type="tex" class="form-control" value="" id="inputEmail" placeholder="Nombres" readonly="">
                         </div>
                     </div>
                     <div class="form-group">

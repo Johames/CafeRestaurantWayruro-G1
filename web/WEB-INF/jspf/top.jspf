@@ -13,6 +13,13 @@
     </head>
 
     <body>
+        <% 
+            HttpSession session1 = request.getSession();
+            String idU = (String)session1.getAttribute("idUsuario");
+            if(idU == null){
+                response.sendRedirect("logeo.jsp");
+            }
+        %>
         <div class="navbar-wrapper">
             <div class="container">
 

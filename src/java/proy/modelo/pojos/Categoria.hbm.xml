@@ -1,21 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 28/05/2015 08:11:50 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 06/06/2015 05:39:27 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="proy.modelo.entidad.Categoria" table="CATEGORIA" schema="ADMIN" optimistic-lock="version">
+    <class name="proy.modelo.entidad.Categoria" table="CATEGORIA" schema="ADMIN">
         <id name="idCategoria" type="short">
             <column name="ID_CATEGORIA" precision="4" scale="0" />
-            <generator class="assigned" />
+            <generator class="assigned"></generator>
         </id>
         <property name="nombreCat" type="string">
             <column name="NOMBRE_CAT" length="20" />
         </property>
-        <set name="productos" table="PRODUCTO" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="ID_CATEGORIA" precision="4" scale="0" />
-            </key>
-            <one-to-many class="proy.modelo.entidad.Producto" />
-        </set>
     </class>
 </hibernate-mapping>
