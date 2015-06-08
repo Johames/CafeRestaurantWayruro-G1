@@ -15,7 +15,8 @@
             </tr>
         </thead>
         <tbody>
-            <%                int count = 0;
+            <%
+                int count = 0;
                 Productodao dao = new ProductodaoImpl();
 
                 for (Producto prod : dao.ListarPlatos()) {
@@ -25,7 +26,8 @@
             <tr>
                 <td><%=count%>.</td>
                 <td><%=prod.getNombreProducto()%></td>
-                <td><%=prod.getPrecio()%></td>
+                <td><%=prod.getPrecioPensionista()%></td>
+                <td><%=prod.getPrecioAVarios()%></td>
                 <td><%=prod.getStock()%></td>
                 <td><p><a class="btn btn-primary" href="platos.jsp?id=" title="Modificar" role="button"><i class="glyphicon glyphicon-edit"></i></a></p></td>
                 <td><p><a class="btn btn-danger" role="button" title="Eliminar" href="platos.jsp?opcion=delete&id=<%=prod.getIdProducto()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
@@ -36,6 +38,7 @@
 </div>
 </div>
 </body>
+
 <script src="jquery/jquery.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="bootstrap/js/holder.js"></script>
