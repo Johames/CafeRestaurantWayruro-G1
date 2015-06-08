@@ -3,18 +3,27 @@ package proy.modelo.entidad;
 
 public class Listar_pensionista {
     
-     private String idContrato;
-     private String nombres;
-     private String apellidos;
-     private String dni;
-     private String NCelular;
-     private String direccion;
-     private String fechaInicio;
-     private String fechaFin;
+    private String idPersona;
+    private String idContrato;
+    private String nombres;
+    private String apellidos;
+    private String dni;
+    private String NCelular;
+    private String direccion;
+    private String fechaInicio;
+    private String fechaFin;
 
     public Listar_pensionista() {
     }
 
+    public String getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(String idPersona) {
+        this.idPersona = idPersona;
+    }
+    
     public String getIdContrato() {
         return idContrato;
     }

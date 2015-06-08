@@ -33,26 +33,27 @@ public class validar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String usuario = request.getParameter("usuario"); usuario = usuario == null ? "" : usuario;
-        String contrasena = request.getParameter("contrasena"); contrasena = contrasena == null ? "" : contrasena;
-        String mensaje = "";
+        String idUsuario = request.getParameter("idUsuario");
+        idUsuario = idUsuario == null ? "" : idUsuario;
+        String usuario = request.getParameter("usuario");
+        usuario = usuario == null ? "" : usuario;
+        String contrasena = request.getParameter("contrasena");
+        contrasena = contrasena == null ? "" : contrasena;
 
         Usuariodao dao = new UsuariodaoImpl();
         Usuario us = new Usuario();
 
-        if (!usuario.equals("") && !contrasena.equals("")) {
+        if (dao.ComprobarUsuario(usuario, contrasena) != null) {
 
             HttpSession session = request.getSession();
             session.setAttribute("idUsuario", us.getIdUsuario());
-            
-            Usuariodao user = new UsuariodaoImpl();
-            us = user.ComprobarUsuario(usuario, contrasena);
- 
-            if (us != null) {
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            } else {
-                request.getRequestDispatcher("error.jsp").forward(request, response);
-            }
+
+            idUsuario = dao.ComprobarUsuario(usuario, contrasena);
+
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+
+        } else {
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
     }
 

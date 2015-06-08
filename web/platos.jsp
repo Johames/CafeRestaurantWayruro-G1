@@ -28,7 +28,7 @@
                 <td><%=prod.getPrecio()%></td>
                 <td><%=prod.getStock()%></td>
                 <td><p><a class="btn btn-primary" href="platos.jsp?id=" title="Modificar" role="button"><i class="glyphicon glyphicon-edit"></i></a></p></td>
-                <td><p><a class="btn btn-danger" role="button" title="Eliminar" href="platos.jsp?opcion=delete&id=<%=prod.getIdProducto()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
+                <td><p><a class="btn btn-danger" onclick="if(!confirm('Esta seguro de eliminar a <%=prod.getNombreProducto()%>'))return false" role="button" title="Eliminar" href="platos.jsp?opcion=delete&id=<%=prod.getIdProducto()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
             </tr>
             <%}%>
         </tbody>

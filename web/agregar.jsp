@@ -12,7 +12,7 @@
                 </form>
             </div>
             <div class="formu">
-                <form class="form-horizontal" action="">
+                <form class="form-horizontal" action="agregar.jsp">
                     <div class="form-group">
                         <label class="control-label col-xs-3">Nombres:</label>
                         <div class="col-xs-6">

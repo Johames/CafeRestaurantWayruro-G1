@@ -26,9 +26,11 @@
         <table class="table table-striped well">
             <thead>
                 <tr>
+                    <th hidden></th>
                     <th>#</th>
+                    <th>ID</th>
+                    <th>Nombres</th>
                     <th>Usuario</th>
-                    <th>Contraseña</th>
                     <th>Rol</th>
                     <th>Modificar</th>
                     <th>Eliminar</th>                                   
@@ -39,17 +41,18 @@
                     int count = 0;
                     Usuariodao dao = new UsuariodaoImpl();
 
-                    for (Usuario user : dao.ListarUsuario()) {
+                    for (Listar_Usuario user : dao.ListarUsuario()) {
                         count++;
 
                 %>
                 <tr>
+                    <td hidden><%=user.getIdPersona()%></td>
                     <td><%=count%>.</td>
+                    <td><%=user.getNombres()%><%=user.getApellidos()%></td>
                     <td><%=user.getUsuario()%></td>
-                    <td><%=user.getContrasena()%></td>
-                    <td></td>
-                    <td><p><a class="btn btn-primary" href="modusuario.jsp?id=" role="button"><i class="glyphicon glyphicon-edit"></i></a></p></td>
-                    <td><p><a class="btn btn-danger" role="button" href="Usuario.jsp?opcion=delete&id=<%=usuario.getIdUsuario()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
+                    <td><%=user.getNombre_rol()%></td>
+                    <td><p><a class="btn btn-primary" href="modusuario.jsp?id=<%=user.getIdPersona()%>" role="button"><i class="glyphicon glyphicon-pencil"></i></a></p></td>
+                    <td><p><a class="btn btn-danger" onclick="if(!confirm('Esta seguro de eliminar a <%=user.getNombres()%><%=user.getApellidos()%>'))return false" role="button" href="Usuario.jsp?opcion=delete&id=<%=user.getIdPersona()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
                 </tr>
                 <%}%>
             </tbody>

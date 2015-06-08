@@ -5,7 +5,9 @@
  */
 package proy.modelo.daoImpl;
 
+import static java.lang.System.out;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import proy.modelo.dao.Usuariodao;
+import proy.modelo.entidad.Listar_Usuario;
 import proy.modelo.entidad.Rol;
 import proy.modelo.entidad.Usuario;
 import proy.modelo.util.HibernateUtil;
@@ -21,51 +24,54 @@ import proy.modelo.util.HibernateUtil;
  *
  * @author TOSHIBA
  */
-public class UsuariodaoImpl  implements Usuariodao{
-    
-    public Connection  abrirConexion(){
+public class UsuariodaoImpl implements Usuariodao {
+
+    public Connection abrirConexion() {
         return conexion.OracleConexion.conectar();
     }
-    
-    public  void cerrarConexion(){
+
+    public void cerrarConexion() {
         try {
             conexion.OracleConexion.conectar().close();
         } catch (Exception e) {
         }
     }
-    
-    public void guardar(){
+
+    public void guardar() {
         try {
             abrirConexion().commit();
         } catch (Exception e) {
         }
     }
-    
-    public void revertir(){
+
+    public void revertir() {
         try {
             abrirConexion().rollback();
         } catch (Exception e) {
         }
     }
-    
+
     @Override
-    public Usuario ComprobarUsuario(String usuario, String contrasena) {
-        Usuario user = null;
-        Session session = null;
-        SessionFactory sf = null;
+    public String ComprobarUsuario(String usuario, String contrasena) {
+        String idUsuario = null;
+        String query = "SELECT id_usuario FROM Usuario WHERE upper(usuario) = '" + usuario.toUpperCase() + "' AND contrasena = '" + contrasena + "'";
+        Statement st = null;
+        ResultSet rs = null;
         try {
-            sf = HibernateUtil.getSessionFactory();
-            session = sf.openSession();
-            Query query = session.createQuery("from Usuario where usuario='"+usuario+"' and contrasena='"+contrasena+"'");
-            user = (Usuario)query.uniqueResult();
-            session.close();
+            st = abrirConexion().createStatement();
+            rs = st.executeQuery(query);
+            if (rs.next()) {
+                idUsuario = rs.getString("id_usuario");
+            }
+            cerrarConexion();
         } catch (Exception e) {
-            System.out.println("Error"+e.getMessage());
             e.printStackTrace();
-            session.close();
-            
+            try {
+                cerrarConexion();
+            } catch (Exception ex) {
+            }
         }
-        return user;
+        return idUsuario;
     }
 
     @Override
@@ -74,20 +80,37 @@ public class UsuariodaoImpl  implements Usuariodao{
     }
 
     @Override
-    public List<Usuario> ListarUsuario() {
-        List<Usuario> lista = null;
-        SessionFactory sf = null;
-        Session session = null;
+    public List<Listar_Usuario> ListarUsuario() {
+        List<Listar_Usuario> lista = new ArrayList<Listar_Usuario>();
+        Statement st = null;
+        ResultSet rs = null;
+        Listar_Usuario listar = null;
+        String query = "select u.id_persona as id p.NOMBRES as nombres, p.APELLIDOS as apellidos, u.USUARIO as usuario, u.CONTRASENA as con, r.NOMBRE_ROL as rol"
+                + "from PERSONA p, USUARIO u, ROL r "
+                + "where p.ID_PERSONA=u.ID_USUARIO and u.ID_ROL = r.ID_ROL ";
         try {
-            sf = HibernateUtil.getSessionFactory();
-            session = sf.openSession();
-            lista = new ArrayList<Usuario>();
-            Query query = session.createQuery("FROM Usuario");
-            lista = query.list();
-            session.close();
+            st = abrirConexion().createStatement();
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                listar =new Listar_Usuario();
+
+                listar.setIdUsuario(rs.getString("id"));
+                listar.setNombres(rs.getString("nombres"));
+                listar.setApellidos(rs.getString("apellidos"));
+                listar.setUsuario(rs.getString("usuario"));
+                listar.setContrasena(rs.getString("con"));
+                listar.setNombre_rol(rs.getString("rol"));
+
+                lista.add(listar);
+            }
+            cerrarConexion();
         } catch (Exception e) {
             e.printStackTrace();
-            session.close();
+            System.out.println(e.getMessage());
+            try {
+                cerrarConexion();
+            } catch (Exception ex) {
+            }
         }
         return lista;
     }
@@ -96,8 +119,8 @@ public class UsuariodaoImpl  implements Usuariodao{
     public boolean EliminarUsuario(int id) {
         boolean flat = false;
         Statement st = null;
-        String query = "delete FROM USUARIO WHERE ID_USUARIO ="+id;
-        
+        String query = "delete FROM USUARIO WHERE ID_USUARIO =" + id;
+
         try {
             st = abrirConexion().createStatement();
             st.executeUpdate(query);
@@ -134,5 +157,5 @@ public class UsuariodaoImpl  implements Usuariodao{
         }
         return lista;
     }
-    
+
 }

@@ -1,3 +1,4 @@
+<%@page import="proy.modelo.entidad.Listar_Usuario"%>
 <%@page import="proy.modelo.entidad.Usuario"%>
 <%@page import="proy.modelo.daoImpl.UsuariodaoImpl"%>
 <%@page import="proy.modelo.dao.Usuariodao"%>

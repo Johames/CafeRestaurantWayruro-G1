@@ -30,7 +30,7 @@ public class NewMain {
         
         //main.eliminar();
         //main.agregar();
-        System.out.println("mensaje "+main.comprobar());
+        main.comprobar();
         
     }
     public void eliminar(){
@@ -65,15 +65,12 @@ public class NewMain {
     }
     
     
-    public boolean comprobar(){
+    public void comprobar(){
         Usuariodao user = new UsuariodaoImpl();
+        String id_usuario = "";
         //usuario us = new usuario();
-        Usuario us = user.ComprobarUsuario("admin", "1234");
-        if(us.getUsuario().equals("admin") && us.getContrasena().equals("1234")){
-            return true;
-        }else{
-            return false;
-        }
+        id_usuario = user.ComprobarUsuario("admin", "1234");
+        System.out.println("ID : "+id_usuario);
     }
     
     

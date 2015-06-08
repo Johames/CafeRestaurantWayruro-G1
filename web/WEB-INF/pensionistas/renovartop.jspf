@@ -1,3 +1,6 @@
+<%@page import="proy.modelo.entidad.Listar_pensionista"%>
+<%@page import="proy.modelo.daoImpl.PensionistadoaImpl"%>
+<%@page import="proy.modelo.dao.Pensionistadao"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -23,8 +26,8 @@
                 response.sendRedirect("error.jsp");
             }
             
-            Personadao persona = new PersonadaoImpl();
-            Persona person = new Persona();
+            Pensionistadao persona = new PensionistadoaImpl();
+            Listar_pensionista listar =  new Listar_pensionista();
         
             String buscarpen = request.getParameter("buscar"); buscarpen = buscarpen == null?"":buscarpen;
             String nombre = request.getParameter("nombres"); nombre = nombre == null?"":nombre;
@@ -32,16 +35,22 @@
             String dn = request.getParameter("dni"); dn = dn == null?"":dn;
             String NCelular = request.getParameter("ncelular"); NCelular = NCelular == null?"":NCelular;
             String direccion = request.getParameter("direcciones"); direccion = direccion == null?"":direccion;
+            String finicio = request.getParameter("fechaInicio"); finicio = finicio == null?"":finicio;
+            String ffin = request.getParameter("fechaFin"); ffin = ffin == null?"":ffin;
+            String idcontrato = request.getParameter("idContrato"); idcontrato = idcontrato == null?"":idcontrato;
             String mensaje = "";
             
             if(!buscarpen.equals("")){
                 //person = persona.BuscarPensionista(buscarpen);
                 if(persona!=null){
-                    nombre = person.getNombres();
-                    apellido = person.getApellidos();
-                    dn = person.getDni();
-                    NCelular = person.getNCelular();
-                    direccion = person.getDireccion();                    
+                    nombre = listar.getNombres();
+                    apellido = listar.getApellidos();
+                    dn = listar.getDni();
+                    NCelular = listar.getNCelular();
+                    direccion = listar.getDireccion();
+                    finicio = listar.getFechaInicio();
+                    ffin = listar.getFechaFin();
+                    idcontrato = listar.getIdContrato();
                 }else{
                     mensaje="Error";
                 }

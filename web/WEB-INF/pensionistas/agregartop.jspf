@@ -36,9 +36,6 @@
             String ncelular = request.getParameter("ncelular"); ncelular = ncelular == null?"":ncelular;
             String direccion = request.getParameter("direccion"); direccion = direccion == null?"":direccion;
             String mensaje = "";
-            int i=0;
-            
-             i++;
             
             
             if(!nombres.equals("") & !apellidos.equals("") & !dni.equals("") &!ncelular.equals("") & !direccion.equals("")){
