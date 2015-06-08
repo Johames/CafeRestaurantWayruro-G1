@@ -48,7 +48,7 @@ public class validar extends HttpServlet {
             Usuariodao user = new UsuariodaoImpl();
             us = user.ComprobarUsuario(usuario, contrasena);
  
-            if (us == null) {
+            if (us != null) {
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             } else {
                 request.getRequestDispatcher("error.jsp").forward(request, response);
