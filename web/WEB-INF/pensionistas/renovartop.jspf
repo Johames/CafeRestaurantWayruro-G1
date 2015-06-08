@@ -15,6 +15,40 @@
         <title>Café Restaurant "Wayruro"</title>
     </head>
     <body>
+        <%
+            HttpSession session1 = request.getSession();
+            Integer idU = (Integer)session1.getAttribute("idUsuario");
+            
+            if(idU == null){
+                response.sendRedirect("error.jsp");
+            }
+            
+            Personadao persona = new PersonadaoImpl();
+            Persona person = new Persona();
+        
+            String buscarpen = request.getParameter("buscar"); buscarpen = buscarpen == null?"":buscarpen;
+            String nombre = request.getParameter("nombres"); nombre = nombre == null?"":nombre;
+            String apellido = request.getParameter("apellidos"); apellido = apellido == null?"":apellido;
+            String dn = request.getParameter("dni"); dn = dn == null?"":dn;
+            String NCelular = request.getParameter("ncelular"); NCelular = NCelular == null?"":NCelular;
+            String direccion = request.getParameter("direcciones"); direccion = direccion == null?"":direccion;
+            String mensaje = "";
+            
+            if(!buscarpen.equals("")){
+                //person = persona.BuscarPensionista(buscarpen);
+                if(persona!=null){
+                    nombre = person.getNombres();
+                    apellido = person.getApellidos();
+                    dn = person.getDni();
+                    NCelular = person.getNCelular();
+                    direccion = person.getDireccion();                    
+                }else{
+                    mensaje="Error";
+                }
+            }else{
+                mensaje="Error";
+            }
+        %>
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">

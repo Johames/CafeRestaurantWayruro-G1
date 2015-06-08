@@ -1,26 +1,6 @@
 <%@include file="WEB-INF/usuario/logeotop.jspf"%>
 
     <body>
-        <%
-            String usuario = request.getParameter("usuario");
-            usuario = usuario == null ? "" : usuario;
-            String contrasena = request.getParameter("contrasena");
-            contrasena = contrasena == null ? "" : contrasena;
-            String mensaje = "";
-
-            if (!usuario.equals("") && !contrasena.equals("")) {
-                Usuariodao dao = new UsuariodaoImpl();
-                Usuario us = dao.ComprobarUsuario(usuario, contrasena);
-                if (us != null) {
-                    response.sendRedirect("index.jsp");
-                } else {
-                    mensaje = "Error";
-                }
-
-            }
-
-
-        %>
         <br><br><br><br>
         <article>
             <div class="container-fluid">
@@ -34,7 +14,7 @@
                                     <br><br>
                                 </div>
                             </div>
-                            <form class="form-signin-heading" action="logeo.jsp" method="post">
+                            <form method="POST" action="valid">
                                 <div class="title">
                                     <label>
                                         <h3 class="tipo"><b>Ingresar Usuario</b></h3>
@@ -46,7 +26,7 @@
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-user"></span>
                                             </span>
-                                            <input type="Usuario" class="form-control" placeholder="Usuario" name="usuario" required autofocus>
+                                            <input type="text" class="form-control" placeholder="Usuario" name="usuario" required autofocus>
                                         </div>
                                     </div>
                                 </div>
@@ -74,15 +54,6 @@
                                     </div>
                                 </div>
                             </form>
-                            <div class="row">
-                                <div class="col-md-12" id="aler">
-                                    <br>
-                                    <%                                    if (!mensaje.equals("")) {
-                                    %>
-                                    <div class="alert alert-danger"><%=mensaje%></div>
-                                    <%}%>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

@@ -16,6 +16,13 @@
 
     <body>
         <%
+            HttpSession session1 = request.getSession();
+            Integer idU = (Integer)session1.getAttribute("idUsuario");
+            
+            if(idU == null){
+                response.sendRedirect("error.jsp");
+            }
+        
             Usuariodao usuariodao = new UsuariodaoImpl();
             Usuario usuario = new Usuario();
 

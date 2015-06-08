@@ -6,6 +6,7 @@
 package proy.modelo.dao;
 
 import java.util.List;
+import proy.modelo.entidad.Categoria;
 import proy.modelo.entidad.Producto;
 
 
@@ -18,6 +19,6 @@ public interface Productodao {
     public List<Producto> ListarBebidas();
     public List<Producto> ListPostres();
     public boolean EliminarProducto(int id);
-    public boolean  AgregarProducto(Producto producto);
-    
+    public boolean  AgregarProducto(Producto producto); 
+    public List<Categoria> ListarCategoria();
 }

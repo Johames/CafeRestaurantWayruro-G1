@@ -16,6 +16,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import proy.modelo.entidad.Producto;
 import proy.modelo.dao.Productodao;
+import proy.modelo.entidad.Categoria;
 import proy.modelo.util.HibernateUtil;
 
 
@@ -59,7 +60,7 @@ public class ProductodaoImpl implements Productodao{
             sf = HibernateUtil.getSessionFactory();
             session = sf.openSession();
             lista = new ArrayList<Producto>();
-            Query query = session.createQuery("FROM Producto where categoria='1'");
+            Query query = session.createQuery("FROM PRODUCTO where idCategoria='1'");
             lista = query.list();
             session.close();
         } catch (Exception e) {
@@ -79,7 +80,7 @@ public class ProductodaoImpl implements Productodao{
             sf = HibernateUtil.getSessionFactory();
             session = sf.openSession();
             lista = new ArrayList<Producto>();
-            Query query = session.createQuery("FROM Producto where categoria='2'");
+            Query query = session.createQuery("FROM Producto where idCategoria='2'");
             lista = query.list();
             session.close();
         } catch (Exception e) {
@@ -98,7 +99,7 @@ public class ProductodaoImpl implements Productodao{
             sf = HibernateUtil.getSessionFactory();
             session = sf.openSession();
             lista = new ArrayList<Producto>();
-            Query query = session.createQuery("FROM Producto where categoria='3'");
+            Query query = session.createQuery("FROM Producto where idCategoria='3'");
             lista = query.list();
             session.close();
         } catch (Exception e) {
@@ -156,7 +157,24 @@ public class ProductodaoImpl implements Productodao{
         return flat;
     
     }
-    
-    
-            
+
+    @Override
+    public List<Categoria> ListarCategoria() {
+        List<Categoria> lista = null;
+        SessionFactory sf = null;
+        Session session = null;
+        try {
+            sf = HibernateUtil.getSessionFactory();
+            session = sf.openSession();
+            lista = new ArrayList<Categoria>();
+            Query query = session.createQuery("FROM Categoria");
+            lista = query.list();
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.close();
+        }
+        return lista;
+    }
+        
 }

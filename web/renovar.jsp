@@ -1,4 +1,6 @@
+
 <%@include file="WEB-INF/pensionistas/renovartop.jspf"%>
+
 <div class="container">
     <div class="row">
         <div class="col-md-2"></div>
@@ -12,45 +14,45 @@
             <div class="formu">
                 <form class="form-horizontal" action="">
                     <div class="form-group">
-                        <label class="control-label col-xs-3">Nombres:</label>
+                        <label class="control-label col-xs-3">Nombres :</label>
                         <div class="col-xs-6">
-                            <input type="tex" class="form-control" value="" id="inputEmail" placeholder="Nombres" readonly="">
+                            <input type="tex" class="form-control" placeholder="Nombres" name="nombres" value="<%=nombre%>" readonly>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-xs-3">Apellidos:</label>
+                        <label class="control-label col-xs-3">Apellidos :</label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" id="inputPassword" placeholder="Apellidos" readonly="">
+                            <input type="text" class="form-control" placeholder="Apellidos" name="apellidos" value="<%=apellido%>" readonly>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-xs-3">DNI:</label>
+                        <label class="control-label col-xs-3">DNI :</label>
                         <div class="col-xs-6">
-                            <input type="text" title="Solo Números (8 en total)" id="numero" pattern="[0-9]{8}" class="form-control" placeholder="DNI" readonly="">
+                            <input type="text" class="form-control" placeholder="DNI" name="dni" value="<%=dn%>" readonly>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-xs-3">N° de Celular:</label>
+                        <label class="control-label col-xs-3">N° de Celular :</label>
                         <div class="col-xs-6">
-                            <input type="text" title="Solo Numeros (9 en total)" pattern="[0-9]{1,10}" class="form-control" placeholder="N° de Celular" readonly="">
+                            <input type="text" class="form-control" placeholder="N° de Celular" name="ncelular" value="<%=NCelular%>" readonly>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-xs-3">Dirección:</label>
+                        <label class="control-label col-xs-3">Dirección :</label>
                         <div class="col-xs-6">
-                            <textarea rows="3" class="form-control" placeholder="Dirección" readonly=""></textarea>
+                            <input type="text" class="form-control" placeholder="Dirección" value="<%=direccion%>" name="direcciones" readonly>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-xs-3">Inicio de la Pensión:</label>
+                        <label class="control-label col-xs-3">Inicio de la Pensión :</label>
                         <div class="col-xs-3">
-                            <input type="date" class="form-control">
+                            <input type="date" class="form-control" name="fechaInicio">
                         </div> 
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-xs-3">Fin de la Pensión:</label>
+                        <label class="control-label col-xs-3">Fin de la Pensión :</label>
                         <div class="col-xs-3">
-                            <input type="date" class="form-control">
+                            <input type="date" class="form-control" name="fechaFin">
                         </div> 
                     </div>
                     <br>

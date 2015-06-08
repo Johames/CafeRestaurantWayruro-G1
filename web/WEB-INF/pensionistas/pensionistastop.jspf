@@ -18,6 +18,14 @@
     </head>
 
     <body>
+        <%
+            HttpSession session1 = request.getSession();
+            Integer idU = (Integer)session1.getAttribute("idUsuario");
+            
+            if(idU == null){
+                response.sendRedirect("error.jsp");
+            }
+        %>
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">

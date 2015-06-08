@@ -91,7 +91,7 @@
                     <td><%=per.getDireccion()%></td>
                     <td><%=per.getFechaInicio().substring(0,10)%></td>
                     <td><%=per.getFechaFin().substring(0,10)%></td>
-                    <td><p><a class="btn btn-primary" href="renovar.jsp?id=<%=per.getIdContrato()%>&nombres=<%=per.getNombres()%>" role="button"><i class="glyphicon glyphicon-refresh"></i></a></p></td>
+                    <td><p><a class="btn btn-primary" title="Renovar Contrato del Pencionista" href="renovar.jsp?id=<%=per.getIdPersona()%>&nombres=<%=per.getNombres()%>&apellidos=<%=per.getApellidos()%>&dni=<%=per.getDni()%>&ncelular=<%=per.getNCelular()%>&direcciones=<%=per.getDireccion()%>" role="button"><i class="glyphicon glyphicon-refresh"></i></a></p></td>
                     <td><p><a class="btn btn-danger" role="button" href="pensionistas.jsp?opcion=delete&id=<%=per.getIdContrato()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
                 </tr>
                 <%}%>

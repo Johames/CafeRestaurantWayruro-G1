@@ -28,8 +28,12 @@
                         <div class="col-xs-4">
                             <select class="form-control" name="rol">
                                 <option selected="selected" hidden>Seleccionar Rol</option>
-                                <option value="1">Administrador</option>
-                                <option value="2">Personal</option>
+                                <%
+                                    Usuariodao dao = new UsuariodaoImpl();
+                                    for(Rol rol : dao.ListarRol()){
+                                %>
+                                <option value="<%=rol.getIdRol()%>"><%=rol.getNombreRol()%></option>
+                                <%}%>
                             </select>
                         </div>
                     </div>

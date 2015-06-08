@@ -13,6 +13,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import proy.modelo.dao.Usuariodao;
+import proy.modelo.entidad.Rol;
 import proy.modelo.entidad.Usuario;
 import proy.modelo.util.HibernateUtil;
 
@@ -113,6 +114,25 @@ public class UsuariodaoImpl  implements Usuariodao{
             }
         }
         return flat;
+    }
+
+    @Override
+    public List<Rol> ListarRol() {
+        List<Rol> lista = null;
+        SessionFactory sf = null;
+        Session session = null;
+        try {
+            sf = HibernateUtil.getSessionFactory();
+            session = sf.openSession();
+            lista = new ArrayList<Rol>();
+            Query query = session.createQuery("FROM Rol");
+            lista = query.list();
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.close();
+        }
+        return lista;
     }
     
 }

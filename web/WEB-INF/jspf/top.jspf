@@ -12,12 +12,12 @@
         <link href="css/carousel.css" rel="stylesheet">
     </head>
 
-    <body>
-        <% 
+    <body><%
             HttpSession session1 = request.getSession();
-            String idU = (String)session1.getAttribute("idUsuario");
+            Integer idU = (Integer)session1.getAttribute("idUsuario");
+            
             if(idU == null){
-                response.sendRedirect("logeo.jsp");
+                response.sendRedirect("error.jsp");
             }
         %>
         <div class="navbar-wrapper">
@@ -51,7 +51,7 @@
                             <div>
                                 <div id="navbar" class="navbar-collapse collapse">
                                     <form class="navbar-form navbar-right">
-                                        <a class="btn btn-danger" href="logeo.jsp" role="button">Salir <i class="glyphicon glyphicon-log-out"></i></a>
+                                        <a class="btn btn-danger" href="cerrar" role="button">Salir <i class="glyphicon glyphicon-log-out"></i></a>
                                     </form>
                                 </div>
                             </div>
