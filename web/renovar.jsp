@@ -13,34 +13,40 @@
             </div>
             <div class="formu">
                 <form class="form-horizontal" action="">
+                    <div class="form-group" hidden>
+                        <label class="control-label col-xs-3">id :</label>
+                        <div class="col-xs-6">
+                            <input type="tex" class="form-control" name="idPerson" value="<%=idPerson%>" readonly>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="control-label col-xs-3">Nombres :</label>
                         <div class="col-xs-6">
-                            <input type="tex" class="form-control" placeholder="Nombres" name="nombres" value="<%=nombre%>" readonly>
+                            <input type="tex" class="form-control" value="<%=nombre%>" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-xs-3">Apellidos :</label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" placeholder="Apellidos" name="apellidos" value="<%=apellido%>" readonly>
+                            <input type="text" class="form-control" value="<%=apellido%>" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-xs-3">DNI :</label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" placeholder="DNI" name="dni" value="<%=dn%>" readonly>
+                            <input type="text" class="form-control" value="<%=dn%>" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-xs-3">N° de Celular :</label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" placeholder="N° de Celular" name="ncelular" value="<%=NCelular%>" readonly>
+                            <input type="text" class="form-control" value="<%=NCelular%>" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-xs-3">Dirección :</label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" placeholder="Dirección" value="<%=direccion%>" name="direcciones" readonly>
+                            <input type="text" class="form-control" value="<%=direccion%>" readonly>
                         </div>
                     </div>
                     <div class="form-group">
@@ -55,7 +61,34 @@
                             <input type="date" class="form-control" name="fechaFin">
                         </div> 
                     </div>
-                    <br>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3">Costo de la Pension :</label>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" name="p_pen" value="<%=p_pen%>" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3">Fecha de Pago :</label>
+                        <div class="col-xs-3">
+                            <input type="date" class="form-control" name="fechaFin">
+                        </div> 
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3">Pago? :</label>
+                        <div class="col-xs-4">
+                            <select class="form-control" name="estado">
+                                <option selected="selected" hidden="">Seleccionar</option>
+                                <option value="1">Si</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3">id Usuario :</label>
+                        <div class="col-xs-6">
+                            <input type="number" class="form-control" name="" value="<%=idU%>" readonly>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
                             <input type="submit" class="btn btn-primary" value="Enviar">

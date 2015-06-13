@@ -1,4 +1,5 @@
 
+<%@page import="proy.modelo.entidad.ContratoPensionista"%>
 <%@page import="proy.modelo.entidad.Persona"%>
 <%@page import="proy.modelo.daoImpl.PensionistadoaImpl"%>
 <%@page import="proy.modelo.dao.Pensionistadao"%>
@@ -27,30 +28,45 @@
                 response.sendRedirect("error.jsp");
             }
         
-            Pensionistadao pensionistadao = new PensionistadoaImpl();
-            Persona persona = new Persona();
+            Pensionistadao dao = new PensionistadoaImpl();
+            Persona person = new Persona();
+            ContratoPensionista contrato = new ContratoPensionista();
             
+            String idPersona = request.getParameter("idpersona"); idPersona = idPersona == null ? "" : idPersona;
             String nombres = request.getParameter("nombres"); nombres = nombres == null?"":nombres;
             String apellidos = request.getParameter("apellidos"); apellidos = apellidos == null?"":apellidos;
             String dni = request.getParameter("dni"); dni = dni == null?"":dni;
             String ncelular = request.getParameter("ncelular"); ncelular = ncelular == null?"":ncelular;
             String direccion = request.getParameter("direccion"); direccion = direccion == null?"":direccion;
+            String f_inicio = request.getParameter("fechaInicio"); f_inicio = f_inicio == null ? "" : f_inicio;
+            String f_final = request.getParameter("fechaFinal"); f_final = f_final == null ? "" : f_final;
+            String fPago = request.getParameter("fpago"); fPago = fPago == null ? "" : fPago;
+            String precioPension = request.getParameter("fpago"); precioPension = precioPension == null ? "" : precioPension;
+            String Pago = request.getParameter("pago"); Pago = Pago == null ? "" : Pago;
             String mensaje = "";
             
-            
-            if(!nombres.equals("") & !apellidos.equals("") & !dni.equals("") &!ncelular.equals("") & !direccion.equals("")){
-                persona.setNombres(nombres);
-                persona.setApellidos(apellidos);
-                persona.setDni(dni);
-                persona.setNCelular(ncelular);
-                persona.setDireccion(direccion);
-                if(pensionistadao.agregarpensionista(persona)){
-                   
-                    response.sendRedirect("pensionistas.jsp");
-                }else {
-                    mensaje = "No se Pudo Agregar el Nuevo Pensionista";
-                }
-            
+            if (!nombres.equals("") & !apellidos.equals("") & !dni.equals("") & !ncelular.equals("") & !direccion.equals("")) {
+                person.setNombres(nombres);
+                person.setApellidos(apellidos);
+                person.setDni(dni);
+                person.setNCelular(ncelular);
+                person.setDireccion(direccion);
+                if (dao.agregarpensionista(person)) {
+                    response.sendRedirect("agregar.jsp?idpersona=");
+                    if (!idPersona.equals("") & !f_inicio.equals("") & !f_final.equals("") & !fPago.equals("") & !precioPension.equals("") & Pago.equals("")) {
+                        contrato.setIdpersona(Integer.parseInt(idPersona));
+                        contrato.setFechaInicio(f_inicio);
+                        contrato.setFechaFin(f_final);
+                        contrato.setFechaPago(fPago);
+                        contrato.setPrecioPension(precioPension);
+                        contrato.setEstado(Pago);
+                        if(dao.agregarContrato(contrato)){
+                            response.sendRedirect("javascript:history.back(-1);");
+                        }else {
+                        mensaje = "No se Pudo Agregar el Producto";
+                        }
+                    }
+                } 
             }
             
         %>

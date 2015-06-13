@@ -76,7 +76,26 @@ public class UsuariodaoImpl implements Usuariodao {
 
     @Override
     public boolean AgregarUsuario(Usuario usuario) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Statement st = null;
+        boolean flat = false;
+        String query = "INSERT INTO Cliente VALUES ()";
+        System.out.println(query); 
+       try {
+            st = abrirConexion().createStatement();
+            st.executeUpdate(query);
+            abrirConexion().commit();
+            abrirConexion().close();
+            flat = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                abrirConexion().rollback();
+                abrirConexion().close();
+                flat = false;
+            } catch (Exception ex) {
+            }
+        }
+        return flat;
     }
 
     @Override
@@ -85,20 +104,18 @@ public class UsuariodaoImpl implements Usuariodao {
         Statement st = null;
         ResultSet rs = null;
         Listar_Usuario listar = null;
-        String query = "select u.id_persona as id p.NOMBRES as nombres, p.APELLIDOS as apellidos, u.USUARIO as usuario, u.CONTRASENA as con, r.NOMBRE_ROL as rol"
-                + "from PERSONA p, USUARIO u, ROL r "
-                + "where p.ID_PERSONA=u.ID_USUARIO and u.ID_ROL = r.ID_ROL ";
+        String query = " select p.nombres as nombres, p.apellidos as apellidos, us.usuario as usuario, r.nombre_rol as rol "
+                + " from persona p, usuario us, rol r "
+                + " where p.id_persona=us.id_usuario and us.id_rol=r.id_rol ";
         try {
             st = abrirConexion().createStatement();
             rs = st.executeQuery(query);
             while (rs.next()) {
-                listar =new Listar_Usuario();
-
-                listar.setIdUsuario(rs.getString("id"));
+                listar = new Listar_Usuario();
+                
                 listar.setNombres(rs.getString("nombres"));
                 listar.setApellidos(rs.getString("apellidos"));
                 listar.setUsuario(rs.getString("usuario"));
-                listar.setContrasena(rs.getString("con"));
                 listar.setNombre_rol(rs.getString("rol"));
 
                 lista.add(listar);
@@ -106,11 +123,11 @@ public class UsuariodaoImpl implements Usuariodao {
             cerrarConexion();
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
             try {
                 cerrarConexion();
             } catch (Exception ex) {
             }
+            System.out.println(e.getMessage());
         }
         return lista;
     }

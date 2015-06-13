@@ -1,45 +1,15 @@
-
-<%@page import="proy.modelo.entidad.Listar_pensionista"%>
-<%@page import="proy.modelo.entidad.ContratoPensionista"%>
 <%@include file="WEB-INF/pensionistas/pensionistastop.jspf" %>
 
-
-
+<input type="hidden" name="idPersona" value="<%=idPersona%>" size="10">
         
-        <%
-            Personadao persona = new PersonadaoImpl();
-            Persona person = new Persona();
-            ContratoPensionista contratoPensionista =  new ContratoPensionista();
-            
-        
-            //String buscarpen = request.getParameter("buscarpen"); buscarpen = buscarpen == null?"":buscarpen;
-            String nombres = request.getParameter("nombres"); nombres = nombres == null?"":nombres;
-            String apellidos = request.getParameter("apellidos"); apellidos = apellidos == null?"":apellidos;
-            String dni = request.getParameter("dni"); dni = dni == null?"":dni;
-            String NCelular = request.getParameter("NCelular"); NCelular = NCelular == null?"":NCelular;
-            String direccion = request.getParameter("direccion"); direccion = direccion == null?"":direccion;
-            String f_inicio = request.getParameter("fechaInicio"); f_inicio = f_inicio ==null?"":f_inicio;
-            String f_final = request.getParameter("fechaFinal"); f_final = f_final ==null?"":f_final;
-                        
-            Pensionistadao dao = new PensionistadoaImpl();
-            for(Listar_pensionista listar_pensionista:dao.buscarPensionista(dni)){
-            
-                    nombres = person.getNombres();
-                    apellidos = person.getApellidos();
-                    dni = person.getDni();
-                    NCelular = person.getNCelular();
-                    direccion = person.getDireccion();
-                    f_inicio = contratoPensionista.getFechaInicio();
-                    f_final = contratoPensionista.getFechaFin();
-                
-            }      
-        %>
-<div class="container">
+<div class="container-fluid">
     <h1 class="sub-header">Lista de Pensionistas</h1>
     <%        
+    
+        Personadao persona = new PersonadaoImpl();
+    
         String opcion = request.getParameter("opcion"); opcion = opcion == null ? "" : opcion;
         String id = request.getParameter("id_contrato"); id = id == null ? "" : id;
-        String mensaje = "";
 
         if (opcion.equals("delete")) {
 
@@ -55,49 +25,53 @@
         }
     %>
     <div class="table-responsive">
-        <table class="table table-striped well">
+        <table id="tj" class="table table-striped well">
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>ID</th>
-                    <th>Nombres</th>  
-                    <th>Apellidos</th> 
+                    <th hidden>ID</th>
+                    <th>Nombres y Apellidos</th>
                     <th>Dni</th> 
                     <th>N_Celular</th> 
                     <th>Direccion</th> 
-                    <th>Inicio de P ension</th>
-                    <th>Fin de Pension</th>
-                    <th>Renovar</th>
-                    <th>Eliminar</th>                                    
+                    <th>Inicio de Pension</th>
+                    <th>Fin de Pension</th>  
+                    <th>Precio</th>   
+                    <th>Fecha de Pago</th> 
+                    <th colspan="3">Acciones</th>                                    
                 </tr>
             </thead>
             <tbody>
                 <%
                     int count = 0;
-
-                    for (Listar_pensionista per : dao.ListarPensionista()) {
+                    Pensionistadao dao = new PensionistadoaImpl();
+                    List<Listar_pensionista> lista = dao.ListarPensionista(nomb);
+                    for (Listar_pensionista per : lista) {
                         count++;
                         
                 %>
                 <tr>
                     <td><%=count%>.</td>
-                    <td><%=per.getIdContrato()%></td>
-                    <td><%=per.getNombres()%></td>
-                    <td><%=per.getApellidos()%></td>
+                    <td hidden><%=per.getIdPersona()%></td>
+                    <td><%=per.getNombres()%>&nbsp;<%=per.getApellidos()%></td>
                     <td><%=per.getDni()%></td>
                     <td><%=per.getNCelular()%></td>
                     <td><%=per.getDireccion()%></td>
                     <td><%=per.getFechaInicio().substring(0,10)%></td>
                     <td><%=per.getFechaFin().substring(0,10)%></td>
-                    <td><p><a class="btn btn-primary" title="Renovar Contrato del Pencionista" href="renovar.jsp?id=<%=per.getIdPersona()%>&nombres=<%=per.getNombres()%>&apellidos=<%=per.getApellidos()%>&dni=<%=per.getDni()%>&ncelular=<%=per.getNCelular()%>&direcciones=<%=per.getDireccion()%>" role="button"><i class="glyphicon glyphicon-refresh"></i></a></p></td>
-                    <td><p><a class="btn btn-danger" title="Eliminar" onclick="if(!confirm('Esta seguro de eliminar a <%=per.getNombres()%><%=per.getApellidos()%>'))return false" role="button" href="pensionistas.jsp?opcion=delete&id=<%=per.getIdContrato()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
+                    <td>$.&nbsp;<%=per.getPrecioPension()%></td>
+                    <td><%=per.getFechaPago().substring(0,10)%></td>
+                    <td><p><a class="btn btn-primary" title="Renovar Contrato del Pencionista" href="renovar.jsp?id=<%=per.getIdPersona()%>&nombres=<%=per.getNombres()%>&apellidos=<%=per.getApellidos()%>&dni=<%=per.getDni()%>&ncelular=<%=per.getNCelular()%>&direcciones=<%=per.getDireccion()%>&p_pen=<%=per.getPrecioPension()%>&pago=<%=per.getFechaPago().substring(0,10)%>" role="button"><i class="glyphicon glyphicon-refresh"></i></a></p></td>
+                    <td><p><a class="btn btn-primary" title="Modificar Contrato del Pencionista" href="modificarpen.jsp role="button><i class="glyphicon glyphicon-pencil"></i></a></p></td>
+                    <td><p><a class="btn btn-danger" title="Eliminar" onclick="if(!confirm('Esta seguro de eliminar a <%=per.getNombres()%> <%=per.getApellidos()%>'))return false" role="button" href="pensionistas.jsp?opcion=delete&id=<%=per.getIdContrato()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
                 </tr>
                 <%}%>
                 <%=mensaje%>
             </tbody>
         </table>
-    </div>
+    </div>    
 </div>
+<%}%>
 </body>
 
 <script src="jquery/jquery.min.js"></script>

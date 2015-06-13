@@ -16,8 +16,7 @@ import proy.modelo.entidad.Producto;
  */
 public interface Productodao {
     public List<Producto> ListarPlatos();
-    public List<Producto> ListarBebidas();
-    public List<Producto> ListPostres();
+    public List<Producto> ListProductos(String nombre);
     public boolean EliminarProducto(int id);
     public boolean  AgregarProducto(Producto producto); 
     public List<Categoria> ListarCategoria();

@@ -1,6 +1,10 @@
+
+<%@page import="java.util.List"%>
 <%@page import="proy.modelo.daoImpl.PersonadaoImpl"%>
 <%@page import="proy.modelo.dao.Personadao"%>
 <%@page import="proy.modelo.daoImpl.PensionistadoaImpl"%>
+<%@page import="proy.modelo.entidad.Listar_pensionista"%>
+<%@page import="proy.modelo.entidad.ContratoPensionista"%>
 <%@page import="proy.modelo.dao.Pensionistadao"%>
 <%@page import="proy.modelo.entidad.Persona"%>
 <!DOCTYPE html>
@@ -8,6 +12,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="keywords" content="Javascript,table filter" />
         <meta name="description" content="">
         <meta name="author" content="">
         <link rel="icon" href="recursos/ico/favicon.ico">
@@ -20,11 +25,34 @@
     <body>
         <%
             HttpSession session1 = request.getSession();
-            Integer idU = (Integer)session1.getAttribute("idUsuario");
-            
-            if(idU == null){
+            Integer idU = (Integer) session1.getAttribute("idUsuario");
+
+            if (idU == null) {
                 response.sendRedirect("error.jsp");
             }
+
+            Pensionistadao p = new PensionistadoaImpl();
+            Persona person = new Persona();
+            ContratoPensionista contrato = new ContratoPensionista();
+
+            String buscarpen = request.getParameter("buscarpen"); buscarpen = buscarpen == null ? "" : buscarpen;
+            String opcion1 = request.getParameter("opcion1"); opcion1 = opcion1 == null ? "buscar" : opcion1;
+
+            String nomb = request.getParameter("buscarpen"); nomb = nomb == null ? "" : nomb;
+
+            String idPersona = request.getParameter("idpersona"); idPersona = idPersona == null ? "" : idPersona;
+            String nombres = request.getParameter("nombres"); nombres = nombres == null ? "" : nombres;
+            String apellidos = request.getParameter("apellidos"); apellidos = apellidos == null ? "" : apellidos;
+            String dni = request.getParameter("dni"); dni = dni == null ? "" : dni;
+            String NCelular = request.getParameter("NCelular"); NCelular = NCelular == null ? "" : NCelular;
+            String direccion = request.getParameter("direccion"); direccion = direccion == null ? "" : direccion;
+            String f_inicio = request.getParameter("fechaInicio"); f_inicio = f_inicio == null ? "" : f_inicio;
+            String f_final = request.getParameter("fechaFinal"); f_final = f_final == null ? "" : f_final;
+            String p_pension = request.getParameter("p_pension"); p_pension = p_pension == null ? "" : p_pension;
+            String f_pago = request.getParameter("f_pago"); f_pago = f_pago == null ? "" : f_pago;
+            String mensaje = "";
+
+
         %>
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
@@ -41,15 +69,42 @@
                     </ul>  
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
-                    <form class="navbar-form navbar-right">
-                        <label for="buscar" class="sr-only">Buscar</label>
+                    <%                        
+                        if (opcion1.equals("buscar")) {
+                    %>
+                    <form class="navbar-form navbar-right" action="pensionistas.jsp" method="post" hidden>
                         <div class="col-lg-pull-0">
                             <div class="input-group">
-                                <input type="text" name="buscarpen" class="form-control" title="Solo Números (8 en total)" pattern="[0-9]{8}" placeholder="Buscar Pensionista por DNI" size="21">
+                                <input type="text" name="buscarpen" class="form-control" title="Nombre del Pencionista" placeholder="Ingresar Nombre a Buscar" size="21">
                                 <span class="input-group-btn">
                                     <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i></button>
                                 </span>
                             </div>
+                        </div>
+                    </form>
+                    <script type="text/javascript">
+                        function filter(phrase, _id) {
+                            var words = phrase.value.toLowerCase().split(" ");
+                            var table = document.getElementById(_id);
+                            var ele;
+                            for (var r = 1; r < table.rows.length; r++) {
+                                ele = table.rows[r].innerHTML.replace(/<[^>]+>/g, "");
+                                var displayStyle = 'none';
+                                for (var i = 0; i < words.length; i++) {
+                                    if (ele.toLowerCase().indexOf(words[i]) >= 0)
+                                        displayStyle = '';
+                                    else {
+                                        displayStyle = 'none';
+                                        break;
+                                    }
+                                }
+                                table.rows[r].style.display = displayStyle;
+                            }
+                        }
+                    </script>
+                    <form class="navbar-form navbar-right">
+                        <div class="col-lg-pull-0">
+                                <input name="filt" onkeyup="filter(this, 'tj', '1')" type="text"class="form-control" placeholder="Nombre a Buscar">
                         </div>
                     </form>
                     <form class="navbar-form navbar-right">
@@ -58,4 +113,3 @@
                 </div>
             </div>
         </nav>
-        

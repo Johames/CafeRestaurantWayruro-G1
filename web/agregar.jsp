@@ -43,6 +43,7 @@
                             <textarea rows="3" class="form-control"  name="direccion" placeholder="Dirección"></textarea>
                         </div>
                     </div>
+                    <input hidden name="idpersona" value="">
                     <div class="form-group">
                         <label class="control-label col-xs-3">Inicio de la Pensión:</label>
                         <div class="col-xs-3">
@@ -53,6 +54,12 @@
                         <label class="control-label col-xs-3">Fin de la Pensión:</label>
                         <div class="col-xs-3">
                             <input type="date" class="form-control" name="fechaFin">
+                        </div> 
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3">Fecha de Pago:</label>
+                        <div class="col-xs-3">
+                            <input type="date" class="form-control" name="fpago">
                         </div> 
                     </div>
                     <div class="form-group">

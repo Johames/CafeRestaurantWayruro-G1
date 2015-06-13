@@ -1,3 +1,7 @@
+<%@page import="proy.modelo.daoImpl.PensionistadoaImpl"%>
+<%@page import="proy.modelo.dao.Pensionistadao"%>
+<%@page import="proy.modelo.entidad.Usuario"%>
+<%@page import="proy.modelo.entidad.Persona"%>
 <%@page import="proy.modelo.entidad.Rol"%>
 <%@page import="proy.modelo.daoImpl.UsuariodaoImpl"%>
 <%@page import="proy.modelo.dao.Usuariodao"%>
@@ -50,3 +54,29 @@
         <br>
         <br>
         <br>
+        <%
+            Pensionistadao pen = new PensionistadoaImpl();
+            Usuariodao dao = new UsuariodaoImpl();
+            Persona persona = new Persona();
+            Usuario us = new Usuario();
+            Rol rl = new Rol();
+            
+            String idPersona = request.getParameter("idpersona"); idPersona = idPersona == null?"":idPersona;
+            String nombres = request.getParameter("nombres"); nombres = nombres == null?"":nombres;
+            String apellidos = request.getParameter("apellidos"); apellidos = apellidos == null?"":apellidos;
+            String dni = request.getParameter("dni"); dni = dni == null?"":dni;
+            String ncelular = request.getParameter("ncelular"); ncelular = ncelular == null?"":ncelular;
+            String direccion = request.getParameter("direccion"); direccion = direccion == null?"":direccion;
+            String usuario = request.getParameter("usuario"); usuario = usuario == null?"":usuario;
+            String contrasena = request.getParameter("contrasena"); contrasena = contrasena == null?"":contrasena;
+            String rol = request.getParameter("rol"); rol = rol == null?"":rol;
+            
+            
+            if(!nombres.equals("nombres") & !apellidos.equals("apellidos") & !dni.equals("") & !ncelular.equals("") & !direccion.equals("")){
+                nombres = persona.setNombres("nombres");
+                pen.agregarpensionista(persona);
+                if(!idPersona.equals("") & !usuario.equals("") & !contrasena.equals("") & !rol.equals("")){
+                    
+                }
+            }
+        %>

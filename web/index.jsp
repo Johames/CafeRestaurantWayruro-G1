@@ -1,5 +1,6 @@
 <%@include file="WEB-INF/jspf/top.jspf" %>
 
+<h1>Bienvenido <%=idU%></h1>
     <div class="container marketing">  
       <div class="row">
         <div class="col-lg-4">

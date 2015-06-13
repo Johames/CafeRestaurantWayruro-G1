@@ -16,7 +16,6 @@
         </thead>
         <tbody>
             <%
-                int count = 0;
                 Productodao dao = new ProductodaoImpl();
 
                 for (Producto prod : dao.ListarBebidas()) {
@@ -25,8 +24,7 @@
             <tr>
                 <td><%=count%>.</td>
                 <td><%=prod.getNombreProducto()%></td>
-                <td><%=prod.getPrecioPensionista()%></td>
-                <td><%=prod.getPrecioAVarios()%></td>
+                <td><%=prod.getPrecio()%></td>
                 <td><%=prod.getStock()%></td>
                 <td><p><a class="btn btn-primary" href="bebida.jsp?id=" title="Modificar" role="button"><i class="glyphicon glyphicon-edit"></i></a></p></td>
                 <td><p><a class="btn btn-danger" role="button" title="Eliminar" href="bebidas.jsp?opcion=delete&id=<%=prod.getIdProducto()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>

@@ -1,3 +1,4 @@
+<%@page import="proy.modelo.entidad.Usuario"%>
 <%@page import="proy.modelo.entidad.Listar_pensionista"%>
 <%@page import="proy.modelo.daoImpl.PensionistadoaImpl"%>
 <%@page import="proy.modelo.dao.Pensionistadao"%>
@@ -21,8 +22,9 @@
         <%
             HttpSession session1 = request.getSession();
             Integer idU = (Integer)session1.getAttribute("idUsuario");
+            Usuario us = new Usuario();
             
-            if(idU == null){
+            if(idU == null && !idU.equals(us.getUsuario())){
                 response.sendRedirect("error.jsp");
             }
             
@@ -30,6 +32,7 @@
             Listar_pensionista listar =  new Listar_pensionista();
         
             String buscarpen = request.getParameter("buscar"); buscarpen = buscarpen == null?"":buscarpen;
+            String idPerson = request.getParameter("id"); idPerson = idPerson == null ? "" : idPerson;
             String nombre = request.getParameter("nombres"); nombre = nombre == null?"":nombre;
             String apellido = request.getParameter("apellidos"); apellido = apellido == null?"":apellido;
             String dn = request.getParameter("dni"); dn = dn == null?"":dn;
@@ -38,25 +41,9 @@
             String finicio = request.getParameter("fechaInicio"); finicio = finicio == null?"":finicio;
             String ffin = request.getParameter("fechaFin"); ffin = ffin == null?"":ffin;
             String idcontrato = request.getParameter("idContrato"); idcontrato = idcontrato == null?"":idcontrato;
+            String p_pen = request.getParameter("p_pen"); p_pen = p_pen == null?"":p_pen;
             String mensaje = "";
             
-            if(!buscarpen.equals("")){
-                //person = persona.BuscarPensionista(buscarpen);
-                if(persona!=null){
-                    nombre = listar.getNombres();
-                    apellido = listar.getApellidos();
-                    dn = listar.getDni();
-                    NCelular = listar.getNCelular();
-                    direccion = listar.getDireccion();
-                    finicio = listar.getFechaInicio();
-                    ffin = listar.getFechaFin();
-                    idcontrato = listar.getIdContrato();
-                }else{
-                    mensaje="Error";
-                }
-            }else{
-                mensaje="Error";
-            }
         %>
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">

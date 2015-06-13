@@ -1,6 +1,7 @@
 <%@page import="proy.modelo.entidad.Producto"%>
 <%@page import="proy.modelo.daoImpl.ProductodaoImpl"%>
 <%@page import="proy.modelo.dao.Productodao"%>
+<%@page import="proy.modelo.entidad.Categoria"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -30,16 +31,14 @@
             Producto producto = new Producto();
             
             String nombreprod = request.getParameter("nombreProducto"); nombreprod = nombreprod == null?"":nombreprod;
-            String preciopen = request.getParameter("precioPencionista"); preciopen = preciopen == null?"":preciopen;
-            String preciovarios = request.getParameter("precioVarios"); preciovarios = preciovarios == null?"":preciovarios;
+            String precio = request.getParameter("precio"); precio = precio == null?"":precio;
             String categoria = request.getParameter("categoria"); categoria = categoria == null?"":categoria;
             String mensaje = "";
             
-            if(!nombreprod.equals("") & !preciopen.equals("") & !preciovarios.equals("") & !categoria.equals("")){
+            if(!nombreprod.equals("") & !precio.equals("") & !categoria.equals("")){
                 producto.setNombreProducto(nombreprod);
-                producto.setPrecioPensionista(preciopen);
-                producto.setPrecioAVarios(preciovarios);
-                //producto.setCategoria(categoria);
+                producto.setPrecio(precio);
+                //producto.setIdCategoria(categoria);
                 if(productodao.AgregarProducto(producto)){
                     response.sendRedirect("javascript:history.back(-1);");
                 }else {

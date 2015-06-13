@@ -43,24 +43,22 @@ public class PensionistadoaImpl implements Pensionistadao {
     }
 
     @Override
-    public List<Listar_pensionista> ListarPensionista() {
+    public List<Listar_pensionista> ListarPensionista(String nomb) {
         List<Listar_pensionista> lista = new ArrayList<Listar_pensionista>();
         Statement st = null;
         ResultSet rs = null;
         Listar_pensionista cp = null;
-        String query = "select cp.id_contrato as id, p.nombres as name, p.apellidos as ape, p.dni as dn, "
-                + "p.n_celular as celu, p.direccion as dire, cp.fecha_inicio as fi, cp.fecha_fin as ff "
+        String query = "select cp.id_persona as id, p.nombres as name, p.apellidos as ape, p.dni as dn, "
+                + "p.n_celular as celu, p.direccion as dire, cp.fecha_inicio as fi, cp.fecha_fin as ff, cp.precio_pension as pp, cp.fecha_pago as fp "
                 + "from persona p, CONTRATO_PENSIONISTA cp "
-                + "where p.id_persona=cp.id_persona order by cp.id_contrato";
+                + "where p.id_persona=cp.id_persona and p.nombres like '%"+nomb+"%'";
 
         try {
             st = abrirConexion().createStatement();
             rs = st.executeQuery(query);
-            //rs = st.executeQuery(query1);
             while (rs.next()) {
-                //p = new Persona();
                 cp = new Listar_pensionista();
-                cp.setIdContrato(rs.getString("id"));
+                cp.setIdPersona(rs.getString("id"));
                 cp.setNombres(rs.getString("name"));
                 cp.setApellidos(rs.getString("ape"));
                 cp.setDni(rs.getString("dn"));
@@ -68,6 +66,8 @@ public class PensionistadoaImpl implements Pensionistadao {
                 cp.setDireccion(rs.getString("dire"));
                 cp.setFechaInicio(rs.getString("fi"));
                 cp.setFechaFin(rs.getString("ff"));
+                cp.setPrecioPension(rs.getString("pp"));
+                cp.setFechaPago(rs.getString("fp"));
                 lista.add(cp);
             }
             abrirConexion().close();
@@ -109,44 +109,49 @@ public class PensionistadoaImpl implements Pensionistadao {
 
 
     @Override
-    public List<Listar_pensionista> buscarPensionista(String dni) {
-        List<Listar_pensionista> lista = new ArrayList<Listar_pensionista>();
-        Listar_pensionista cp = null;
-        Statement st = null;
-        ResultSet rs = null;
-        String query = "select cp.id_contrato as id, p.nombres as name, p.apellidos as ape, p.dni as dn, "
-                + "p.n_celular as celu, p.direccion as dire, cp.fecha_inicio as fi, cp.fecha_fin as ff "
-                + "from persona p, CONTRATO_PENSIONISTA cp "
-                + "where p.id_persona=cp.id_persona and p."+dni+" ";
+    public boolean agregarpensionista(Persona persona) {
+        boolean flat = false;
+        SessionFactory sf = null;
+        Session session = null;
+        Transaction transaction = null;
         try {
-            st = abrirConexion().createStatement();
-            rs = st.executeQuery(query);
-            while (rs.next()) {
-                cp.setIdContrato(rs.getString("id"));
-                cp.setNombres(rs.getString("name"));
-                cp.setApellidos(rs.getString("ape"));
-                cp.setDni(rs.getString("dn"));
-                cp.setNCelular(rs.getString("celu"));
-                cp.setDireccion(rs.getString("dire"));
-                cp.setFechaInicio(rs.getString("fi"));
-                cp.setFechaFin(rs.getString("ff"));
-                lista.add(cp);
-            }
-            abrirConexion().close();
+            sf = HibernateUtil.getSessionFactory();
+            session = sf.openSession();
+            transaction = session.beginTransaction();
+            session.save(persona);
+            transaction.commit();
+            session.close();
+            flat=true;
         } catch (Exception e) {
             e.printStackTrace();
-            try {
-                abrirConexion().close();
-            } catch (Exception ex) {
-
-            }
+            flat=false;
+            transaction.rollback();
+            session.close();
         }
-        return lista;
+        return flat;
     }
 
     @Override
-    public boolean agregarpensionista(Persona persona) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean agregarContrato(ContratoPensionista contrato) {
+        boolean flat = false;
+        SessionFactory sf = null;
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            sf = HibernateUtil.getSessionFactory();
+            session = sf.openSession();
+            transaction = session.beginTransaction();
+            session.save(contrato);
+            transaction.commit();
+            session.close();
+            flat=true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            flat=false;
+            transaction.rollback();
+            session.close();
+        }
+        return flat;
     }
 
     

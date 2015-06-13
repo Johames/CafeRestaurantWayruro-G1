@@ -1,3 +1,4 @@
+
 <%@include file="WEB-INF/productos/addproductotop.jspf" %>
 
 <div class="container">
@@ -35,9 +36,13 @@
                         <div class="col-xs-4">
                             <select class="form-control" name="categoria">
                                 <option selected="selected" hidden>Seleccionar Categoria</option>
-                                <option value="1">Platos</option>
-                                <option value="2">Bebidas</option>
-                                <option value="3">Postres</option>
+                                <%                                                        
+                                    int count = 0;
+                                    for (Categoria cat : productodao.ListarCategoria()) {
+                                        count++;
+                                %>
+                                <option value="<%=cat.getIdCategoria()%>"><%=cat.getNombreCat()%></option>
+                                <%}%>
                             </select>
                         </div>
                     </div>

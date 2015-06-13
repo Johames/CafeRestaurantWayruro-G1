@@ -16,9 +16,8 @@ import proy.modelo.entidad.Persona;
  */
 public interface Pensionistadao {
     
-    public List<Listar_pensionista> ListarPensionista();
+    public List<Listar_pensionista> ListarPensionista(String nomb);
     public boolean EliminarPensionista(int id);
     public boolean agregarpensionista(Persona persona);
-    //public Persona BuscarPensionista(String dni);
-    public List<Listar_pensionista> buscarPensionista(String dni);
+    public boolean agregarContrato(ContratoPensionista contrato);
 }

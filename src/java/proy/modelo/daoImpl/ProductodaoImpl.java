@@ -17,6 +17,7 @@ import org.hibernate.Transaction;
 import proy.modelo.entidad.Producto;
 import proy.modelo.dao.Productodao;
 import proy.modelo.entidad.Categoria;
+import proy.modelo.entidad.Listar_pensionista;
 import proy.modelo.util.HibernateUtil;
 
 
@@ -72,39 +73,29 @@ public class ProductodaoImpl implements Productodao{
     }
 
     @Override
-    public List<Producto> ListarBebidas() {
-        List<Producto> lista = null;
-        SessionFactory sf = null;
-        Session session = null;
-        try {
-            sf = HibernateUtil.getSessionFactory();
-            session = sf.openSession();
-            lista = new ArrayList<Producto>();
-            Query query = session.createQuery("FROM Producto where idCategoria='2'");
-            lista = query.list();
-            session.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            session.close();
-        }
-        return lista;
-    }
+    public List<Producto> ListProductos(String nombre) {
+        List<Producto> lista = new ArrayList<Producto>();
+        Statement st = null;
+        ResultSet rs = null;
+        Producto pro = null;
+        String query = "select nombre_producto as producto from producto where nombre_producto like '%"+nombre+"%'";
 
-    @Override
-    public List<Producto> ListPostres() {
-        List<Producto> lista = null;
-        SessionFactory sf = null;
-        Session session = null;
         try {
-            sf = HibernateUtil.getSessionFactory();
-            session = sf.openSession();
-            lista = new ArrayList<Producto>();
-            Query query = session.createQuery("FROM Producto where idCategoria='3'");
-            lista = query.list();
-            session.close();
+            st = abrirConexion().createStatement();
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                pro = new Producto();
+                pro.setNombreProducto(rs.getString("producto"));
+                lista.add(pro);
+            }
+            abrirConexion().close();
         } catch (Exception e) {
             e.printStackTrace();
-            session.close();
+            try {
+                abrirConexion().close();
+            } catch (Exception ex) {
+                
+            }
         }
         return lista;
     }
@@ -153,7 +144,7 @@ public class ProductodaoImpl implements Productodao{
             flat=false;
             transaction.rollback();
             session.close();
-        }
+        }   
         return flat;
     
     }

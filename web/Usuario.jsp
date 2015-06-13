@@ -1,4 +1,5 @@
 <%@include file="WEB-INF/usuario/usuariotop.jspf" %>
+
 <div class="container">
     <%
         
@@ -26,9 +27,7 @@
         <table class="table table-striped well">
             <thead>
                 <tr>
-                    <th hidden></th>
                     <th>#</th>
-                    <th>ID</th>
                     <th>Nombres</th>
                     <th>Usuario</th>
                     <th>Rol</th>
@@ -38,17 +37,15 @@
             </thead>
             <tbody>
                 <%
-                    int count = 0;
                     Usuariodao dao = new UsuariodaoImpl();
-
+                    int coun = 0;
                     for (Listar_Usuario user : dao.ListarUsuario()) {
-                        count++;
+                        coun++;
 
                 %>
                 <tr>
-                    <td hidden><%=user.getIdPersona()%></td>
-                    <td><%=count%>.</td>
-                    <td><%=user.getNombres()%><%=user.getApellidos()%></td>
+                    <td><%=coun%>.</td>
+                    <td><%=user.getNombres()%>&nbsp;<%=user.getApellidos()%></td>
                     <td><%=user.getUsuario()%></td>
                     <td><%=user.getNombre_rol()%></td>
                     <td><p><a class="btn btn-primary" href="modusuario.jsp?id=<%=user.getIdPersona()%>" role="button"><i class="glyphicon glyphicon-pencil"></i></a></p></td>
