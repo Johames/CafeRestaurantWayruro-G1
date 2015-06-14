@@ -13,12 +13,12 @@
 
     </head>
 
-    <body>
+    <body class="padre" >
         <br>
         <br>
         <br>
         <br>
-        <div class="container">
+        <div class="container-fluid" >
 
             <div class="jumbotron col-lg-5">
                 <h1>Error!!!...</h1>
