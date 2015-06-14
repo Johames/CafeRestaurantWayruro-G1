@@ -18,13 +18,12 @@
         <link href="css/estilo.css" rel="stylesheet">
         <script src="bootstrap/js/ie-emulation-modes-warning.js"></script>
         <title>Café Restaurant "Wayruro"</title>
+        <jsp:useBean id="idUsuario" scope="session" class="java.lang.String" />
     </head>
     <body>
         <%
-            HttpSession session1 = request.getSession();
-            Integer idU = (Integer)session1.getAttribute("idUsuario");
             
-            if(idU == null){
+            if(idUsuario == null){
                 response.sendRedirect("error.jsp");
             }
         

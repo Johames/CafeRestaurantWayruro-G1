@@ -17,32 +17,49 @@
         <link href="css/estilo.css" rel="stylesheet">
         <script src="bootstrap/js/ie-emulation-modes-warning.js"></script>
         <title>Café Restaurant "Wayruro"</title>
+        <jsp:useBean id="idUsuario" scope="session" class="java.lang.String" />
     </head>
     <body>
         <%
-            HttpSession session1 = request.getSession();
-            Integer idU = (Integer)session1.getAttribute("idUsuario");
             
-            if(idU == null){
+            if(idUsuario == null){
                 response.sendRedirect("error.jsp");
             }
         
             Productodao productodao = new ProductodaoImpl();
             Producto producto = new Producto();
+            Categoria cat = new Categoria();
             
             String nombreprod = request.getParameter("nombreProducto"); nombreprod = nombreprod == null?"":nombreprod;
-            String precio = request.getParameter("precio"); precio = precio == null?"":precio;
-            String categoria = request.getParameter("categoria"); categoria = categoria == null?"":categoria;
+            String precios = request.getParameter("precio"); precios = precios == null?"":precios;
+            String categoria = request.getParameter("idCategoria"); categoria = categoria == null?"":categoria;
+            String IdU = request.getParameter("idUsuario"); IdU = IdU == null?"":IdU;
+            String nombreCategoria = request.getParameter("nombreCat"); nombreCategoria = nombreCategoria == null?"":nombreCategoria;
             String mensaje = "";
+            String alert = "";
             
-            if(!nombreprod.equals("") & !precio.equals("") & !categoria.equals("")){
+            if(!nombreprod.equals("") && !precios.equals("") && !categoria.equals("")){
                 producto.setNombreProducto(nombreprod);
-                producto.setPrecio(precio);
-                //producto.setIdCategoria(categoria);
+                producto.setPrecio(precios);
+                producto.setIdCategoria(Integer.parseInt(categoria));
+                producto.setIdUsuario(Integer.parseInt(IdU));
                 if(productodao.AgregarProducto(producto)){
-                    response.sendRedirect("javascript:history.back(-1);");
-                }else {
-                    mensaje = "No se Pudo Agregar el Producto";
+                    alert = "info";
+                    mensaje = "El Producto se añadió correctamente...<br><br><a class='btn btn-primary' href='addproducto.jsp'>[Registrar más >>]";
+                }else{
+                    alert = "danger";
+                    mensaje = "No se pudo agregar el Producto";
+                }
+            }
+            
+            if(!nombreCategoria.equals("")){
+                cat.setNombreCat(nombreCategoria);
+                if(productodao.AgregarCategoria(cat)){
+                    alert = "info";
+                    mensaje = "La Categoría se añadió correctamente...<br><br><a class='btn btn-primary' href='addcategoria.jsp'>[Registrar más >>]</a>";
+                }else{
+                    alert = "danger";
+                    mensaje = "No se pudo agregar la Categoría";
                 }
             }
             
@@ -63,7 +80,7 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <form class="navbar-form navbar-right">
-                        <a class="btn btn-primary" href="javascript:history.back(-1);" title="Ir la página anterior" title="Ir la página anterior" role="button">Volver a la Lista &emsp;<i class="glyphicon glyphicon-list-alt"></i></a>
+                        <a class="btn btn-primary" href="platos.jsp" title="Ir la página anterior" title="Ir la página anterior" role="button">Volver a la Lista &emsp;<i class="glyphicon glyphicon-list-alt"></i></a>
                     </form>
                 </div>
             </div>

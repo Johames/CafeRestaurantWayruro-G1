@@ -15,9 +15,10 @@ import proy.modelo.entidad.Producto;
  * @author TOSHIBA
  */
 public interface Productodao {
-    public List<Producto> ListarPlatos();
     public List<Producto> ListProductos(String nombre);
     public boolean EliminarProducto(int id);
     public boolean  AgregarProducto(Producto producto); 
     public List<Categoria> ListarCategoria();
+    public boolean AgregarCategoria(Categoria cat);
+    public List<Producto> ListarProductos();
 }

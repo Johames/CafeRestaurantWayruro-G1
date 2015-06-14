@@ -53,26 +53,6 @@ public class ProductodaoImpl implements Productodao{
     }
     
     @Override
-    public List<Producto> ListarPlatos() {
-        List<Producto> lista = null;
-        SessionFactory sf = null;
-        Session session = null;
-        try {
-            sf = HibernateUtil.getSessionFactory();
-            session = sf.openSession();
-            lista = new ArrayList<Producto>();
-            Query query = session.createQuery("FROM PRODUCTO where idCategoria='1'");
-            lista = query.list();
-            session.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            session.close();
-        }
-        return lista;
-       
-    }
-
-    @Override
     public List<Producto> ListProductos(String nombre) {
         List<Producto> lista = new ArrayList<Producto>();
         Statement st = null;
@@ -127,26 +107,25 @@ public class ProductodaoImpl implements Productodao{
 
     @Override
     public boolean AgregarProducto(Producto producto) {
-    boolean flat = false;
-        SessionFactory sf = null;
-        Session session = null;
-        Transaction transaction = null;
+        boolean stado = false;
+        Statement st= null;
+        String query="insert into PRODUCTO values ('', '"+producto.getNombreProducto()+"','"+producto.getPrecio()+"',"+producto.getIdCategoria()+","+producto.getIdUsuario()+") ";
         try {
-            sf = HibernateUtil.getSessionFactory();
-            session = sf.openSession();
-            transaction = session.beginTransaction();
-            session.save(producto);
-            transaction.commit();
-            session.close();
-            flat=true;
+            st = abrirConexion().createStatement();
+            st.executeUpdate(query);
+            guardar();
+            cerrarConexion();
+            stado = true;
         } catch (Exception e) {
             e.printStackTrace();
-            flat=false;
-            transaction.rollback();
-            session.close();
-        }   
-        return flat;
-    
+            try {
+                revertir();
+                cerrarConexion();
+                stado = false;
+            } catch (Exception ex) {
+            }
+        }
+        return stado;
     }
 
     @Override
@@ -166,6 +145,59 @@ public class ProductodaoImpl implements Productodao{
             session.close();
         }
         return lista;
+    }
+
+    @Override
+    public boolean AgregarCategoria(Categoria cat) {
+        boolean estado = false;
+        Statement st= null;
+        String query="insert into CATEGORIA values ('', '"+cat.getNombreCat()+"') ";
+        try {
+            st = abrirConexion().createStatement();
+            st.executeUpdate(query);
+            guardar();
+            cerrarConexion();
+            estado = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            try {
+                revertir();
+                cerrarConexion();
+                estado = false;
+            } catch (Exception ex) {
+            }
+        }
+        return estado;
+    }
+
+    @Override
+    public List<Producto> ListarProductos() {
+        List<Producto> list = new ArrayList<Producto>();
+        Statement st = null;
+        ResultSet rs = null;
+        Producto pro = null;
+        String query = "select nombre_producto as producto, precio from producto ";
+
+        try {
+            st = abrirConexion().createStatement();
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                pro = new Producto();
+                pro.setNombreProducto(rs.getString("producto"));
+                pro.setPrecio(rs.getString("precio"));
+                list.add(pro);
+            }
+            abrirConexion().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                abrirConexion().close();
+            } catch (Exception ex) {
+                
+            }
+        }
+        return list;
     }
         
 }

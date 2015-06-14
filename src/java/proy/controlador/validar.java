@@ -33,26 +33,24 @@ public class validar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String idUsuario = request.getParameter("idUsuario"); idUsuario = idUsuario == null?"":idUsuario;
+        String us = request.getParameter(""); us = us == null?"":us;
         String usuario = request.getParameter("usuario"); usuario = usuario == null?"":usuario;
         String contrasena = request.getParameter("contrasena"); contrasena = contrasena == null?"":contrasena;
 
         Usuariodao dao = new UsuariodaoImpl();
-        Usuario us = new Usuario();
-
-        if (dao.ComprobarUsuario(usuario, contrasena) != null) {
-
+        
+        if(dao.ComprobarUsuario(usuario, contrasena) != null){
+            
+            us = dao.ComprobarUsuario(usuario, contrasena);
+            
             HttpSession session = request.getSession();
-            session.setAttribute("idUsuario", us.getIdUsuario());
-
-            idUsuario = dao.ComprobarUsuario(usuario, contrasena);
-
+            session.setAttribute("idUsuario", dao.ComprobarUsuario(usuario, contrasena));
+            
             request.getRequestDispatcher("index.jsp").forward(request, response);
-
-        } else {
+            
+        }else{
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

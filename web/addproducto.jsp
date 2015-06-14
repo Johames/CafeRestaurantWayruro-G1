@@ -1,6 +1,17 @@
 
 <%@include file="WEB-INF/productos/addproductotop.jspf" %>
 
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6" id="aler">
+        <br>
+        <%
+            if(!mensaje.equals("")){
+        %>
+        <div class="alert alert-<%=alert%>"><%=mensaje%></div>
+        <%}%>
+    </div>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-2"></div>
@@ -12,38 +23,38 @@
                 </form>
             </div>
             <div class="formu">
-                <form class="form-horizontal" action="addproducto.jsp">
+                <form class="form-horizontal" action="addproducto.jsp" method="post">
                     <div class="form-group">
-                        <label class="control-label col-xs-3">Nombre del Producto:</label>
+                        <label class="control-label col-xs-3">Nombre del Producto :</label>
                         <div class="col-xs-6">
-                            <input type="tex" class="form-control" name="nombreProducto" placeholder="Nombre del Producto">
+                            <input type="text" class="form-control" name="nombreProducto" placeholder="Nombre del Producto" autofocus>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-xs-3">Precio a Pencionistas:</label>
+                        <label class="control-label col-xs-3">Precio :</label>
                         <div class="col-xs-6">
-                            <input type="number" pattern="[0-9]{6}" class="form-control" name="precioPencionista" placeholder="Precio a Pencionistas">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-3">Precio a Clientes:</label>
-                        <div class="col-xs-6">
-                            <input type="number" pattern="[0-9]{6}" class="form-control" name="precioVarios" placeholder="Precio a Clientes">
+                            <input type="number" pattern="[0-9]{6}" class="form-control" name="precio" placeholder="Precio">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-xs-3">Categoria :</label>
                         <div class="col-xs-4">
-                            <select class="form-control" name="categoria">
+                            <select class="form-control" name="idCategoria">
                                 <option selected="selected" hidden>Seleccionar Categoria</option>
                                 <%                                                        
                                     int count = 0;
-                                    for (Categoria cat : productodao.ListarCategoria()) {
+                                    for (Categoria cate : productodao.ListarCategoria()) {
                                         count++;
                                 %>
-                                <option value="<%=cat.getIdCategoria()%>"><%=cat.getNombreCat()%></option>
+                                <option value="<%=cate.getIdCategoria()%>"><%=cate.getNombreCat()%></option>
                                 <%}%>
                             </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3">Usuario :</label>
+                        <div class="col-xs-6">
+                            <input type="number" class="form-control" value="<%=idUsuario%>" name="idUsuario" placeholder="Precio a Pencionistas" readonly>
                         </div>
                     </div>
                     <br>

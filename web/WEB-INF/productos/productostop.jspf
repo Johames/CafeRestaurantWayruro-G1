@@ -13,17 +13,16 @@
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="css/dashboard.css" rel="stylesheet">
         <script src="bootstrap/js/ie-emulation-modes-warning.js"></script>
+        <jsp:useBean id="idUsuario" scope="session" class="java.lang.String" />
     </head>
 
     <body>
         <%
-            HttpSession session1 = request.getSession();
-            Integer idU = (Integer)session1.getAttribute("idUsuario");
             
-            if(idU == null){
+            if (idUsuario == null) {
                 response.sendRedirect("error.jsp");
             }
-        
+
             Productodao productodao = new ProductodaoImpl();
 
         %>
@@ -41,16 +40,30 @@
                         <li class="active"><a href="index.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
                     </ul>  
                 </div>
+                <script type="text/javascript">
+                    function filter(phrase, _id) {
+                        var words = phrase.value.toLowerCase().split(" ");
+                        var table = document.getElementById(_id);
+                        var ele;
+                        for (var r = 1; r < table.rows.length; r++) {
+                            ele = table.rows[r].innerHTML.replace(/<[^>]+>/g, "");
+                            var displayStyle = 'none';
+                            for (var i = 0; i < words.length; i++) {
+                                if (ele.toLowerCase().indexOf(words[i]) >= 0)
+                                    displayStyle = '';
+                                else {
+                                    displayStyle = 'none';
+                                    break;
+                                }
+                            }
+                            table.rows[r].style.display = displayStyle;
+                        }
+                    }
+                </script>
                 <div id="navbar" class="navbar-collapse collapse">
                     <form class="navbar-form navbar-right">
-                        <label for="buscar" class="sr-only">Buscar</label>
                         <div class="col-lg-pull-0">
-                            <div class="input-group">
-                                <input type="text" name="" class="form-control" placeholder="Buscar Producto" size="15">
-                                <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i></button>
-                                </span>
-                            </div>
+                            <input name="filt" onkeyup="filter(this, 'la', '1')" type="text"class="form-control" placeholder="Nombre a Buscar">
                         </div>
                     </form>
                     <form class="navbar-form navbar-right">
@@ -65,20 +78,20 @@
 
         <div class="container">
             <div class="col-sm-3 col-md-2 sidebar">
-                <%
-                        int count = 0;
-                        
-                        for(Categoria cat : productodao.ListarCategoria()){
-                            count++;
+                <%                    int count = 0;
+                    for (Categoria cat : productodao.ListarCategoria()) {
+                        count++;
                 %>
                 <ul class="nav nav-sidebar">
                     <li><a href="platos.jsp?id_categoria=<%=cat.getIdCategoria()%>"><%=cat.getNombreCat()%><span class="sr-only">(current)</span></a></li>
                 </ul>
                 <%}%>
             </div>
-            <%                
-                String opcion = request.getParameter("opcion"); opcion = opcion == null?"":opcion;
-                String id = request.getParameter("id"); id = id == null?"":id;
+            <%
+                String opcion = request.getParameter("opcion");
+                opcion = opcion == null ? "" : opcion;
+                String id = request.getParameter("id");
+                id = id == null ? "" : id;
                 String mensaje = "";
 
                 if (opcion.equals("delete")) {
@@ -93,6 +106,6 @@
 
                     }
                 }
-                
+
                 Categoria categ = new Categoria();
             %>

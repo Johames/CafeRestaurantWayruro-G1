@@ -18,6 +18,6 @@ public interface Pensionistadao {
     
     public List<Listar_pensionista> ListarPensionista(String nomb);
     public boolean EliminarPensionista(int id);
-    public boolean agregarpensionista(Persona persona);
+    public boolean RenovarContrato(ContratoPensionista contratoPensionista);
     public boolean agregarContrato(ContratoPensionista contrato);
 }

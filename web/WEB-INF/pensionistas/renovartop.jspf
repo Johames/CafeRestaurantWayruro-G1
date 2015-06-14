@@ -1,3 +1,5 @@
+<%@page import="java.sql.Date"%>
+<%@page import="proy.modelo.entidad.ContratoPensionista"%>
 <%@page import="proy.modelo.entidad.Usuario"%>
 <%@page import="proy.modelo.entidad.Listar_pensionista"%>
 <%@page import="proy.modelo.daoImpl.PensionistadoaImpl"%>
@@ -17,32 +19,52 @@
         <link href="css/estilo.css" rel="stylesheet">
         <script src="bootstrap/js/ie-emulation-modes-warning.js"></script>
         <title>Café Restaurant "Wayruro"</title>
+        <jsp:useBean id="idUsuario" scope="session" class="java.lang.String" />
     </head>
     <body>
         <%
-            HttpSession session1 = request.getSession();
-            Integer idU = (Integer)session1.getAttribute("idUsuario");
             Usuario us = new Usuario();
             
-            if(idU == null && !idU.equals(us.getUsuario())){
+            if(idUsuario == null){
                 response.sendRedirect("error.jsp");
             }
             
             Pensionistadao persona = new PensionistadoaImpl();
             Listar_pensionista listar =  new Listar_pensionista();
-        
+            ContratoPensionista contratoPensionista = new ContratoPensionista();
+            
             String buscarpen = request.getParameter("buscar"); buscarpen = buscarpen == null?"":buscarpen;
-            String idPerson = request.getParameter("id"); idPerson = idPerson == null ? "" : idPerson;
+            String idpersona = request.getParameter("idpersona"); idpersona = idpersona == null ? "" : idpersona;
             String nombre = request.getParameter("nombres"); nombre = nombre == null?"":nombre;
             String apellido = request.getParameter("apellidos"); apellido = apellido == null?"":apellido;
             String dn = request.getParameter("dni"); dn = dn == null?"":dn;
             String NCelular = request.getParameter("ncelular"); NCelular = NCelular == null?"":NCelular;
             String direccion = request.getParameter("direcciones"); direccion = direccion == null?"":direccion;
-            String finicio = request.getParameter("fechaInicio"); finicio = finicio == null?"":finicio;
-            String ffin = request.getParameter("fechaFin"); ffin = ffin == null?"":ffin;
-            String idcontrato = request.getParameter("idContrato"); idcontrato = idcontrato == null?"":idcontrato;
-            String p_pen = request.getParameter("p_pen"); p_pen = p_pen == null?"":p_pen;
+            String fechaInicio = request.getParameter("fechaInicio"); fechaInicio = fechaInicio == null?"":fechaInicio;
+            String fechaFin = request.getParameter("fechaFin"); fechaFin = fechaFin == null?"":fechaFin;
+            String precioPension = request.getParameter("precioPension"); precioPension = precioPension == null?"":precioPension;
+            String fechaPago = request.getParameter("fechaPago"); fechaPago = fechaPago == null?"":fechaPago;
+            String estado = request.getParameter("estado"); estado = estado == null?"":estado;
+            String idusuario = request.getParameter("idusuario"); idusuario = idusuario == null?"":idusuario;
             String mensaje = "";
+            String alert = "";
+            
+            if(!idpersona.equals("") && !fechaInicio.equals("") && !fechaFin.equals("") && !precioPension.equals("") && !fechaPago.equals("") && !estado.equals("") && !idusuario.equals("")){
+                contratoPensionista.setIdpersona(Integer.parseInt(idpersona));
+                contratoPensionista.setFechaInicio(fechaInicio);
+                contratoPensionista.setFechaFin(fechaFin);
+                contratoPensionista.setPrecioPension(precioPension);
+                contratoPensionista.setFechaPago(fechaPago);
+                contratoPensionista.setEstado(estado);
+                contratoPensionista.setIdusuario(Integer.parseInt(idusuario));
+                if(persona.RenovarContrato(contratoPensionista)){
+                    alert = "info";
+                    mensaje = "El Contrato se renovó correctamente...";
+                }else{
+                    alert = "danger";
+                    mensaje = "No se pudo renovar el Contrato";
+                }
+            }
             
         %>
         <nav class="navbar navbar-inverse navbar-fixed-top">

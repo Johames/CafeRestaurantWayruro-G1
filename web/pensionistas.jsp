@@ -61,7 +61,9 @@
                     <td><%=per.getFechaFin().substring(0,10)%></td>
                     <td>$.&nbsp;<%=per.getPrecioPension()%></td>
                     <td><%=per.getFechaPago().substring(0,10)%></td>
-                    <td><p><a class="btn btn-primary" title="Renovar Contrato del Pencionista" href="renovar.jsp?id=<%=per.getIdPersona()%>&nombres=<%=per.getNombres()%>&apellidos=<%=per.getApellidos()%>&dni=<%=per.getDni()%>&ncelular=<%=per.getNCelular()%>&direcciones=<%=per.getDireccion()%>&p_pen=<%=per.getPrecioPension()%>&pago=<%=per.getFechaPago().substring(0,10)%>" role="button"><i class="glyphicon glyphicon-refresh"></i></a></p></td>
+                    <td><p><a class="btn btn-primary" title="Renovar Contrato del Pencionista" href="renovar.jsp?idpersona=<%=per.getIdPersona()%>&nombres=<%=per.getNombres()%>&apellidos=<%=per.getApellidos()%>
+                              &dni=<%=per.getDni()%>&ncelular=<%=per.getNCelular()%>&direcciones=<%=per.getDireccion()%>
+                              &precioPension=<%=per.getPrecioPension()%>&pago=<%=per.getFechaPago().substring(0,10)%>" role="button"><i class="glyphicon glyphicon-refresh"></i></a></p></td>
                     <td><p><a class="btn btn-primary" title="Modificar Contrato del Pencionista" href="modificarpen.jsp role="button><i class="glyphicon glyphicon-pencil"></i></a></p></td>
                     <td><p><a class="btn btn-danger" title="Eliminar" onclick="if(!confirm('Esta seguro de eliminar a <%=per.getNombres()%> <%=per.getApellidos()%>'))return false" role="button" href="pensionistas.jsp?opcion=delete&id=<%=per.getIdContrato()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
                 </tr>

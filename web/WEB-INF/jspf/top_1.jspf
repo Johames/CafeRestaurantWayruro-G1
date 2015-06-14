@@ -10,14 +10,12 @@
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <script src="./Carousel Template for Bootstrap_files/ie-emulation-modes-warning.js"></script>
         <link href="css/carousel.css" rel="stylesheet">
+        <jsp:useBean id="idUsuario" scope="session" class="java.lang.String" />
     </head>
 
     <body>
         <%
-            HttpSession session1 = request.getSession();
-            Integer idU = (Integer)session1.getAttribute("idUsuario");
-            
-            if(idU == null){
+            if(idUsuario == null){
                 response.sendRedirect("error.jsp");
             }
         %>

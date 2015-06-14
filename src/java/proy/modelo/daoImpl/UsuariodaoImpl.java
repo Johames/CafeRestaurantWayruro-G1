@@ -54,7 +54,7 @@ public class UsuariodaoImpl implements Usuariodao {
     @Override
     public String ComprobarUsuario(String usuario, String contrasena) {
         String idUsuario = null;
-        String query = "SELECT id_usuario FROM Usuario WHERE upper(usuario) = '" + usuario.toUpperCase() + "' AND contrasena = '" + contrasena + "'";
+        String query = "SELECT id_usuario FROM Usuario WHERE upper(usuario)='"+usuario.toUpperCase()+"' AND contrasena='"+contrasena+"' and estado='1'";
         Statement st = null;
         ResultSet rs = null;
         try {
@@ -66,6 +66,7 @@ public class UsuariodaoImpl implements Usuariodao {
             cerrarConexion();
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
             try {
                 cerrarConexion();
             } catch (Exception ex) {

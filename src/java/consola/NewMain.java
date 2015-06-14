@@ -42,7 +42,7 @@ public class NewMain {
         }
     }
     
-    public void agregar (){
+    /*public void agregar (){
         Pensionistadao pen = new PensionistadoaImpl();
         Persona persona = new Persona();
         
@@ -52,7 +52,7 @@ public class NewMain {
         persona.setNCelular("987365274");
         persona.setDireccion("Jr. Mejia 354");
         
-        if(pen.agregarpensionista(persona)){
+        if(pen.RenovarContrato(co)){
             System.out.println("Se Agregó Correctamente");
         } else {
             System.out.println("Ocurrió un Error");
@@ -62,7 +62,7 @@ public class NewMain {
     
     public void buscar(String dni){
         Pensionistadao pen = new PensionistadoaImpl();
-    }
+    }*/
     
     
     public void comprobar(){

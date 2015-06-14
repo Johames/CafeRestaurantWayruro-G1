@@ -1,6 +1,16 @@
-
 <%@include file="WEB-INF/pensionistas/renovartop.jspf"%>
 
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6" id="aler">
+        <br>
+        <%
+            if(!mensaje.equals("")){
+        %>
+        <div class="alert alert-<%=alert%>"><%=mensaje%></div>
+        <%}%>
+    </div>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-2"></div>
@@ -12,11 +22,11 @@
                 </form>
             </div>
             <div class="formu">
-                <form class="form-horizontal" action="">
-                    <div class="form-group" hidden>
+                <form class="form-horizontal" action="renovar.jsp" method="post">
+                    <div class="form-group">
                         <label class="control-label col-xs-3">id :</label>
                         <div class="col-xs-6">
-                            <input type="tex" class="form-control" name="idPerson" value="<%=idPerson%>" readonly>
+                            <input type="tex" class="form-control" name="idpersona" value="<%=idpersona%>" readonly>
                         </div>
                     </div>
                     <div class="form-group">
@@ -64,13 +74,13 @@
                     <div class="form-group">
                         <label class="control-label col-xs-3">Costo de la Pension :</label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="p_pen" value="<%=p_pen%>" readonly>
+                            <input type="text" class="form-control" name="precioPension" value="<%=precioPension%>" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-xs-3">Fecha de Pago :</label>
                         <div class="col-xs-3">
-                            <input type="date" class="form-control" name="fechaFin">
+                            <input type="date" class="form-control" name="fechaPago">
                         </div> 
                     </div>
                     <div class="form-group">
@@ -86,7 +96,7 @@
                     <div class="form-group">
                         <label class="control-label col-xs-3">id Usuario :</label>
                         <div class="col-xs-6">
-                            <input type="number" class="form-control" name="" value="<%=idU%>" readonly>
+                            <input type="number" class="form-control" name="idusuario" value="<%=idUsuario%>" readonly>
                         </div>
                     </div>
                     <div class="form-group">

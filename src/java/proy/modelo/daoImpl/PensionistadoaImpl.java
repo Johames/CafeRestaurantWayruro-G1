@@ -109,26 +109,35 @@ public class PensionistadoaImpl implements Pensionistadao {
 
 
     @Override
-    public boolean agregarpensionista(Persona persona) {
-        boolean flat = false;
-        SessionFactory sf = null;
-        Session session = null;
-        Transaction transaction = null;
+    public boolean RenovarContrato(ContratoPensionista contratoPensionista) {
+        boolean estado = false;
+        Statement st= null;
+        String query="Insert into CONTRATO_PENSIONISTA values "
+                        + "('',"+contratoPensionista.getIdpersona()
+                        +",'"+contratoPensionista.getFechaInicio()
+                        +"','"+contratoPensionista.getFechaFin()
+                        +"','"+contratoPensionista.getPrecioPension()
+                        +"','"+contratoPensionista.getFechaPago()
+                        +"','"+contratoPensionista.getEstado()
+                        +"',"+contratoPensionista.getIdusuario()+") ";
         try {
-            sf = HibernateUtil.getSessionFactory();
-            session = sf.openSession();
-            transaction = session.beginTransaction();
-            session.save(persona);
-            transaction.commit();
-            session.close();
-            flat=true;
+            st = abrirConexion().createStatement();
+            st.executeUpdate(query);
+            guardar();
+            cerrarConexion();
+            estado = true;
         } catch (Exception e) {
             e.printStackTrace();
-            flat=false;
-            transaction.rollback();
-            session.close();
+            System.out.println(e.getMessage());
+            try {
+                revertir();
+                cerrarConexion();
+                estado = false;
+            } catch (Exception ex) {
+                
+            }
         }
-        return flat;
+        return estado;
     }
 
     @Override
