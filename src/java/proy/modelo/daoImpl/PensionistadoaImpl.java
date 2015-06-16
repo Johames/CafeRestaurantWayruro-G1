@@ -43,21 +43,24 @@ public class PensionistadoaImpl implements Pensionistadao {
     }
 
     @Override
-    public List<Listar_pensionista> ListarPensionista(String nomb) {
+    public List<Listar_pensionista> ListarPensionista() {
         List<Listar_pensionista> lista = new ArrayList<Listar_pensionista>();
         Statement st = null;
         ResultSet rs = null;
         Listar_pensionista cp = null;
-        String query = "select cp.id_persona as id, p.nombres as name, p.apellidos as ape, p.dni as dn, "
+        String query = "select cp.id_contrato as idc, cp.id_persona as id, p.nombres as name, p.apellidos as ape, p.dni as dn, "
                 + "p.n_celular as celu, p.direccion as dire, cp.fecha_inicio as fi, cp.fecha_fin as ff, cp.precio_pension as pp, cp.fecha_pago as fp "
                 + "from persona p, CONTRATO_PENSIONISTA cp "
-                + "where p.id_persona=cp.id_persona and p.nombres like '%"+nomb+"%'";
+                + "where p.id_persona=cp.id_persona and " 
+                + "(select to_char(sysdate,'dd/mm/yyyy')from dual)>=(cp.fecha_inicio) " 
+                + "and (select to_char(sysdate,'dd/mm/yyyy')from dual)<=(cp.fecha_fin) ";
 
         try {
             st = abrirConexion().createStatement();
             rs = st.executeQuery(query);
             while (rs.next()) {
                 cp = new Listar_pensionista();
+                cp.setIdContrato(rs.getString("idc"));
                 cp.setIdPersona(rs.getString("id"));
                 cp.setNombres(rs.getString("name"));
                 cp.setApellidos(rs.getString("ape"));
@@ -161,6 +164,49 @@ public class PensionistadoaImpl implements Pensionistadao {
             session.close();
         }
         return flat;
+    }
+
+    @Override
+    public List<Listar_pensionista> ListarInactivos() {
+        List<Listar_pensionista> list = new ArrayList<Listar_pensionista>();
+        Statement st = null;
+        ResultSet rs = null;
+        Listar_pensionista cp = null;
+        String query = "select cp.id_contrato as idc, cp.id_persona as id, p.nombres as name, p.apellidos as ape, p.dni as dn, "
+                + "p.n_celular as celu, p.direccion as dire, cp.fecha_inicio as fi, cp.fecha_fin as ff, cp.precio_pension as pp, cp.fecha_pago as fp "
+                + "from persona p, CONTRATO_PENSIONISTA cp "
+                + "where p.id_persona=cp.id_persona and " 
+                + "(select to_char(sysdate,'dd/mm/yyyy')from dual)>=(cp.fecha_inicio) " 
+                + "and (select to_char(sysdate,'dd/mm/yyyy')from dual)>=(cp.fecha_fin) ";
+
+        try {
+            st = abrirConexion().createStatement();
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                cp = new Listar_pensionista();
+                cp.setIdContrato(rs.getString("idc"));
+                cp.setIdPersona(rs.getString("id"));
+                cp.setNombres(rs.getString("name"));
+                cp.setApellidos(rs.getString("ape"));
+                cp.setDni(rs.getString("dn"));
+                cp.setNCelular(rs.getString("celu"));
+                cp.setDireccion(rs.getString("dire"));
+                cp.setFechaInicio(rs.getString("fi"));
+                cp.setFechaFin(rs.getString("ff"));
+                cp.setPrecioPension(rs.getString("pp"));
+                cp.setFechaPago(rs.getString("fp"));
+                list.add(cp);
+            }
+            abrirConexion().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                abrirConexion().close();
+            } catch (Exception ex) {
+            }
+        }
+
+        return list;
     }
 
     

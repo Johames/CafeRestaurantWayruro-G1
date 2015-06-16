@@ -5,7 +5,7 @@ public class Venta  {
 
      private int idVenta;
      private String numero;
-     private Persona persona;
+     private int idPersona;
      private String fechaVenta;
      private String tipo;
      private int idUsuario;
@@ -29,12 +29,12 @@ public class Venta  {
         this.numero = numero;
     }
 
-    public Persona getPersona() {
-        return persona;
+    public int getIdPersona() {
+        return idPersona;
     }
 
-    public void setPersona(Persona persona) {
-        this.persona = persona;
+    public void setIdPersona(int idPersona) {
+        this.idPersona = idPersona;
     }
 
     public String getFechaVenta() {

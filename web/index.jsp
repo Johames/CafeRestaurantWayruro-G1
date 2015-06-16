@@ -10,7 +10,7 @@
         <div class="col-lg-4">
             <img class="img-circle" src="recursos/img/pedido.png" alt="Generic placeholder image" width="140" height="140">
             <h2>Ventas</h2>
-            <p><a class="btn btn-primary" href="detalleventa.jsp" role="button">Iniciar Venta »</a></p>
+            <p><a class="btn btn-primary" href="venta.jsp" role="button">Iniciar Venta »</a></p>
         </div>
         <div class="col-lg-4">
             <img class="img-circle" src="recursos/img/reserva.png" alt="Generic placeholder image" width="140" height="140">

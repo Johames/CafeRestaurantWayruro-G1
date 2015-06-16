@@ -24,6 +24,9 @@
             }
 
             Productodao productodao = new ProductodaoImpl();
+            
+            String idCategoria = request.getParameter("idCategoria"); idCategoria = idCategoria == null?"":idCategoria;
+            String nombreCat = request.getParameter("nombreCat"); nombreCat = nombreCat == null?"":nombreCat;
 
         %>
         <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -83,7 +86,7 @@
                         count++;
                 %>
                 <ul class="nav nav-sidebar">
-                    <li><a href="platos.jsp?id_categoria=<%=cat.getIdCategoria()%>"><%=cat.getNombreCat()%><span class="sr-only">(current)</span></a></li>
+                    <li><a href="platos.jsp?idCategoria=<%=cat.getIdCategoria()%>&nombreCat=<%=cat.getNombreCat()%>"><%=cat.getNombreCat()%><span class="sr-only">(current)</span></a></li>
                 </ul>
                 <%}%>
             </div>

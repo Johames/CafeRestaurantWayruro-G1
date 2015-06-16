@@ -1,3 +1,4 @@
+<%@page import="javafx.util.converter.DateTimeStringConverter"%>
 <%@page import="java.sql.Date"%>
 <%@page import="proy.modelo.entidad.ContratoPensionista"%>
 <%@page import="proy.modelo.entidad.Usuario"%>
@@ -41,7 +42,6 @@
             String NCelular = request.getParameter("ncelular"); NCelular = NCelular == null?"":NCelular;
             String direccion = request.getParameter("direcciones"); direccion = direccion == null?"":direccion;
             String fechaInicio = request.getParameter("fechaInicio"); fechaInicio = fechaInicio == null?"":fechaInicio;
-            String fechaFin = request.getParameter("fechaFin"); fechaFin = fechaFin == null?"":fechaFin;
             String precioPension = request.getParameter("precioPension"); precioPension = precioPension == null?"":precioPension;
             String fechaPago = request.getParameter("fechaPago"); fechaPago = fechaPago == null?"":fechaPago;
             String estado = request.getParameter("estado"); estado = estado == null?"":estado;
@@ -49,10 +49,9 @@
             String mensaje = "";
             String alert = "";
             
-            if(!idpersona.equals("") && !fechaInicio.equals("") && !fechaFin.equals("") && !precioPension.equals("") && !fechaPago.equals("") && !estado.equals("") && !idusuario.equals("")){
+            if(!idpersona.equals("") && !fechaInicio.equals("") && !precioPension.equals("") && !fechaPago.equals("") && !estado.equals("") && !idusuario.equals("")){
                 contratoPensionista.setIdpersona(Integer.parseInt(idpersona));
                 contratoPensionista.setFechaInicio(fechaInicio);
-                contratoPensionista.setFechaFin(fechaFin);
                 contratoPensionista.setPrecioPension(precioPension);
                 contratoPensionista.setFechaPago(fechaPago);
                 contratoPensionista.setEstado(estado);

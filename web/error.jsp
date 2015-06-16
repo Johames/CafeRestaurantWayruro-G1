@@ -20,7 +20,7 @@
         <br>
         <div class="container-fluid" >
 
-            <div class="jumbotron col-lg-5">
+            <div class="jumbotron col-lg-8">
                 <h1>Error!!!...</h1>
                 <br><br>
                 <p>Usuario o Contraseña Incorrectos</p>

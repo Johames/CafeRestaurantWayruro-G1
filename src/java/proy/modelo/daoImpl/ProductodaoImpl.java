@@ -53,34 +53,6 @@ public class ProductodaoImpl implements Productodao{
     }
     
     @Override
-    public List<Producto> ListProductos(String nombre) {
-        List<Producto> lista = new ArrayList<Producto>();
-        Statement st = null;
-        ResultSet rs = null;
-        Producto pro = null;
-        String query = "select nombre_producto as producto from producto where nombre_producto like '%"+nombre+"%'";
-
-        try {
-            st = abrirConexion().createStatement();
-            rs = st.executeQuery(query);
-            while (rs.next()) {
-                pro = new Producto();
-                pro.setNombreProducto(rs.getString("producto"));
-                lista.add(pro);
-            }
-            abrirConexion().close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            try {
-                abrirConexion().close();
-            } catch (Exception ex) {
-                
-            }
-        }
-        return lista;
-    }
-
-    @Override
     public boolean EliminarProducto(int id) {
     boolean flat = false;
         Statement st = null;
@@ -177,13 +149,14 @@ public class ProductodaoImpl implements Productodao{
         Statement st = null;
         ResultSet rs = null;
         Producto pro = null;
-        String query = "select nombre_producto as producto, precio from producto ";
+        String query = "select id_producto as id, nombre_producto as producto, precio from producto ";
 
         try {
             st = abrirConexion().createStatement();
             rs = st.executeQuery(query);
             while (rs.next()) {
                 pro = new Producto();
+                pro.setIdProducto(rs.getShort("id"));
                 pro.setNombreProducto(rs.getString("producto"));
                 pro.setPrecio(rs.getString("precio"));
                 list.add(pro);
@@ -198,6 +171,35 @@ public class ProductodaoImpl implements Productodao{
             }
         }
         return list;
+    }
+
+    @Override
+    public List<Producto> Listar(String idCategoria) {
+        List<Producto> lista = new ArrayList<Producto>();
+        Statement st = null;
+        ResultSet rs = null;
+        Producto pro = null;
+        String query = "select nombre_producto as producto, precio from producto where id_categoria='"+idCategoria+"' ";
+
+        try {
+            st = abrirConexion().createStatement();
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                pro = new Producto();
+                pro.setNombreProducto(rs.getString("producto"));
+                pro.setPrecio(rs.getString("precio"));
+                lista.add(pro);
+            }
+            abrirConexion().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                abrirConexion().close();
+            } catch (Exception ex) {
+                
+            }
+        }
+        return lista;
     }
         
 }

@@ -45,7 +45,7 @@
                 producto.setIdUsuario(Integer.parseInt(IdU));
                 if(productodao.AgregarProducto(producto)){
                     alert = "info";
-                    mensaje = "El Producto se añadió correctamente...<br><br><a class='btn btn-primary' href='addproducto.jsp'>[Registrar más >>]";
+                    mensaje = "El Producto se añadió correctamente...<br><br><a class='btn btn-primary' href='addproducto.jsp'>[Registrar más >>]</a>";
                 }else{
                     alert = "danger";
                     mensaje = "No se pudo agregar el Producto";
@@ -80,7 +80,7 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <form class="navbar-form navbar-right">
-                        <a class="btn btn-primary" href="platos.jsp" title="Ir la página anterior" title="Ir la página anterior" role="button">Volver a la Lista &emsp;<i class="glyphicon glyphicon-list-alt"></i></a>
+                        <a class="btn btn-primary" href="platos.jsp?idCategoria=1&nombreCat=Menu" title="Ir la página anterior" title="Ir la página anterior" role="button">Volver a la Lista &emsp;<i class="glyphicon glyphicon-list-alt"></i></a>
                     </form>
                 </div>
             </div>

@@ -8,10 +8,8 @@ package consola;
 
 import proy.modelo.entidad.Usuario;
 import proy.modelo.dao.Pensionistadao;
-import proy.modelo.dao.Personadao;
 import proy.modelo.dao.Usuariodao;
 import proy.modelo.daoImpl.PensionistadoaImpl;
-import proy.modelo.daoImpl.PersonadaoImpl;
 import proy.modelo.daoImpl.UsuariodaoImpl;
 import proy.modelo.entidad.Persona;
 
@@ -28,18 +26,9 @@ public class NewMain {
         // TODO code application logic here
         NewMain main = new NewMain();
         
-        //main.eliminar();
         //main.agregar();
         main.comprobar();
         
-    }
-    public void eliminar(){
-        Personadao per = new PersonadaoImpl();
-        if(per.EliminarPersona(9)){
-            System.out.println("se elimino correctamente");
-        }else{
-            System.out.println("ocurrio un error");
-        }
     }
     
     /*public void agregar (){

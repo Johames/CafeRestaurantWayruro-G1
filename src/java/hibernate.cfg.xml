@@ -8,7 +8,7 @@
     <property name="hibernate.connection.username">adm</property>
     <property name="hibernate.connection.password">adm</property>
     <mapping resource="proy/modelo/pojos/Persona.hbm.xml"/>
-    <mapping resource="proy/modelo/pojos/Categoria.hbm.xml"/>
     <mapping resource="proy/modelo/pojos/Rol.hbm.xml"/>
+    <mapping resource="proy/modelo/pojos/Categoria.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

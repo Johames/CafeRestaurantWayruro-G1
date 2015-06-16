@@ -35,6 +35,12 @@
                 response.sendRedirect("error.jsp");
             }
             
+            String nombres = request.getParameter("nombres"); nombres = nombres == null?"":nombres;
+            
+            String idProducto = request.getParameter("idProducto"); idProducto = idProducto == null?"":idProducto;
+            String nombreProducto = request.getParameter("nombreProducto"); nombreProducto = nombreProducto == null?"":nombreProducto;
+            String precio = request.getParameter("precio"); precio = precio == null?"":precio;
+            
         %>
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
@@ -49,6 +55,11 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="active"><a href="index.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
                     </ul>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <form class="navbar-form navbar-right">
+                        <a class="btn btn-primary" href="venta.jsp" role="button">Volver a la Lista &emsp;<i class="glyphicon glyphicon-list-alt"></i></a>
+                    </form>
                 </div>
             </div>
         </nav>

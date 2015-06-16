@@ -66,12 +66,6 @@
                         </div> 
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-xs-3">Fin de la Pensión :</label>
-                        <div class="col-xs-3">
-                            <input type="date" class="form-control" name="fechaFin">
-                        </div> 
-                    </div>
-                    <div class="form-group">
                         <label class="control-label col-xs-3">Costo de la Pension :</label>
                         <div class="col-xs-6">
                             <input type="text" class="form-control" name="precioPension" value="<%=precioPension%>" readonly>

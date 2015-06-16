@@ -1,3 +1,6 @@
+<%@page import="proy.modelo.entidad.Categoria"%>
+<%@page import="proy.modelo.daoImpl.ProductodaoImpl"%>
+<%@page import="proy.modelo.dao.Productodao"%>
 <!DOCTYPE html>
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
@@ -40,7 +43,7 @@
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Listas &emsp;<i class="glyphicon glyphicon-list"></i></span></a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li class="dropdown-header">Listas de Poductos</li>
-                                        <li><a href="platos.jsp">Productos</a></li>
+                                        <li><a href="platos.jsp?idCategoria=1&nombreCat=Menu">Productos</a></li>
                                         <li class="divider"></li>
                                         <li class="dropdown-header">Listas de Usuarios</li>
                                         <li><a href="Usuario.jsp">Usuarios</a></li>

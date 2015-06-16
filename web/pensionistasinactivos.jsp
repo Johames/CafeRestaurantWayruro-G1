@@ -22,7 +22,7 @@
 
     <body>
         <%
-            
+
             if (idUsuario == null) {
                 response.sendRedirect("error.jsp");
             }
@@ -32,18 +32,7 @@
             ContratoPensionista contrato = new ContratoPensionista();
 
             String idPersona = request.getParameter("idpersona"); idPersona = idPersona == null ? "" : idPersona;
-            String nombres = request.getParameter("nombres"); nombres = nombres == null ? "" : nombres;
-            String apellidos = request.getParameter("apellidos"); apellidos = apellidos == null ? "" : apellidos;
-            String dni = request.getParameter("dni"); dni = dni == null ? "" : dni;
-            String NCelular = request.getParameter("NCelular"); NCelular = NCelular == null ? "" : NCelular;
-            String direccion = request.getParameter("direccion"); direccion = direccion == null ? "" : direccion;
-            String f_inicio = request.getParameter("fechaInicio"); f_inicio = f_inicio == null ? "" : f_inicio;
-            String f_final = request.getParameter("fechaFinal"); f_final = f_final == null ? "" : f_final;
-            String p_pension = request.getParameter("p_pension"); p_pension = p_pension == null ? "" : p_pension;
-            String f_pago = request.getParameter("f_pago"); f_pago = f_pago == null ? "" : f_pago;
-            String mensaje = "";
-
-
+            
         %>
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
@@ -85,9 +74,69 @@
                             <input name="filt" onkeyup="filter(this, 'tj', '1')" type="text"class="form-control" placeholder="Nombre a Buscar" autofocus >
                         </div>
                     </form>
-                    <form class="navbar-form navbar-right">
-                        <a class="btn btn-primary" href="agregar.jsp" role="button">Agregar &emsp;<i class="glyphicon glyphicon-floppy-disk"></i></a>
-                    </form>
+                    <div id="navbar" class="navbar-collapse collapse">
+                        <form class="navbar-form navbar-right">
+                            <a class="btn btn-primary" href="pensionistas.jsp" role="button">Volver &emsp;<i class="glyphicon glyphicon-list-alt"></i></a>
+                        </form>
+                    </div>
                 </div>
             </div>
         </nav>
+
+        <input type="hidden" name="idPersona" value="<%=idPersona%>" size="10">
+
+        <div class="container-fluid">
+            <h1 class="sub-header">Lista de Pensionistas Inactivos</h1>
+            <div class="table-responsive">
+                <table id="tj" class="table table-striped well">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th hidden>ID</th>
+                            <th>Nombres y Apellidos</th>
+                            <th>Dni</th> 
+                            <th>N_Celular</th> 
+                            <th>Direccion</th> 
+                            <th>Inicio de Pension</th>
+                            <th>Fin de Pension</th>  
+                            <th>Precio</th>   
+                            <th>Fecha de Pago</th> 
+                            <th colspan="3">Acciones</th>                                    
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%
+                            int count = 0;
+                            Pensionistadao dao = new PensionistadoaImpl();
+                            List<Listar_pensionista> list = dao.ListarInactivos();
+                            for (Listar_pensionista per : list) {
+                                count++;
+
+                        %>
+                        <tr>
+                            <td><%=count%>.</td>
+                            <td hidden><%=per.getIdPersona()%></td>
+                            <td><%=per.getNombres()%>&nbsp;<%=per.getApellidos()%></td>
+                            <td><%=per.getDni()%></td>
+                            <td><%=per.getNCelular()%></td>
+                            <td><%=per.getDireccion()%></td>
+                            <td><%=per.getFechaInicio().substring(0, 10)%></td>
+                            <td><%=per.getFechaFin().substring(0, 10)%></td>
+                            <td>$.&nbsp;<%=per.getPrecioPension()%></td>
+                            <td><%=per.getFechaPago().substring(0, 10)%></td>
+                            <td><p><a class="btn btn-primary" title="Renovar Contrato del Pencionista" href="renovar.jsp?idpersona=<%=per.getIdPersona()%>&nombres=<%=per.getNombres()%>&apellidos=<%=per.getApellidos()%>&dni=<%=per.getDni()%>&ncelular=<%=per.getNCelular()%>&direcciones=<%=per.getDireccion()%>&precioPension=<%=per.getPrecioPension()%>&pago=<%=per.getFechaPago().substring(0, 10)%>" role="button"><i class="glyphicon glyphicon-refresh"></i></a></p></td>
+                            <td><p><a class="btn btn-danger" title="Eliminar" onclick="if (!confirm('Esta seguro de eliminar a <%=per.getNombres()%> <%=per.getApellidos()%>'))return false" role="button" href="pensionistas.jsp?opcion=delete&id=<%=per.getIdContrato()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
+                        </tr>
+                        <%}%>
+                    </tbody>
+                </table>
+            </div>    
+        </div>
+    </body>
+
+    <script src="jquery/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="bootstrap/js/holder.js"></script>
+    <script src="bootstrap/js/ie10-viewport-bug-workaround.js"></script>
+
+</html>

@@ -22,7 +22,6 @@
     </head>
     <body>
         <%
-            
             if(idUsuario == null){
                 response.sendRedirect("error.jsp");
             }
@@ -50,7 +49,7 @@
                 person.setDni(dni);
                 person.setNCelular(ncelular);
                 person.setDireccion(direccion);
-                if (dao.agregarpensionista(person)) {
+                if (dao.agregarContrato(contrato)) {
                     response.sendRedirect("agregar.jsp?idpersona=");
                     if (!idPersona.equals("") & !f_inicio.equals("") & !f_final.equals("") & !fPago.equals("") & !precioPension.equals("") & Pago.equals("")) {
                         contrato.setIdpersona(Integer.parseInt(idPersona));

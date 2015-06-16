@@ -3,27 +3,7 @@
 <input type="hidden" name="idPersona" value="<%=idPersona%>" size="10">
         
 <div class="container-fluid">
-    <h1 class="sub-header">Lista de Pensionistas</h1>
-    <%        
-    
-        Personadao persona = new PersonadaoImpl();
-    
-        String opcion = request.getParameter("opcion"); opcion = opcion == null ? "" : opcion;
-        String id = request.getParameter("id_contrato"); id = id == null ? "" : id;
-
-        if (opcion.equals("delete")) {
-
-            if (persona.EliminarPersona(Integer.parseInt(id))) {
-
-                mensaje = "Se elimino correctamente";
-
-            } else {
-
-                mensaje = "Ocurrio un error al Eliminar";
-
-            }
-        }
-    %>
+    <h1 class="sub-header">Lista de Pensionistas Activos<label class="col-lg-offset-0"></label>&nbsp;&nbsp;&nbsp;<label class="col-lg-offset-6"></label><a href="pensionistasinactivos.jsp" class="btn btn-primary right">Pensionistas Inactivos</a></h1>
     <div class="table-responsive">
         <table id="tj" class="table table-striped well">
             <thead>
@@ -45,7 +25,7 @@
                 <%
                     int count = 0;
                     Pensionistadao dao = new PensionistadoaImpl();
-                    List<Listar_pensionista> lista = dao.ListarPensionista(nomb);
+                    List<Listar_pensionista> lista = dao.ListarPensionista();
                     for (Listar_pensionista per : lista) {
                         count++;
                         
@@ -61,9 +41,7 @@
                     <td><%=per.getFechaFin().substring(0,10)%></td>
                     <td>$.&nbsp;<%=per.getPrecioPension()%></td>
                     <td><%=per.getFechaPago().substring(0,10)%></td>
-                    <td><p><a class="btn btn-primary" title="Renovar Contrato del Pencionista" href="renovar.jsp?idpersona=<%=per.getIdPersona()%>&nombres=<%=per.getNombres()%>&apellidos=<%=per.getApellidos()%>
-                              &dni=<%=per.getDni()%>&ncelular=<%=per.getNCelular()%>&direcciones=<%=per.getDireccion()%>
-                              &precioPension=<%=per.getPrecioPension()%>&pago=<%=per.getFechaPago().substring(0,10)%>" role="button"><i class="glyphicon glyphicon-refresh"></i></a></p></td>
+                    <td><p><a class="btn btn-primary" title="Renovar Contrato del Pencionista" href="renovar.jsp?idpersona=<%=per.getIdPersona()%>&nombres=<%=per.getNombres()%>&apellidos=<%=per.getApellidos()%>&dni=<%=per.getDni()%>&ncelular=<%=per.getNCelular()%>&direcciones=<%=per.getDireccion()%>&precioPension=<%=per.getPrecioPension()%>&pago=<%=per.getFechaPago().substring(0,10)%>" role="button"><i class="glyphicon glyphicon-refresh"></i></a></p></td>
                     <td><p><a class="btn btn-primary" title="Modificar Contrato del Pencionista" href="modificarpen.jsp role="button><i class="glyphicon glyphicon-pencil"></i></a></p></td>
                     <td><p><a class="btn btn-danger" title="Eliminar" onclick="if(!confirm('Esta seguro de eliminar a <%=per.getNombres()%> <%=per.getApellidos()%>'))return false" role="button" href="pensionistas.jsp?opcion=delete&id=<%=per.getIdContrato()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
                 </tr>
@@ -73,7 +51,6 @@
         </table>
     </div>    
 </div>
-<%}%>
 </body>
 
 <script src="jquery/jquery.min.js"></script>

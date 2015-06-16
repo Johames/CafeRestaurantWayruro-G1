@@ -15,13 +15,29 @@
                     <table class="table table-striped well">
                         <thead>
                             <tr>
-                                <th>Compra</th>
+                                <th>Venta</th>
                                 <th>Productos</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td class="col-xs-6">
+                                    <SCRIPT language="JavaScript" type="text/javascript">
+                                        function cambia( ) { 
+                                        document.forms[2].elements[0].value='Cliente Varios';
+                                        }
+                                    </SCRIPT>
+                                    <div class="form-horizontal">
+                                        <form class="col-md-10"> 
+                                            <label class="control-label col-xs-2"></label>
+                                            <div class="form-group col-md-6">
+                                                <input type="text" class="form-control" value="<%=nombres%>"> 
+                                            </div>
+                                            <label class="control-label col-xs-1"></label>
+                                            <INPUT class="btn btn-primary" TYPE="button" VALUE="cambiar" ONCLICK="cambia()">
+                                        </form>
+                                        <br><br><br>
+                                    </div>
                                     <form class="form-horizontal" action="" name="form1">
                                         <div> 
                                             <div class="form-group col-md-7">
@@ -42,6 +58,7 @@
                                                     <tr>
                                                         <th>#</th>
                                                         <th>Cantidad</th>
+                                                        <th hidden>Id Producto</th>
                                                         <th>Producto</th>
                                                         <th>Precio</th>
                                                         <th>Sub Total</th>
@@ -52,13 +69,14 @@
                                                     <tr>
                                                         <td></td>
                                                         <td></td>
-                                                        <td></td>
-                                                        <td></td>
+                                                        <td hidden><%=idProducto%></td>
+                                                        <td><%=nombreProducto%></td>
+                                                        <td><%=precio%></td>
                                                         <td></td>
                                                         <td>
                                                             <p>
-                                                                <a title="Editar" href=""><i class="glyphicon glyphicon-pencil"></i></a>&nbsp;&nbsp;
-                                                                <a title="Eliminar" href=""><i class="glyphicon glyphicon-trash"></i></a>
+                                                                <a title="Editar" href="#"><i class="glyphicon glyphicon-pencil"></i></a>&nbsp;&nbsp;
+                                                                <a title="Eliminar" href="detalleventa.jsp?idProducto=&nombreProducto=&precio="><i class="glyphicon glyphicon-trash"></i></a>
                                                             </p>
                                                         </td>
                                                     </tr>
@@ -89,28 +107,6 @@
                                                     <option value="<%=cat.getIdCategoria()%>"><%=cat.getNombreCat()%></option>
                                                     <%}%>
                                                 </select>
-                                            </div>
-                                            <%
-                                                String buscarpro = request.getParameter("buscarpro");
-                                                buscarpro = buscarpro == null ? "" : buscarpro;
-                                                String opcion2 = request.getParameter("opcion1");
-                                                opcion2 = opcion2 == null ? "buscar" : opcion2;
-
-                                                String nombre = request.getParameter("buscarpro");
-                                                nombre = nombre == null ? "" : nombre;
-
-                                                if (opcion2.equals("buscar")) {
-
-                                            %>
-                                            <div hidden>
-                                                <div class="col-lg-pull-0">
-                                                    <div class="input-group">
-                                                        <input type="text" name="buscarpro" class="form-control" title="Nombre del Producto" placeholder="Producto">
-                                                        <span class="input-group-btn">
-                                                            <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i></button>
-                                                        </span>
-                                                    </div>
-                                                </div>
                                             </div>
                                             <script type="text/javascript">
                                                 function filter(phrase, _id) {
@@ -144,30 +140,33 @@
                                             <div class="table-responsive">
                                                 <table id="jt" class="table table-striped well">
                                                     <thead>
-                                                        <tr>
+                                                        <tr hidden>
                                                             <th>#</th>
+                                                            <th>Id Producto</th>
                                                             <th>Productos</th>
-                                                            <th></th>
+                                                            <th>Precio</th>
+                                                            <th>Enviar</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <%                                                            int coun = 0;
-                                                            List<Producto> lista = productodao.ListProductos(nombre);
+                                                            List<Producto> lista = productodao.ListarProductos();
                                                             for (Producto producto : lista) {
                                                                 coun++;
 
                                                         %>
                                                         <tr>
                                                             <td><%=coun%></td>
+                                                            <td hidden><%=producto.getIdProducto()%></td>
                                                             <td><%=producto.getNombreProducto()%></td>
-                                                            <td><p><a class="btn btn-primary" title="Agregar a la Venta" href="detalleventa.jsp" role="button"><i class="glyphicon glyphicon-share-alt"></i></a></p></td>
+                                                            <td hidden><%=producto.getPrecio()%></td>
+                                                            <td><p><a class="btn btn-primary" title="Agregar a la Venta" href="detalleventa.jsp?idProducto=<%=producto.getIdProducto()%>&nombreProducto=<%=producto.getNombreProducto()%>&precio=<%=producto.getPrecio()%>" role="button"><i class="glyphicon glyphicon-share-alt"></i></a></p></td>
                                                         </tr>
                                                         <%}%>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
-                                        <%}%>
                                     </form>
                                 </td>
                             </tr>

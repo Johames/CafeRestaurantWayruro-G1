@@ -1,7 +1,7 @@
 <%@include file="WEB-INF/productos/productostop.jspf" %>
 
 <div class="table-responsive col-sm-6 col-sm-offset-2 col-md-12 col-md-offset-1 main">
-    <h1 class="sub-header">Lista de <%=categ.getNombreCat()%></h1>
+    <h1 class="sub-header">Lista de <%=nombreCat%></h1>
     <table class="table table-striped well" id="la">
         <thead>
             <tr>
@@ -16,7 +16,7 @@
             <%    
                 Productodao dao = new ProductodaoImpl();
                     int coun = 0;
-                for (Producto prod : dao.ListarProductos()) {
+                for (Producto prod : dao.Listar(idCategoria)) {
                     coun++;
 
             %>
