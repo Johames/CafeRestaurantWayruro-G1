@@ -22,11 +22,10 @@
                         <tbody>
                             <tr>
                                 <td class="col-xs-6">
-                                    <SCRIPT language="JavaScript" type="text/javascript">
-                                        function cambia( ) { 
-                                        document.forms[2].elements[0].value='Cliente Varios';
-                                        }
-                                    </SCRIPT>
+                                    <%
+                                       String op = request.getParameter("opcion"); op = op == null?"":op;
+                                       if(op.equals("venta")){
+                                    %>
                                     <div class="form-horizontal">
                                         <form class="col-md-10"> 
                                             <label class="control-label col-xs-2"></label>
@@ -34,10 +33,10 @@
                                                 <input type="text" class="form-control" value="<%=nombres%>"> 
                                             </div>
                                             <label class="control-label col-xs-1"></label>
-                                            <INPUT class="btn btn-primary" TYPE="button" VALUE="cambiar" ONCLICK="cambia()">
                                         </form>
                                         <br><br><br>
                                     </div>
+                                    <%}%>
                                     <form class="form-horizontal" action="" name="form1">
                                         <div> 
                                             <div class="form-group col-md-7">

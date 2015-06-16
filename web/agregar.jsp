@@ -28,13 +28,13 @@
                     <div class="form-group">
                         <label class="control-label col-xs-3">DNI:</label>
                         <div class="col-xs-6">
-                            <input type="text" title="Solo Números (8 en total)" name="dni" pattern="[0-9]{8}" class="form-control" placeholder="DNI">
+                            <input type="text" maxlength="8" title="Solo Números (8 en total)" name="dni" pattern="[0-9]{8}" class="form-control" placeholder="DNI">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-xs-3">N° de Celular:</label>
                         <div class="col-xs-6">
-                            <input type="text" title="Solo Números (9 en total)" pattern="[0-9]{1,10}" name="ncelular" class="form-control" placeholder="N° de Celular">
+                            <input type="text" maxlength="10" title="Solo Números (9 en total)" pattern="[0-9]{1,10}" name="ncelular" class="form-control" placeholder="N° de Celular">
                         </div>
                     </div>
                     <div class="form-group">

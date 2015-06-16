@@ -78,18 +78,18 @@
                                     <tr>
                                         <td>
                                             <br><br><br>
-                                            <div class="container col-md-12">
+                                            <div class="formu container col-md-12">
                                                 <div class="row">
                                                     <div class="form-group">
-                                                        <label class="control-label col-xs-2">Cliente</label>
+                                                        <label class="control-label col-xs-2"></label>
                                                         <div class="col-xs-0"></div>
-                                                        <div class="col-xs-8">
-                                                            <form class="input-group" method="Post">
-                                                                <input type="text" class="form-control" placeholder="Nombre del Cliente" name="nombres" autofocus>
+                                                        <div class="col-xs-7">
+                                                            <div class="input-group-btn">
+                                                                <input type="hidden" name="opcion" value="venta"> 
                                                                 <span class="input-group-btn">
-                                                                    <a type="submit" href="detalleventa.jsp?nombres=Cliente Varios" class="btn btn-primary"><i>ir</i></a>
+                                                                    <a type="submit" href="detalleventa.jsp?nombres=Cliente Varios" class="btn btn-primary"><i>Iniciar Venta</i></a>
                                                                 </span>
-                                                            </form>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -8,6 +8,10 @@
         <servlet-name>CerrarSesion</servlet-name>
         <servlet-class>proy.controlador.CerrarSesion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Producto</servlet-name>
+        <servlet-class>proy.controlador.Producto</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>validar</servlet-name>
         <url-pattern>/valid</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>CerrarSesion</servlet-name>
         <url-pattern>/cerrar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Producto</servlet-name>
+        <url-pattern>/prod</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
