@@ -32,19 +32,19 @@
                     <div class="form-group">
                         <label class="control-label col-xs-3">Nombres :</label>
                         <div class="col-xs-6">
-                            <input type="tex" class="form-control" value="<%=nombre%>" readonly>
+                            <input type="tex" class="form-control" value="<%=nombres%>" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-xs-3">Apellidos :</label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" value="<%=apellido%>" readonly>
+                            <input type="text" class="form-control" value="<%=apellidos%>" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-xs-3">DNI :</label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" value="<%=dn%>" readonly>
+                            <input type="text" class="form-control" value="<%=dni%>" readonly>
                         </div>
                     </div>
                     <div class="form-group">
@@ -62,20 +62,14 @@
                     <div class="form-group">
                         <label class="control-label col-xs-3">Inicio de la Pensión :</label>
                         <div class="col-xs-3">
-                            <input type="date" class="form-control" name="fechaInicio">
+                            <input type="date" class="form-control" name="fechini">
                         </div> 
                     </div>
                     <div class="form-group">
                         <label class="control-label col-xs-3">Costo de la Pension :</label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="precioPension" value="<%=precioPension%>" readonly>
+                            <input type="text" class="form-control" name="precio" value="<%=precio%>" readonly>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-3">Fecha de Pago :</label>
-                        <div class="col-xs-3">
-                            <input type="date" class="form-control" name="fechaPago">
-                        </div> 
                     </div>
                     <div class="form-group">
                         <label class="control-label col-xs-3">Pago? :</label>

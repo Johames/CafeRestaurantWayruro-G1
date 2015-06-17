@@ -77,7 +77,13 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <br><br><br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
                                             <div class="formu container col-md-12">
                                                 <div class="row">
                                                     <div class="form-group">
@@ -157,7 +163,7 @@
                                                                     <td hidden><%=per.getIdContrato()%></td>
                                                                     <td><%=per.getNombres()%>&nbsp;<%=per.getApellidos()%></td>
                                                                     <td><p>
-                                                                            <a class="btn btn-primary" title="Enviar Cliente" href="control.jsp?idContrato=<%=per.getIdContrato()%>&nombres=<%=per.getNombres()%>&apellidos=<%=per.getApellidos()%>" role="button">
+                                                                            <a class="btn btn-primary" title="Enviar Cliente" href="detalleventa.jsp?idContrato=<%=per.getIdContrato()%>&nombres=<%=per.getNombres()%>&apellidos=<%=per.getApellidos()%>" role="button">
                                                                                 <i class="glyphicon glyphicon-share-alt">
                                                                                 </i>
                                                                             </a>

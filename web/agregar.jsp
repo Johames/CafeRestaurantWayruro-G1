@@ -1,6 +1,16 @@
-
 <%@include file="WEB-INF/pensionistas/agregartop.jspf" %>
 
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6" id="aler">
+        <br>
+        <%
+            if(!mensaje.equals("")){
+        %>
+        <div class="alert alert-<%=alert%>"><%=mensaje%></div>
+        <%}%>
+    </div>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-2"></div>
@@ -16,19 +26,19 @@
                     <div class="form-group">
                         <label class="control-label col-xs-3">Nombres:</label>
                         <div class="col-xs-6">
-                            <input type="tex" class="form-control" name="nombres" placeholder="Nombres" autofocus>
+                            <input type="tex" class="form-control" name="nombre" placeholder="Nombres" autofocus>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-xs-3">Apellidos:</label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="apellidos" placeholder="Apellidos">
+                            <input type="text" class="form-control" name="apellido" placeholder="Apellidos">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-xs-3">DNI:</label>
                         <div class="col-xs-6">
-                            <input type="text" maxlength="8" title="Solo Números (8 en total)" name="dni" pattern="[0-9]{8}" class="form-control" placeholder="DNI">
+                            <input type="text" maxlength="8" title="Solo Números (8 en total)" name="dn" pattern="[0-9]{8}" class="form-control" placeholder="DNI">
                         </div>
                     </div>
                     <div class="form-group">
@@ -40,43 +50,37 @@
                     <div class="form-group">
                         <label class="control-label col-xs-3">Dirección:</label>
                         <div class="col-xs-6">
-                            <textarea rows="3" class="form-control"  name="direccion" placeholder="Dirección"></textarea>
+                            <textarea rows="3" class="form-control"  name="direcciones" placeholder="Dirección"></textarea>
                         </div>
                     </div>
                     <input hidden name="idpersona" value="">
                     <div class="form-group">
                         <label class="control-label col-xs-3">Inicio de la Pensión:</label>
                         <div class="col-xs-3">
-                            <input type="date" class="form-control"name="fechaInicio">
-                        </div> 
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-3">Fin de la Pensión:</label>
-                        <div class="col-xs-3">
-                            <input type="date" class="form-control" name="fechaFin">
-                        </div> 
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-3">Fecha de Pago:</label>
-                        <div class="col-xs-3">
-                            <input type="date" class="form-control" name="fpago">
+                            <input type="date" class="form-control"name="fechini">
                         </div> 
                     </div>
                     <div class="form-group">
                         <label class="control-label col-xs-3">Costo de la Pension:</label>
                         <div class="col-xs-3">
-                            <input type="number" class="form-control"name="precioPencion">
+                            <input type="number" class="form-control"name="precio">
                         </div> 
                     </div>
                     <div class="form-group">
                         <label class="control-label col-xs-3">Pago? :</label>
                         <div class="col-xs-4">
-                            <select class="form-control" name="estado">
+                            <select class="form-control" name="stado">
                                 <option selected="selected" hidden="">Seleccionar</option>
                                 <option value="1">Si</option>
                                 <option value="0">No</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3">Id Usuario:</label>
+                        <div class="col-xs-3">
+                            <input type="number" class="form-control" value="<%=idUsuario%>" name="idUsuario">
+                        </div> 
                     </div>
                     <br>
                     <div class="form-group">
@@ -87,7 +91,6 @@
                     </div>
                 </form>
             </div>
-            <%=mensaje%>
         </div>
     </div>
 </div>

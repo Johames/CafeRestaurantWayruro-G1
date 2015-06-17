@@ -14,6 +14,7 @@ public class Listar_pensionista {
     private String fechaFin;
     private String precioPension;
     private String fechaPago;
+    private String vigencia;
 
     public Listar_pensionista() {
     }
@@ -104,6 +105,14 @@ public class Listar_pensionista {
 
     public void setFechaPago(String fechaPago) {
         this.fechaPago = fechaPago;
+    }
+
+    public String getVigencia() {
+        return vigencia;
+    }
+
+    public void setVigencia(String vigencia) {
+        this.vigencia = vigencia;
     }
      
 }

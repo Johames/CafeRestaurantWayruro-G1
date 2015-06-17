@@ -1,9 +1,7 @@
 <%@include file="WEB-INF/pensionistas/pensionistastop.jspf" %>
 
-<input type="hidden" name="idPersona" value="<%=idPersona%>" size="10">
-        
 <div class="container-fluid">
-    <h1 class="sub-header">Lista de Pensionistas Activos<label class="col-lg-offset-0"></label>&nbsp;&nbsp;&nbsp;<label class="col-lg-offset-6"></label><a href="pensionistasinactivos.jsp" class="btn btn-primary right">Pensionistas Inactivos</a></h1>
+    <h1 class="sub-header">Lista de Pensionistas Activos<label class="col-lg-offset-0"></label>&nbsp;&nbsp;<label class="col-lg-offset-6"></label><a href="pensionistasinactivos.jsp" class="btn btn-primary right">Pensionistas Inactivos</a></h1>
     <div class="table-responsive">
         <table id="tj" class="table table-striped well">
             <thead>
@@ -18,6 +16,7 @@
                     <th>Fin de Pension</th>  
                     <th>Precio</th>   
                     <th>Fecha de Pago</th> 
+                    <th>Vigencia</th>
                     <th colspan="3">Acciones</th>                                    
                 </tr>
             </thead>
@@ -40,13 +39,13 @@
                     <td><%=per.getFechaInicio().substring(0,10)%></td>
                     <td><%=per.getFechaFin().substring(0,10)%></td>
                     <td>$.&nbsp;<%=per.getPrecioPension()%></td>
-                    <td><%=per.getFechaPago().substring(0,10)%></td>
-                    <td><p><a class="btn btn-primary" title="Renovar Contrato del Pencionista" href="renovar.jsp?idpersona=<%=per.getIdPersona()%>&nombres=<%=per.getNombres()%>&apellidos=<%=per.getApellidos()%>&dni=<%=per.getDni()%>&ncelular=<%=per.getNCelular()%>&direcciones=<%=per.getDireccion()%>&precioPension=<%=per.getPrecioPension()%>&pago=<%=per.getFechaPago().substring(0,10)%>" role="button"><i class="glyphicon glyphicon-refresh"></i></a></p></td>
+                    <td><%=per.getFechaPago()%></td>
+                    <td><%=per.getVigencia()%>&nbsp;Días</td>
+                    <td><p><a class="btn btn-primary" title="Renovar Contrato del Pencionista" href="renovar.jsp?idpersona=<%=per.getIdPersona()%>&nombres=<%=per.getNombres()%>&apellidos=<%=per.getApellidos()%>&dni=<%=per.getDni()%>&ncelular=<%=per.getNCelular()%>&direcciones=<%=per.getDireccion()%>&precioPension=<%=per.getPrecioPension()%>&pago=" role="button"><i class="glyphicon glyphicon-refresh"></i></a></p></td>
                     <td><p><a class="btn btn-primary" title="Modificar Contrato del Pencionista" href="modificarpen.jsp role="button><i class="glyphicon glyphicon-pencil"></i></a></p></td>
-                    <td><p><a class="btn btn-danger" title="Eliminar" onclick="if(!confirm('Esta seguro de eliminar a <%=per.getNombres()%> <%=per.getApellidos()%>'))return false" role="button" href="pensionistas.jsp?opcion=delete&id=<%=per.getIdContrato()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
+                    <td><p><a class="btn btn-danger" title="Eliminar" onclick="if(!confirm('Esta seguro de eliminar a <%=per.getNombres()%> <%=per.getApellidos()%> y todos sus registros'))return false" role="button" href="pensionistas.jsp?opcion=delete&id=<%=per.getIdContrato()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
                 </tr>
                 <%}%>
-                <%=mensaje%>
             </tbody>
         </table>
     </div>    

@@ -1,6 +1,5 @@
 
-<%@page import="proy.modelo.entidad.ContratoPensionista"%>
-<%@page import="proy.modelo.entidad.Persona"%>
+<%@page import="proy.modelo.entidad.AgregarContrato"%>
 <%@page import="proy.modelo.daoImpl.PensionistadoaImpl"%>
 <%@page import="proy.modelo.dao.Pensionistadao"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -27,44 +26,36 @@
             }
         
             Pensionistadao dao = new PensionistadoaImpl();
-            Persona person = new Persona();
-            ContratoPensionista contrato = new ContratoPensionista();
+            AgregarContrato agregarContrato = new AgregarContrato();
             
-            String idPersona = request.getParameter("idpersona"); idPersona = idPersona == null ? "" : idPersona;
-            String nombres = request.getParameter("nombres"); nombres = nombres == null?"":nombres;
-            String apellidos = request.getParameter("apellidos"); apellidos = apellidos == null?"":apellidos;
-            String dni = request.getParameter("dni"); dni = dni == null?"":dni;
+            String nombre = request.getParameter("nombre"); nombre = nombre == null?"":nombre;
+            String apellido = request.getParameter("apellido"); apellido = apellido == null?"":apellido;
+            String dn = request.getParameter("dn"); dn = dn == null?"":dn;
             String ncelular = request.getParameter("ncelular"); ncelular = ncelular == null?"":ncelular;
-            String direccion = request.getParameter("direccion"); direccion = direccion == null?"":direccion;
-            String f_inicio = request.getParameter("fechaInicio"); f_inicio = f_inicio == null ? "" : f_inicio;
-            String f_final = request.getParameter("fechaFinal"); f_final = f_final == null ? "" : f_final;
-            String fPago = request.getParameter("fpago"); fPago = fPago == null ? "" : fPago;
-            String precioPension = request.getParameter("fpago"); precioPension = precioPension == null ? "" : precioPension;
-            String Pago = request.getParameter("pago"); Pago = Pago == null ? "" : Pago;
+            String direcciones = request.getParameter("direcciones"); direcciones = direcciones == null?"":direcciones;
+            String fechini = request.getParameter("fechini"); fechini = fechini == null ? "" : fechini;
+            String precio = request.getParameter("precio"); precio = precio == null ? "" : precio;
+            String stado = request.getParameter("stado"); stado = stado == null ? "" : stado;
+            String alert = "";
             String mensaje = "";
             
-            if (!nombres.equals("") & !apellidos.equals("") & !dni.equals("") & !ncelular.equals("") & !direccion.equals("")) {
-                person.setNombres(nombres);
-                person.setApellidos(apellidos);
-                person.setDni(dni);
-                person.setNCelular(ncelular);
-                person.setDireccion(direccion);
-                if (dao.agregarContrato(contrato)) {
-                    response.sendRedirect("agregar.jsp?idpersona=");
-                    if (!idPersona.equals("") & !f_inicio.equals("") & !f_final.equals("") & !fPago.equals("") & !precioPension.equals("") & Pago.equals("")) {
-                        contrato.setIdpersona(Integer.parseInt(idPersona));
-                        contrato.setFechaInicio(f_inicio);
-                        contrato.setFechaFin(f_final);
-                        contrato.setFechaPago(fPago);
-                        contrato.setPrecioPension(precioPension);
-                        contrato.setEstado(Pago);
-                        if(dao.agregarContrato(contrato)){
-                            response.sendRedirect("javascript:history.back(-1);");
-                        }else {
-                        mensaje = "No se Pudo Agregar el Producto";
-                        }
-                    }
-                } 
+            if (!nombre.equals("") & !apellido.equals("") & !dn.equals("") & !direcciones.equals("") & !fechini.equals("") & !precio.equals("") & !stado.equals("")) {
+                 agregarContrato.setNombre(nombre);
+                 agregarContrato.setApellido(apellido);
+                 agregarContrato.setDn(dn);
+                 agregarContrato.setNcelular(ncelular);
+                 agregarContrato.setDirecciones(direcciones);
+                 agregarContrato.setFechini(fechini);
+                 agregarContrato.setPrecio(precio);
+                 agregarContrato.setStado(stado);
+                 agregarContrato.setIdusuario(idUsuario);
+                 if(dao.agregarContrato(agregarContrato)){
+                     alert = "info";
+                    mensaje = "El Contrato se añadió correctamente...<br><br><a class='btn btn-primary' href='agregar.jsp'>[Agregar más >>]</a>";
+                 }else{
+                     alert = "danger";
+                    mensaje = "El Contrato no se pudo agregarse...";
+                 }
             }
             
         %>

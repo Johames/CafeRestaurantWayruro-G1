@@ -6,6 +6,7 @@
 package proy.modelo.dao;
 
 import java.util.List;
+import proy.modelo.entidad.Agregar_Usuario;
 import proy.modelo.entidad.Listar_Usuario;
 import proy.modelo.entidad.Rol;
 import proy.modelo.entidad.Usuario;
@@ -17,7 +18,7 @@ import proy.modelo.entidad.Usuario;
 public interface Usuariodao {
     public String ComprobarUsuario(String usuario, String contrasena);
     public List<Listar_Usuario> ListarUsuario();
-    public boolean AgregarUsuario(Usuario usuario);
+    public boolean AgregarUsuario(Agregar_Usuario agregar_Usuario);
     public boolean EliminarUsuario(int id);
     public List<Rol> ListarRol();
 }

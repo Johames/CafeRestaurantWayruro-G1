@@ -10,9 +10,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import proy.modelo.dao.Pensionistadao;
+import proy.modelo.entidad.AgregarContrato;
 import proy.modelo.entidad.ContratoPensionista;
 import proy.modelo.entidad.Listar_pensionista;
 import proy.modelo.entidad.Persona;
+import proy.modelo.entidad.RenovarContrato;
 import proy.modelo.util.HibernateUtil;
 
 public class PensionistadoaImpl implements Pensionistadao {
@@ -49,7 +51,8 @@ public class PensionistadoaImpl implements Pensionistadao {
         ResultSet rs = null;
         Listar_pensionista cp = null;
         String query = "select cp.id_contrato as idc, cp.id_persona as id, p.nombres as name, p.apellidos as ape, p.dni as dn, "
-                + "p.n_celular as celu, p.direccion as dire, cp.fecha_inicio as fi, cp.fecha_fin as ff, cp.precio_pension as pp, cp.fecha_pago as fp "
+                + "p.n_celular as celu, p.direccion as dire, cp.fecha_inicio as fi, cp.fecha_fin as ff, cp.precio_pension as pp, cp.fecha_pago as fp,"
+                + "trunc(to_date(cp.fecha_fin))-trunc(to_date(to_char(sysdate, 'dd/mm/yyyy'))) as vigencia "
                 + "from persona p, CONTRATO_PENSIONISTA cp "
                 + "where p.id_persona=cp.id_persona and " 
                 + "(select to_char(sysdate,'dd/mm/yyyy')from dual)>=(cp.fecha_inicio) " 
@@ -71,6 +74,7 @@ public class PensionistadoaImpl implements Pensionistadao {
                 cp.setFechaFin(rs.getString("ff"));
                 cp.setPrecioPension(rs.getString("pp"));
                 cp.setFechaPago(rs.getString("fp"));
+                cp.setVigencia(rs.getString("vigencia"));
                 lista.add(cp);
             }
             abrirConexion().close();
@@ -112,17 +116,12 @@ public class PensionistadoaImpl implements Pensionistadao {
 
 
     @Override
-    public boolean RenovarContrato(ContratoPensionista contratoPensionista) {
+    public boolean RenovarContrato(RenovarContrato renovarContrato) {
         boolean estado = false;
         Statement st= null;
-        String query="Insert into CONTRATO_PENSIONISTA values "
-                        + "('',"+contratoPensionista.getIdpersona()
-                        +",'"+contratoPensionista.getFechaInicio()
-                        +"','"+contratoPensionista.getFechaFin()
-                        +"','"+contratoPensionista.getPrecioPension()
-                        +"','"+contratoPensionista.getFechaPago()
-                        +"','"+contratoPensionista.getEstado()
-                        +"',"+contratoPensionista.getIdusuario()+") ";
+        String query = " begin renovarcontrato("+renovarContrato.getIdpersona()+" "
+                + ", '"+renovarContrato.getFechini()+"','"+renovarContrato.getPrecio()+"' "
+                + ", '"+renovarContrato.getStado()+"','"+renovarContrato.getIdusuario()+"');end; ";
         try {
             st = abrirConexion().createStatement();
             st.executeUpdate(query);
@@ -137,31 +136,34 @@ public class PensionistadoaImpl implements Pensionistadao {
                 cerrarConexion();
                 estado = false;
             } catch (Exception ex) {
-                
             }
         }
         return estado;
     }
 
     @Override
-    public boolean agregarContrato(ContratoPensionista contrato) {
+    public boolean agregarContrato(AgregarContrato agregarContrato) {
         boolean flat = false;
-        SessionFactory sf = null;
-        Session session = null;
-        Transaction transaction = null;
+        Statement st= null;
+        String query = "begin registrarcontrato('"+agregarContrato.getNombre()+"','"+agregarContrato.getApellido()+"' "
+                + ", '"+agregarContrato.getDn()+"','"+agregarContrato.getNcelular()+"','"+agregarContrato.getDirecciones()+"' "
+                + ", '"+agregarContrato.getFechini()+"','"+agregarContrato.getPrecio()+"','"+agregarContrato.getStado()+"' "
+                + ",'"+agregarContrato.getIdusuario()+"');end; ";
         try {
-            sf = HibernateUtil.getSessionFactory();
-            session = sf.openSession();
-            transaction = session.beginTransaction();
-            session.save(contrato);
-            transaction.commit();
-            session.close();
-            flat=true;
+            st = abrirConexion().createStatement();
+            st.executeUpdate(query);
+            guardar();
+            cerrarConexion();
+            flat = true;
         } catch (Exception e) {
             e.printStackTrace();
-            flat=false;
-            transaction.rollback();
-            session.close();
+            System.out.println(e.getMessage());
+            try {
+                revertir();
+                cerrarConexion();
+                flat = false;
+            } catch (Exception ex) {
+            }
         }
         return flat;
     }

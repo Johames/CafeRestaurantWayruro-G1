@@ -1,3 +1,4 @@
+<%@page import="proy.modelo.entidad.Agregar_Usuario"%>
 <%@page import="proy.modelo.daoImpl.PensionistadoaImpl"%>
 <%@page import="proy.modelo.dao.Pensionistadao"%>
 <%@page import="proy.modelo.entidad.Usuario"%>
@@ -45,7 +46,7 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <form class="navbar-form navbar-right">
-                        <a class="btn btn-primary" href="javascript:history.back(-1);" title="Ir a la Página Anterior" role="button">Ir a la Lista &emsp;<i class="glyphicon glyphicon-list-alt"></i></a>
+                        <a class="btn btn-primary" href="Usuario.jsp" title="Ir a la Lista" role="button">Ir a la Lista &emsp;<i class="glyphicon glyphicon-list-alt"></i></a>
                     </form>
                 </div>
             </div>
@@ -56,26 +57,40 @@
         <%
             Pensionistadao pen = new PensionistadoaImpl();
             Usuariodao dao = new UsuariodaoImpl();
+            Agregar_Usuario agregar_Usuario = new Agregar_Usuario();
             Persona persona = new Persona();
             Usuario us = new Usuario();
-            Rol rl = new Rol();
             
-            String idPersona = request.getParameter("idpersona"); idPersona = idPersona == null?"":idPersona;
-            String nombres = request.getParameter("nombres"); nombres = nombres == null?"":nombres;
-            String apellidos = request.getParameter("apellidos"); apellidos = apellidos == null?"":apellidos;
-            String dni = request.getParameter("dni"); dni = dni == null?"":dni;
+            String nombre = request.getParameter("nombre"); nombre = nombre == null?"":nombre;
+            String apellido = request.getParameter("apellido"); apellido = apellido == null?"":apellido;
+            String dn = request.getParameter("dn"); dn = dn == null?"":dn;
             String ncelular = request.getParameter("ncelular"); ncelular = ncelular == null?"":ncelular;
-            String direccion = request.getParameter("direccion"); direccion = direccion == null?"":direccion;
-            String usuario = request.getParameter("usuario"); usuario = usuario == null?"":usuario;
-            String contrasena = request.getParameter("contrasena"); contrasena = contrasena == null?"":contrasena;
+            String direcciones = request.getParameter("direcciones"); direcciones = direcciones == null?"":direcciones;
+            String usuar = request.getParameter("usuar"); usuar = usuar == null?"":usuar;
+            String contra = request.getParameter("contra"); contra = contra == null?"":contra;
+            String stado = request.getParameter("stado"); stado = stado == null?"":stado;
             String rol = request.getParameter("rol"); rol = rol == null?"":rol;
+            String alert = "";
+            String mensaje = "";
             
             
-            if(!nombres.equals("nombres") & !apellidos.equals("apellidos") & !dni.equals("") & !ncelular.equals("") & !direccion.equals("")){
-                nombres = persona.setNombres("nombres");
-                pen.agregarpensionista(persona);
-                if(!idPersona.equals("") & !usuario.equals("") & !contrasena.equals("") & !rol.equals("")){
-                    
+            if(!nombre.equals("nombre") & !apellido.equals("apellido") & !dn.equals("") & !direcciones.equals("") & !usuar.equals("") & !contra.equals("")){
+                agregar_Usuario.setNombre(nombre);
+                agregar_Usuario.setApellido(apellido);
+                agregar_Usuario.setDn(dn);
+                agregar_Usuario.setNcelular(ncelular);
+                agregar_Usuario.setDirecciones(direcciones);
+                agregar_Usuario.setUsuar(usuar);
+                agregar_Usuario.setContra(contra);
+                agregar_Usuario.setStado(stado);
+                agregar_Usuario.setRol(rol);
+                agregar_Usuario.setIdUsuario(idUsuario);
+                if(dao.AgregarUsuario(agregar_Usuario)){
+                    alert = "info";
+                    mensaje = "El Usuario se añadió correctamente...<br><br><a class='btn btn-primary' href='agregarusuario.jsp'>[Agregar más >>]</a>";
+                }else{
+                    alert = "danger";
+                    mensaje = "El Usuario no se pudo agregarse...";
                 }
             }
         %>

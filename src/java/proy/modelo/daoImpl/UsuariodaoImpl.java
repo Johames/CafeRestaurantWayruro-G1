@@ -15,6 +15,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import proy.modelo.dao.Usuariodao;
+import proy.modelo.entidad.Agregar_Usuario;
 import proy.modelo.entidad.Listar_Usuario;
 import proy.modelo.entidad.Rol;
 import proy.modelo.entidad.Usuario;
@@ -76,27 +77,30 @@ public class UsuariodaoImpl implements Usuariodao {
     }
 
     @Override
-    public boolean AgregarUsuario(Usuario usuario) {
-        Statement st = null;
-        boolean flat = false;
-        String query = "INSERT INTO Cliente VALUES ()";
-        System.out.println(query); 
-       try {
+    public boolean AgregarUsuario(Agregar_Usuario agregar_Usuario) {
+        boolean stado = false;
+        Statement st= null;
+        String query="begin registrarusuario('"+agregar_Usuario.getNombre()+"','"+agregar_Usuario.getApellido()+"' "
+                + ", '"+agregar_Usuario.getDn()+"','"+agregar_Usuario.getNcelular()+"','"+agregar_Usuario.getDirecciones()+"'"
+                + ",'"+agregar_Usuario.getUsuar()+"','"+agregar_Usuario.getContra()+"','"+agregar_Usuario.getStado()+"'"
+                + ",'"+agregar_Usuario.getRol()+"');end; ";
+        try {
             st = abrirConexion().createStatement();
             st.executeUpdate(query);
-            abrirConexion().commit();
-            abrirConexion().close();
-            flat = true;
+            guardar();
+            cerrarConexion();
+            stado = true;
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
             try {
-                abrirConexion().rollback();
-                abrirConexion().close();
-                flat = false;
+                revertir();
+                cerrarConexion();
+                stado = false;
             } catch (Exception ex) {
             }
         }
-        return flat;
+        return stado;
     }
 
     @Override

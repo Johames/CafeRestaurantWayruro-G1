@@ -6,11 +6,13 @@
 package consola;
 
 
+import com.mchange.v2.c3p0.test.ListTablesTest;
 import proy.modelo.entidad.Usuario;
 import proy.modelo.dao.Pensionistadao;
 import proy.modelo.dao.Usuariodao;
 import proy.modelo.daoImpl.PensionistadoaImpl;
 import proy.modelo.daoImpl.UsuariodaoImpl;
+import proy.modelo.entidad.Listar_pensionista;
 import proy.modelo.entidad.Persona;
 
 /**
@@ -27,7 +29,8 @@ public class NewMain {
         NewMain main = new NewMain();
         
         //main.agregar();
-        main.comprobar();
+        //main.comprobar();
+        main.buscar();
         
     }
     
@@ -60,6 +63,14 @@ public class NewMain {
         //usuario us = new usuario();
         id_usuario = user.ComprobarUsuario("admin", "1234");
         System.out.println("ID : "+id_usuario);
+    }
+    
+    public void buscar(){
+        Pensionistadao dao = new PensionistadoaImpl();
+        
+        for (Listar_pensionista pensionista : dao.ListarPensionista()) {
+            System.out.println(pensionista.getNombres());
+        }
     }
     
     

@@ -1,3 +1,4 @@
+<%@page import="proy.modelo.entidad.RenovarContrato"%>
 <%@page import="javafx.util.converter.DateTimeStringConverter"%>
 <%@page import="java.sql.Date"%>
 <%@page import="proy.modelo.entidad.ContratoPensionista"%>
@@ -32,31 +33,27 @@
             
             Pensionistadao persona = new PensionistadoaImpl();
             Listar_pensionista listar =  new Listar_pensionista();
-            ContratoPensionista contratoPensionista = new ContratoPensionista();
+            RenovarContrato renovarContrato = new RenovarContrato();
             
-            String buscarpen = request.getParameter("buscar"); buscarpen = buscarpen == null?"":buscarpen;
             String idpersona = request.getParameter("idpersona"); idpersona = idpersona == null ? "" : idpersona;
-            String nombre = request.getParameter("nombres"); nombre = nombre == null?"":nombre;
-            String apellido = request.getParameter("apellidos"); apellido = apellido == null?"":apellido;
-            String dn = request.getParameter("dni"); dn = dn == null?"":dn;
+            String nombres = request.getParameter("nombres"); nombres = nombres == null?"":nombres;
+            String apellidos = request.getParameter("apellidos"); apellidos = apellidos == null?"":apellidos;
+            String dni = request.getParameter("dni"); dni = dni == null?"":dni;
             String NCelular = request.getParameter("ncelular"); NCelular = NCelular == null?"":NCelular;
             String direccion = request.getParameter("direcciones"); direccion = direccion == null?"":direccion;
-            String fechaInicio = request.getParameter("fechaInicio"); fechaInicio = fechaInicio == null?"":fechaInicio;
-            String precioPension = request.getParameter("precioPension"); precioPension = precioPension == null?"":precioPension;
-            String fechaPago = request.getParameter("fechaPago"); fechaPago = fechaPago == null?"":fechaPago;
-            String estado = request.getParameter("estado"); estado = estado == null?"":estado;
-            String idusuario = request.getParameter("idusuario"); idusuario = idusuario == null?"":idusuario;
+            String fechini = request.getParameter("fechini"); fechini = fechini == null?"":fechini;
+            String precio = request.getParameter("precio"); precio = precio == null?"":precio;
+            String stado = request.getParameter("stado"); stado = stado == null?"":stado;
             String mensaje = "";
             String alert = "";
             
-            if(!idpersona.equals("") && !fechaInicio.equals("") && !precioPension.equals("") && !fechaPago.equals("") && !estado.equals("") && !idusuario.equals("")){
-                contratoPensionista.setIdpersona(Integer.parseInt(idpersona));
-                contratoPensionista.setFechaInicio(fechaInicio);
-                contratoPensionista.setPrecioPension(precioPension);
-                contratoPensionista.setFechaPago(fechaPago);
-                contratoPensionista.setEstado(estado);
-                contratoPensionista.setIdusuario(Integer.parseInt(idusuario));
-                if(persona.RenovarContrato(contratoPensionista)){
+            if(!idpersona.equals("") & !fechini.equals("") & !precio.equals("") & !stado.equals("")){
+                renovarContrato.setIdpersona(Integer.parseInt(idpersona));
+                renovarContrato.setFechini(fechini);
+                renovarContrato.setPrecio(precio);
+                renovarContrato.setStado(stado);
+                renovarContrato.setIdusuario(idUsuario);
+                if(persona.RenovarContrato(renovarContrato)){
                     alert = "info";
                     mensaje = "El Contrato se renovó correctamente...";
                 }else{

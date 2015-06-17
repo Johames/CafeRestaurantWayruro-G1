@@ -36,6 +36,8 @@
             }
             
             String nombres = request.getParameter("nombres"); nombres = nombres == null?"":nombres;
+            String apellidos = request.getParameter("apellidos"); apellidos = apellidos == null?"":apellidos;
+            String idContrato = request.getParameter("idContrato"); idContrato = idContrato == null?"":idContrato;
             
             String idProducto = request.getParameter("idProducto"); idProducto = idProducto == null?"":idProducto;
             String nombreProducto = request.getParameter("nombreProducto"); nombreProducto = nombreProducto == null?"":nombreProducto;

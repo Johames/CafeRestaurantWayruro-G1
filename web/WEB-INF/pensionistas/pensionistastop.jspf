@@ -1,9 +1,7 @@
 <%@page import="java.util.List"%>
 <%@page import="proy.modelo.daoImpl.PensionistadoaImpl"%>
 <%@page import="proy.modelo.entidad.Listar_pensionista"%>
-<%@page import="proy.modelo.entidad.ContratoPensionista"%>
 <%@page import="proy.modelo.dao.Pensionistadao"%>
-<%@page import="proy.modelo.entidad.Persona"%>
 <!DOCTYPE html>
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
@@ -26,24 +24,7 @@
             if (idUsuario == null) {
                 response.sendRedirect("error.jsp");
             }
-
-            Pensionistadao p = new PensionistadoaImpl();
-            Persona person = new Persona();
-            ContratoPensionista contrato = new ContratoPensionista();
-
-            String idPersona = request.getParameter("idpersona"); idPersona = idPersona == null ? "" : idPersona;
-            String nombres = request.getParameter("nombres"); nombres = nombres == null ? "" : nombres;
-            String apellidos = request.getParameter("apellidos"); apellidos = apellidos == null ? "" : apellidos;
-            String dni = request.getParameter("dni"); dni = dni == null ? "" : dni;
-            String NCelular = request.getParameter("NCelular"); NCelular = NCelular == null ? "" : NCelular;
-            String direccion = request.getParameter("direccion"); direccion = direccion == null ? "" : direccion;
-            String f_inicio = request.getParameter("fechaInicio"); f_inicio = f_inicio == null ? "" : f_inicio;
-            String f_final = request.getParameter("fechaFinal"); f_final = f_final == null ? "" : f_final;
-            String p_pension = request.getParameter("p_pension"); p_pension = p_pension == null ? "" : p_pension;
-            String f_pago = request.getParameter("f_pago"); f_pago = f_pago == null ? "" : f_pago;
-            String mensaje = "";
-
-
+            
         %>
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
@@ -82,7 +63,7 @@
                     </script>
                     <form class="navbar-form navbar-right">
                         <div class="col-lg-pull-0">
-                            <input name="filt" onkeyup="filter(this, 'tj', '1')" type="text"class="form-control" placeholder="Nombre a Buscar" autofocus >
+                            <input name="filt" onkeyup="filter(this, 'tj', '1')" type="text"class="form-control" placeholder="Nombre a Buscar" autofocus>
                         </div>
                     </form>
                     <form class="navbar-form navbar-right">
