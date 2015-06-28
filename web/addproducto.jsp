@@ -43,7 +43,7 @@
                                 <option selected="selected" hidden>Seleccionar Categoria</option>
                                 <%                                                        
                                     int count = 0;
-                                    for (Categoria cate : productodao.ListarCategoria()) {
+                                    for (Categoria cate : categoriadao.ListarCategoria()) {
                                         count++;
                                 %>
                                 <option value="<%=cate.getIdCategoria()%>"><%=cate.getNombreCat()%></option>
@@ -54,7 +54,7 @@
                     <div class="form-group">
                         <label class="control-label col-xs-3">Usuario :</label>
                         <div class="col-xs-6">
-                            <input type="number" class="form-control" value="<%=idUsuario%>" name="idUsuario" placeholder="Precio a Pencionistas" readonly>
+                            <input type="number" class="form-control" value="<%=idUsuario%>" name="idUsuario" readonly>
                         </div>
                     </div>
                     <br>

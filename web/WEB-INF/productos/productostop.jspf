@@ -1,3 +1,5 @@
+<%@page import="proy.modelo.daoImpl.CategoriadaoImpl"%>
+<%@page import="proy.modelo.dao.Categoriadao"%>
 <%@page import="proy.modelo.entidad.Categoria"%>
 <%@page import="proy.modelo.daoImpl.ProductodaoImpl"%>
 <%@page import="proy.modelo.dao.Productodao"%>
@@ -19,12 +21,10 @@
     <body>
         <%
             
-            if (idUsuario == null) {
+            if (idUsuario.equals("")) {
                 response.sendRedirect("error.jsp");
             }
 
-            Productodao productodao = new ProductodaoImpl();
-            
             String idCategoria = request.getParameter("idCategoria"); idCategoria = idCategoria == null?"":idCategoria;
             String nombreCat = request.getParameter("nombreCat"); nombreCat = nombreCat == null?"":nombreCat;
 
@@ -40,7 +40,7 @@
                     </button>
                     <a class="navbar-brand" href="pensionistas.jsp">Café Restaurant "Wayruro"</a>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="index.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
+                        <li class="active"><a href="inicio.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
                     </ul>  
                 </div>
                 <script type="text/javascript">
@@ -81,34 +81,14 @@
 
         <div class="container">
             <div class="col-sm-3 col-md-2 sidebar">
-                <%                    int count = 0;
-                    for (Categoria cat : productodao.ListarCategoria()) {
+                <%     
+                    Categoriadao cat = new CategoriadaoImpl();
+                    int count = 0;
+                    for(Categoria categ : cat.ListarCategoria()){
                         count++;
                 %>
                 <ul class="nav nav-sidebar">
-                    <li><a href="platos.jsp?idCategoria=<%=cat.getIdCategoria()%>&nombreCat=<%=cat.getNombreCat()%>"><%=cat.getNombreCat()%><span class="sr-only">(current)</span></a></li>
+                    <li><a href="platos.jsp?idCategoria=<%=categ.getIdCategoria()%>&nombreCat=<%=categ.getNombreCat()%>"><%=categ.getNombreCat()%><span class="sr-only"></span></a></li>
                 </ul>
                 <%}%>
             </div>
-            <%
-                String opcion = request.getParameter("opcion");
-                opcion = opcion == null ? "" : opcion;
-                String id = request.getParameter("id");
-                id = id == null ? "" : id;
-                String mensaje = "";
-
-                if (opcion.equals("delete")) {
-
-                    if (productodao.EliminarProducto(Integer.parseInt(id))) {
-
-                        mensaje = "Se elimino correctamente";
-
-                    } else {
-
-                        mensaje = "Ocurrio un error al Eliminar";
-
-                    }
-                }
-
-                Categoria categ = new Categoria();
-            %>

@@ -70,3 +70,36 @@
                 </div>
             </div>
         </div>
+        
+    <div class="container marketing">  
+      <div class="row">
+        <div class="col-lg-4">
+          <img class="img-circle" src="recursos/img/pensionistas.png" alt="Generic placeholder image" width="140" height="140">
+          <h2>Pensionistas</h2>
+          <p><a class="disabled btn btn-primary" href="pensionistas.jsp" role="button">Ver Lista »</a></p>
+        </div>
+        <div class="col-lg-4">
+          <div class="tab-pane fade active in" id="map-acercade">
+                  <div class="row-fluid">
+                    <div class="span11">
+                        <div class="tab-pane active" id="maptarapoto">
+	                    <iframe width="100%" height="220" scrolling="auto" frameborder="1px" src="http://www.sudoku-online.org/" name="window"></iframe>
+	                </div>
+                    </div>
+                  </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="tab-pane fade active in" id="map-acercade">
+                  <div class="row-fluid">
+                    <div class="span11">
+                        <div class="tab-pane active" id="maptarapoto">
+	                    <iframe width="100%" height="220" frameborder="2" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com.pe/maps?f=q&amp;source=s_q&amp;hl=es&amp;geocode=&amp;q=upeu&amp;aq=&amp;sll=-9.243538,-75.019515&amp;sspn=35.39906,59.106445&amp;ie=UTF8&amp;hq=upeu&amp;hnear=&amp;t=m&amp;cid=6993184648769333257&amp;ll=-6.472842,-76.393604&amp;spn=0.018762,0.025663&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe>
+	                </div>
+                    </div>
+                  </div>
+          </div>
+        </div>
+      </div>
+              
+<%@include file="WEB-INF/jspf/bottom.jspf" %>

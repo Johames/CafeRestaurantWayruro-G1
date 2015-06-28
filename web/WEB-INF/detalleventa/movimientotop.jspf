@@ -1,11 +1,13 @@
-<%@page import="proy.modelo.entidad.Listar_Usuario"%>
-<%@page import="proy.modelo.entidad.Usuario"%>
-<%@page import="proy.modelo.daoImpl.UsuariodaoImpl"%>
-<%@page import="proy.modelo.dao.Usuariodao"%>
+<%@page import="proy.modelo.entidad.Listar_Movimientos"%>
+<%@page import="java.util.List"%>
+<%@page import="proy.modelo.daoImpl.MovimientosdaoImpl"%>
+<%@page import="proy.modelo.dao.Movimientosdao"%>
+<!DOCTYPE html>
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="keywords" content="Javascript,table filter" />
         <meta name="description" content="">
         <meta name="author" content="">
         <link rel="icon" href="recursos/ico/favicon.ico">
@@ -19,27 +21,10 @@
     <body>
         <%
             
-            if(idUsuario.equals("")){
+            if (idUsuario.equals("")) {
                 response.sendRedirect("error.jsp");
             }
-        
-            Usuariodao usuariodao = new UsuariodaoImpl();
-            Usuario usuario = new Usuario();
-
-            String buscarpen = request.getParameter("buscarpen");
-            buscarpen = buscarpen == null ? "" : buscarpen;
-            String nombres = request.getParameter("nombres");
-            nombres = nombres == null ? "" : nombres;
-            String apellidos = request.getParameter("apellidos");
-            apellidos = apellidos == null ? "" : apellidos;
-            String dni = request.getParameter("dni");
-            dni = dni == null ? "" : dni;
-            String NCelular = request.getParameter("NCelular");
-            NCelular = NCelular == null ? "" : NCelular;
-            String direccion = request.getParameter("direccion");
-            direccion = direccion == null ? "" : direccion;
-
-
+            
         %>
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
@@ -56,8 +41,30 @@
                     </ul>  
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
+                    <script type="text/javascript">
+                        function filter(phrase, _id) {
+                            var words = phrase.value.toLowerCase().split(" ");
+                            var table = document.getElementById(_id);
+                            var ele;
+                            for (var r = 1; r < table.rows.length; r++) {
+                                ele = table.rows[r].innerHTML.replace(/<[^>]+>/g, "");
+                                var displayStyle = 'none';
+                                for (var i = 0; i < words.length; i++) {
+                                    if (ele.toLowerCase().indexOf(words[i]) >= 0)
+                                        displayStyle = '';
+                                    else {
+                                        displayStyle = 'none';
+                                        break;
+                                    }
+                                }
+                                table.rows[r].style.display = displayStyle;
+                            }
+                        }
+                    </script>
                     <form class="navbar-form navbar-right">
-                        <a class="btn btn-primary" href="agregarusuario.jsp" role="button">Agregar &emsp;<i class="glyphicon glyphicon-floppy-disk"></i></a>
+                        <div class="col-lg-pull-0">
+                            <input name="filt" onkeyup="filter(this, 'tab', '1')" type="text"class="form-control" placeholder="Buscar" autofocus>
+                        </div>
                     </form>
                 </div>
             </div>

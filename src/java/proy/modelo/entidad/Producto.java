@@ -3,20 +3,20 @@ package proy.modelo.entidad;
 public class Producto  {
 
 
-     private int idProducto;
+     private String idProducto;
      private String nombreProducto;
      private String precio;
-     private int idCategoria;     
-     private int idUsuario;
+     private String idCategoria;     
+     private String idUsuario;
 
     public Producto() {
     }
 
-    public int getIdProducto() {
+    public String getIdProducto() {
         return idProducto;
     }
 
-    public void setIdProducto(int idProducto) {
+    public void setIdProducto(String idProducto) {
         this.idProducto = idProducto;
     }
 
@@ -36,25 +36,22 @@ public class Producto  {
         this.precio = precio;
     }
 
-    public int getIdCategoria() {
+    public String getIdCategoria() {
         return idCategoria;
     }
 
-    public void setIdCategoria(int idCategoria) {
+    public void setIdCategoria(String idCategoria) {
         this.idCategoria = idCategoria;
     }
 
-    public int getIdUsuario() {
+    public String getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(String idUsuario) {
         this.idUsuario = idUsuario;
     }
-     
-     
-     
-
+    
 }
 
 

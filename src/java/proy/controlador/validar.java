@@ -46,7 +46,7 @@ public class validar extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("idUsuario", dao.ComprobarUsuario(usuario, contrasena));
             
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            request.getRequestDispatcher("inicio.jsp").forward(request, response);
             
         }else{
             request.getRequestDispatcher("error.jsp").forward(request, response);

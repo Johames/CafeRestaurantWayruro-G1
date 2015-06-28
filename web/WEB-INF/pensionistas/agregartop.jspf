@@ -1,4 +1,3 @@
-
 <%@page import="proy.modelo.entidad.AgregarContrato"%>
 <%@page import="proy.modelo.daoImpl.PensionistadoaImpl"%>
 <%@page import="proy.modelo.dao.Pensionistadao"%>
@@ -21,7 +20,7 @@
     </head>
     <body>
         <%
-            if(idUsuario == null){
+            if(idUsuario.equals("")){
                 response.sendRedirect("error.jsp");
             }
         
@@ -36,10 +35,11 @@
             String fechini = request.getParameter("fechini"); fechini = fechini == null ? "" : fechini;
             String precio = request.getParameter("precio"); precio = precio == null ? "" : precio;
             String stado = request.getParameter("stado"); stado = stado == null ? "" : stado;
+            String tip = request.getParameter("tip"); tip = tip == null?"":tip;
             String alert = "";
             String mensaje = "";
             
-            if (!nombre.equals("") & !apellido.equals("") & !dn.equals("") & !direcciones.equals("") & !fechini.equals("") & !precio.equals("") & !stado.equals("")) {
+            if (!nombre.equals("") && !apellido.equals("") && !dn.equals("") && !direcciones.equals("") && !fechini.equals("") && !precio.equals("") && !stado.equals("") && !tip.equals("")) {
                  agregarContrato.setNombre(nombre);
                  agregarContrato.setApellido(apellido);
                  agregarContrato.setDn(dn);
@@ -49,12 +49,13 @@
                  agregarContrato.setPrecio(precio);
                  agregarContrato.setStado(stado);
                  agregarContrato.setIdusuario(idUsuario);
+                 agregarContrato.setTip(tip);
                  if(dao.agregarContrato(agregarContrato)){
                      alert = "info";
                     mensaje = "El Contrato se añadió correctamente...<br><br><a class='btn btn-primary' href='agregar.jsp'>[Agregar más >>]</a>";
                  }else{
                      alert = "danger";
-                    mensaje = "El Contrato no se pudo agregarse...";
+                    mensaje = "El Contrato no se pudo agregar...";
                  }
             }
             
@@ -70,7 +71,7 @@
                     </button>
                     <a class="navbar-brand" href="#">Café Restaurant "Wayruro"</a>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="index.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
+                        <li class="active"><a href="inicio.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
                     </ul>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">

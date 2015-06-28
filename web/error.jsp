@@ -27,7 +27,7 @@
             </div>
 
         </div>
-        <meta http-equiv="Refresh" content="5;url=logeo.jsp">
+        <meta http-equiv="Refresh" content="5;url=index.jsp">
 
         <script src="jquery/jquery.min.js"></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>

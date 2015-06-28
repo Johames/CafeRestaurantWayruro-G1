@@ -5,6 +5,7 @@
  */
 package proy.modelo.dao;
 
+import proy.modelo.entidad.AgregarVenta;
 import proy.modelo.entidad.Agregar_Venta;
 import proy.modelo.entidad.Venta;
 
@@ -15,4 +16,6 @@ import proy.modelo.entidad.Venta;
 public interface Ventadao {
     
     public boolean AgregarVenta(Agregar_Venta agregarv);
+    public boolean Agregar(AgregarVenta venta);
+    public String BuscarId();
 }

@@ -15,6 +15,7 @@ public class RenovarContrato {
     private String precio;
     private String stado;
     private String idusuario;
+    private String tip;
 
     public RenovarContrato() {
     }
@@ -57,6 +58,14 @@ public class RenovarContrato {
 
     public void setIdusuario(String idusuario) {
         this.idusuario = idusuario;
+    }
+
+    public String getTip() {
+        return tip;
+    }
+
+    public void setTip(String tip) {
+        this.tip = tip;
     }
     
 }

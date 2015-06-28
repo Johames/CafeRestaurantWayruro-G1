@@ -22,7 +22,7 @@
                 </form>
             </div>
             <div class="formu">
-                <form class="form-horizontal" action="agregar.jsp">
+                <form class="form-horizontal" action="agregar.jsp" method="Post">
                     <div class="form-group">
                         <label class="control-label col-xs-3">Nombres:</label>
                         <div class="col-xs-6">
@@ -53,7 +53,6 @@
                             <textarea rows="3" class="form-control"  name="direcciones" placeholder="Dirección"></textarea>
                         </div>
                     </div>
-                    <input hidden name="idpersona" value="">
                     <div class="form-group">
                         <label class="control-label col-xs-3">Inicio de la Pensión:</label>
                         <div class="col-xs-3">
@@ -63,7 +62,7 @@
                     <div class="form-group">
                         <label class="control-label col-xs-3">Costo de la Pension:</label>
                         <div class="col-xs-3">
-                            <input type="number" class="form-control"name="precio">
+                            <input type="number" class="form-control" name="precio">
                         </div> 
                     </div>
                     <div class="form-group">
@@ -76,11 +75,17 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" hidden>
                         <label class="control-label col-xs-3">Id Usuario:</label>
                         <div class="col-xs-3">
-                            <input type="number" class="form-control" value="<%=idUsuario%>" name="idUsuario">
+                            <input type="text" class="form-control" value="<%=idUsuario%>" name="idUsuario" readonly>
                         </div> 
+                    </div>
+                    <div class="form-group" hidden>
+                        <label class="control-label col-xs-3">Tipo :</label>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" name="tip" value="c" readonly>
+                        </div>
                     </div>
                     <br>
                     <div class="form-group">

@@ -163,19 +163,30 @@ public class UsuariodaoImpl implements Usuariodao {
 
     @Override
     public List<Rol> ListarRol() {
-        List<Rol> lista = null;
-        SessionFactory sf = null;
-        Session session = null;
+        List<Rol> lista = new ArrayList<Rol>();
+        Statement st = null;
+        ResultSet rs = null;
+        Rol rol = null;
+        String query = " select id_rol as id, nombre_rol as rol "
+                + " from rol ";
         try {
-            sf = HibernateUtil.getSessionFactory();
-            session = sf.openSession();
-            lista = new ArrayList<Rol>();
-            Query query = session.createQuery("FROM Rol");
-            lista = query.list();
-            session.close();
+            st = abrirConexion().createStatement();
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                rol = new Rol();
+                rol.setIdRol(rs.getShort("id"));
+                rol.setNombreRol(rs.getString("rol"));
+
+                lista.add(rol);
+            }
+            cerrarConexion();
         } catch (Exception e) {
             e.printStackTrace();
-            session.close();
+            try {
+                cerrarConexion();
+            } catch (Exception ex) {
+            }
+            System.out.println(e.getMessage());
         }
         return lista;
     }

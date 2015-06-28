@@ -12,6 +12,7 @@ import org.hibernate.Transaction;
 import proy.modelo.dao.Pensionistadao;
 import proy.modelo.entidad.AgregarContrato;
 import proy.modelo.entidad.ContratoPensionista;
+import proy.modelo.entidad.Listar_Asistencias;
 import proy.modelo.entidad.Listar_pensionista;
 import proy.modelo.entidad.Persona;
 import proy.modelo.entidad.RenovarContrato;
@@ -51,12 +52,12 @@ public class PensionistadoaImpl implements Pensionistadao {
         ResultSet rs = null;
         Listar_pensionista cp = null;
         String query = "select cp.id_contrato as idc, cp.id_persona as id, p.nombres as name, p.apellidos as ape, p.dni as dn, "
-                + "p.n_celular as celu, p.direccion as dire, cp.fecha_inicio as fi, cp.fecha_fin as ff, cp.precio_pension as pp, cp.fecha_pago as fp,"
-                + "trunc(to_date(cp.fecha_fin))-trunc(to_date(to_char(sysdate, 'dd/mm/yyyy'))) as vigencia "
-                + "from persona p, CONTRATO_PENSIONISTA cp "
-                + "where p.id_persona=cp.id_persona and " 
-                + "(select to_char(sysdate,'dd/mm/yyyy')from dual)>=(cp.fecha_inicio) " 
-                + "and (select to_char(sysdate,'dd/mm/yyyy')from dual)<=(cp.fecha_fin) ";
+                + " p.n_celular as celu, p.direccion as dire, cp.fecha_inicio as fi, cp.fecha_fin as ff, cp.precio_pension as pp, coalesce(to_char(cp.fecha_pago, 'dd/mm/yyyy'),' ') as fp, "
+                + " trunc(to_date(cp.fecha_fin))-trunc(to_date(to_char(sysdate, 'dd/mm/yyyy'))) as vigencia "
+                + " from persona p, CONTRATO_PENSIONISTA cp "
+                + " where p.id_persona=cp.id_persona and " 
+                + " (select to_char(sysdate,'dd/mm/yyyy')from dual)>=(cp.fecha_inicio) " 
+                + " and (select to_char(sysdate,'dd/mm/yyyy')from dual)<=(cp.fecha_fin) order by cp.id_contrato desc ";
 
         try {
             st = abrirConexion().createStatement();
@@ -90,10 +91,10 @@ public class PensionistadoaImpl implements Pensionistadao {
     }
     
     @Override
-    public boolean EliminarPensionista(int id) {
-     boolean flat = false;
+    public boolean EliminarPensionista(String idcontrato) {
+        boolean flat = false;
         Statement st = null;
-        String query = "delete FROM  WHERE  ="+id;
+        String query = "begin eliminarcontrato ('"+idcontrato+"');end; ";
         
         try {
             st = abrirConexion().createStatement();
@@ -104,10 +105,12 @@ public class PensionistadoaImpl implements Pensionistadao {
         } catch (Exception e) {
             e.printStackTrace();
             flat = false;
+            System.out.println(e.getMessage());
             try {
                 revertir();
                 cerrarConexion();
             } catch (Exception ex) {
+                System.out.println(ex.getMessage());
             }
         }
         return flat;
@@ -120,8 +123,8 @@ public class PensionistadoaImpl implements Pensionistadao {
         boolean estado = false;
         Statement st= null;
         String query = " begin renovarcontrato("+renovarContrato.getIdpersona()+" "
-                + ", '"+renovarContrato.getFechini()+"','"+renovarContrato.getPrecio()+"' "
-                + ", '"+renovarContrato.getStado()+"','"+renovarContrato.getIdusuario()+"');end; ";
+                + " ,to_date('"+renovarContrato.getFechini()+"', 'yyyy-mm-dd'),'"+renovarContrato.getPrecio()+"' "
+                + " , '"+renovarContrato.getStado()+"',"+renovarContrato.getIdusuario()+", '"+renovarContrato.getTip()+"');end; ";
         try {
             st = abrirConexion().createStatement();
             st.executeUpdate(query);
@@ -145,10 +148,10 @@ public class PensionistadoaImpl implements Pensionistadao {
     public boolean agregarContrato(AgregarContrato agregarContrato) {
         boolean flat = false;
         Statement st= null;
-        String query = "begin registrarcontrato('"+agregarContrato.getNombre()+"','"+agregarContrato.getApellido()+"' "
-                + ", '"+agregarContrato.getDn()+"','"+agregarContrato.getNcelular()+"','"+agregarContrato.getDirecciones()+"' "
-                + ", '"+agregarContrato.getFechini()+"','"+agregarContrato.getPrecio()+"','"+agregarContrato.getStado()+"' "
-                + ",'"+agregarContrato.getIdusuario()+"');end; ";
+        String query = " begin registrarcontrato('"+agregarContrato.getNombre()+"','"+agregarContrato.getApellido()+"' "
+                + " , '"+agregarContrato.getDn()+"','"+agregarContrato.getNcelular()+"','"+agregarContrato.getDirecciones()+"' "
+                + " , to_date('"+agregarContrato.getFechini()+"', 'yyyy-mm-dd'),'"+agregarContrato.getPrecio()+"','"+agregarContrato.getStado()+"' "
+                + " , "+agregarContrato.getIdusuario()+", '"+agregarContrato.getTip()+"');end; ";
         try {
             st = abrirConexion().createStatement();
             st.executeUpdate(query);
@@ -174,12 +177,12 @@ public class PensionistadoaImpl implements Pensionistadao {
         Statement st = null;
         ResultSet rs = null;
         Listar_pensionista cp = null;
-        String query = "select cp.id_contrato as idc, cp.id_persona as id, p.nombres as name, p.apellidos as ape, p.dni as dn, "
-                + "p.n_celular as celu, p.direccion as dire, cp.fecha_inicio as fi, cp.fecha_fin as ff, cp.precio_pension as pp, cp.fecha_pago as fp "
-                + "from persona p, CONTRATO_PENSIONISTA cp "
-                + "where p.id_persona=cp.id_persona and " 
-                + "(select to_char(sysdate,'dd/mm/yyyy')from dual)>=(cp.fecha_inicio) " 
-                + "and (select to_char(sysdate,'dd/mm/yyyy')from dual)>=(cp.fecha_fin) ";
+        String query = " select cp.id_contrato as idc, cp.id_persona as id, p.nombres as name, p.apellidos as ape, p.dni as dn, "
+                + " p.n_celular as celu, p.direccion as dire, cp.fecha_inicio as fi, cp.fecha_fin as ff, cp.precio_pension as pp, cp.fecha_pago as fp "
+                + " from persona p, CONTRATO_PENSIONISTA cp "
+                + " where p.id_persona=cp.id_persona and " 
+                + " (select to_char(sysdate,'dd/mm/yyyy')from dual)>=(cp.fecha_inicio) " 
+                + " and (select to_char(sysdate,'dd/mm/yyyy')from dual)>=(cp.fecha_fin) order by cp.id_contrato desc ";
 
         try {
             st = abrirConexion().createStatement();
@@ -198,6 +201,156 @@ public class PensionistadoaImpl implements Pensionistadao {
                 cp.setPrecioPension(rs.getString("pp"));
                 cp.setFechaPago(rs.getString("fp"));
                 list.add(cp);
+            }
+            abrirConexion().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                abrirConexion().close();
+            } catch (Exception ex) {
+            }
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Listar_Asistencias> ListarAsistenciasDia() {
+        List<Listar_Asistencias> list = new ArrayList<Listar_Asistencias>();
+        Statement st = null;
+        ResultSet rs = null;
+        Listar_Asistencias la = null;
+        String query = " select nombres, apellidos, id_contrato, fecha, " +
+                        " case de " +
+                        "	when '0' then 'no Desayuno' " +
+                        "	when '1' then 'Desayuno' " +
+                        "	else 'ninguno' " +
+                        " end as desayuno, " +
+                        " case al " +
+                        "	when '0' then 'no Almorzó' " +
+                        "	when '1' then 'Almorzó' " +
+                        "	else 'ninguno' " +
+                        " end as almuerzo, " +
+                        " case ce " +
+                        "	when '0' then 'no Cenó' " +
+                        "	when '1' then 'Cenó' " +
+                        "	else 'ninguno' " +
+                        " end as cena " +
+                        " from view_controldia ";
+
+        try {
+            st = abrirConexion().createStatement();
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                la = new Listar_Asistencias();
+                la.setNombres(rs.getString("nombres"));
+                la.setApellidos(rs.getString("apellidos"));
+                la.setIdContrato(rs.getString("id_contrato"));
+                la.setFecha(rs.getString("fecha"));
+                la.setDesayuno(rs.getString("desayuno"));
+                la.setAlmuerzo(rs.getString("almuerzo"));
+                la.setCena(rs.getString("cena"));
+                list.add(la);
+            }
+            abrirConexion().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                abrirConexion().close();
+            } catch (Exception ex) {
+            }
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Listar_Asistencias> ListarAsistenciasMes() {
+        List<Listar_Asistencias> list = new ArrayList<Listar_Asistencias>();
+        Statement st = null;
+        ResultSet rs = null;
+        Listar_Asistencias la = null;
+        String query = " select nombres, apellidos, id_contrato, fecha, " +
+                        " case de " +
+                        "	when '0' then 'no Desayuno' " +
+                        "	when '1' then 'Desayuno' " +
+                        "	else 'ninguno' " +
+                        " end as desayuno, " +
+                        " case al " +
+                        "	when '0' then 'no Almorzó' " +
+                        "	when '1' then 'Almorzó' " +
+                        "	else 'ninguno' " +
+                        " end as almuerzo, " +
+                        " case ce " +
+                        "	when '0' then 'no Cenó' " +
+                        "	when '1' then 'Cenó' " +
+                        "	else 'ninguno' " +
+                        " end as cena " +
+                        " from view_controlmes ";
+
+        try {
+            st = abrirConexion().createStatement();
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                la = new Listar_Asistencias();
+                la.setNombres(rs.getString("nombres"));
+                la.setApellidos(rs.getString("apellidos"));
+                la.setIdContrato(rs.getString("id_contrato"));
+                la.setFecha(rs.getString("fecha"));
+                la.setDesayuno(rs.getString("desayuno"));
+                la.setAlmuerzo(rs.getString("almuerzo"));
+                la.setCena(rs.getString("cena"));
+                list.add(la);
+            }
+            abrirConexion().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                abrirConexion().close();
+            } catch (Exception ex) {
+            }
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Listar_Asistencias> ListarAsistencias() {
+        List<Listar_Asistencias> list = new ArrayList<Listar_Asistencias>();
+        Statement st = null;
+        ResultSet rs = null;
+        Listar_Asistencias la = null;
+        String query = " select nombres, apellidos, id_contrato, fecha, " +
+                        " case de " +
+                        "	when '0' then 'no Desayuno' " +
+                        "	when '1' then 'Desayuno' " +
+                        "	else 'ninguno' " +
+                        " end as desayuno, " +
+                        " case al " +
+                        "	when '0' then 'no Almorzó' " +
+                        "	when '1' then 'Almorzó' " +
+                        "	else 'ninguno' " +
+                        " end as almuerzo, " +
+                        " case ce " +
+                        "	when '0' then 'no Cenó' " +
+                        "	when '1' then 'Cenó' " +
+                        "	else 'ninguno' " +
+                        " end as cena " +
+                        " from view_control ";
+
+        try {
+            st = abrirConexion().createStatement();
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                la = new Listar_Asistencias();
+                la.setNombres(rs.getString("nombres"));
+                la.setApellidos(rs.getString("apellidos"));
+                la.setIdContrato(rs.getString("id_contrato"));
+                la.setFecha(rs.getString("fecha"));
+                la.setDesayuno(rs.getString("desayuno"));
+                la.setAlmuerzo(rs.getString("almuerzo"));
+                la.setCena(rs.getString("cena"));
+                list.add(la);
             }
             abrirConexion().close();
         } catch (Exception e) {

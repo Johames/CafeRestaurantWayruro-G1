@@ -1,3 +1,5 @@
+<%@page import="proy.modelo.daoImpl.CategoriadaoImpl"%>
+<%@page import="proy.modelo.dao.Categoriadao"%>
 <%@page import="proy.modelo.entidad.Producto"%>
 <%@page import="proy.modelo.daoImpl.ProductodaoImpl"%>
 <%@page import="proy.modelo.dao.Productodao"%>
@@ -22,11 +24,12 @@
     <body>
         <%
             
-            if(idUsuario == null){
+            if(idUsuario.equals("")){
                 response.sendRedirect("error.jsp");
             }
         
             Productodao productodao = new ProductodaoImpl();
+            Categoriadao categoriadao = new CategoriadaoImpl();
             Producto producto = new Producto();
             Categoria cat = new Categoria();
             
@@ -54,7 +57,7 @@
             
             if(!nombreCategoria.equals("")){
                 cat.setNombreCat(nombreCategoria);
-                if(productodao.AgregarCategoria(cat)){
+                if(categoriadao.AgregarCategoria(cat)){
                     alert = "info";
                     mensaje = "La Categoría se añadió correctamente...<br><br><a class='btn btn-primary' href='addcategoria.jsp'>[Registrar más >>]</a>";
                 }else{
@@ -75,7 +78,7 @@
                     </button>
                     <a class="navbar-brand" href="#">Café Restaurant "Wayruro"</a>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="index.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
+                        <li class="active"><a href="inicio.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
                     </ul>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">

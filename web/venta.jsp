@@ -1,66 +1,30 @@
-<%@page import="proy.modelo.entidad.Producto"%>
-<%@page import="proy.modelo.daoImpl.PensionistadoaImpl"%>
-<%@page import="proy.modelo.dao.Pensionistadao"%>
-<%@page import="proy.modelo.daoImpl.ProductodaoImpl"%>
-<%@page import="proy.modelo.dao.Productodao"%>
-<%@page import="proy.modelo.entidad.Categoria"%>
-<%@page import="proy.modelo.entidad.Listar_pensionista"%>
-<%@page import="java.util.List"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="keywords" content="Javascript,table filter" />
-        <meta name="author" content="">
-        <link rel="icon" href="recursos/ico/favicon.ico">
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/estilo.css" rel="stylesheet">
-        <script src="bootstrap/js/ie-emulation-modes-warning.js"></script>
-        <title>Café Restaurant "Wayruro"</title>
-        <jsp:useBean id="idUsuario" scope="session" class="java.lang.String" />
-    </head>
-    <body>
-        <%
+<%@page import="proy.modelo.entidad.AgregarVenta"%>
+<%@page import="proy.modelo.entidad.Venta"%>
+<%@page import="proy.modelo.daoImpl.VentadaoImpl"%>
+<%@page import="proy.modelo.dao.Ventadao"%>
+<%@include file="WEB-INF/detalleventa/ventatop.jspf" %>
 
-            String mensaje = "";
+<%
+    Ventadao ventadao = new VentadaoImpl();
+    AgregarVenta venta = new AgregarVenta();
 
-            Productodao productodao = new ProductodaoImpl();
+    String opcion = request.getParameter("opcion"); opcion = opcion == null?"":opcion; 
+    String tipo = request.getParameter("tipo"); tipo = tipo == null?"":tipo; 
+    String idventa = request.getParameter("idventa"); idventa = idventa == null?"":idventa;
+    String numero = request.getParameter("numero"); numero = numero == null?"":numero;
+    String fechaventa = request.getParameter("fechaventa"); fechaventa = fechaventa == null?"":fechaventa;
+    
+    if(opcion.equals("Venta")){
+        venta.setIdUsuario(idUsuario);
+        venta.setTipo(tipo);
+        if(ventadao.Agregar(venta)){
+            idventa = ventadao.BuscarId();
+            response.sendRedirect("detalleventa.jsp?idventa="+idventa);
+        }
+    }
+    
+%>
 
-            if (idUsuario == null) {
-                response.sendRedirect("error.jsp");
-            }
-
-            String nombres = request.getParameter("nombres");
-            nombres = nombres == null ? "" : nombres;
-
-        %>
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">Café Restaurant "Wayruro"</a>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="index.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
         <div class="container">
             <div class="form-group"> 
                 <div class="row">
@@ -82,32 +46,25 @@
                                             <br>
                                             <br>
                                             <br>
-                                            <br>
-                                            <br>
-                                            <div class="formu container col-md-12">
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-xs-2"></label>
-                                                        <div class="col-xs-0"></div>
-                                                        <div class="col-xs-7">
-                                                            <div class="input-group-btn">
-                                                                <input type="hidden" name="opcion" value="venta"> 
-                                                                <span class="input-group-btn">
-                                                                    <a type="submit" href="detalleventa.jsp?nombres=Cliente Varios" class="btn btn-primary"><i>Iniciar Venta</i></a>
-                                                                </span>
-                                                            </div>
-                                                        </div>
+                                            <form>
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-3 col-md-4"></div>
+                                                <div class="col-xs-12 col-sm-6 col-md-4">
+                                                    <div>
+                                                        <input type="hidden" name="tipo" value="v">
+                                                        <input class="btn btn-primary" type="submit" name="opcion" value="Venta">
                                                     </div>
                                                 </div>
+                                                <div class="col-xs-12 col-sm-3 col-md-4"></div>
                                             </div>
+                                            </form>
                                         </td>
                                         <td class="col-xs-6">
-
-                                            <%                
+                                            <% 
                                                 Pensionistadao dao = new PensionistadoaImpl();
                                             %>
                                             <div class="formu">
-                                                <form class="form-horizontal" action="detalle">
+                                                <form class="form-horizontal" action="venta.jsp" method="Post">
                                                     <div class="form-group">
                                                         <label class="control-label col-xs-1"></label>
                                                         <div class="col-xs-0"></div>
@@ -162,17 +119,14 @@
                                                                     <td><%=count%>.</td>
                                                                     <td hidden><%=per.getIdContrato()%></td>
                                                                     <td><%=per.getNombres()%>&nbsp;<%=per.getApellidos()%></td>
-                                                                    <td><p>
-                                                                            <a class="btn btn-primary" title="Enviar Cliente" href="detalleventa.jsp?idContrato=<%=per.getIdContrato()%>&nombres=<%=per.getNombres()%>&apellidos=<%=per.getApellidos()%>" role="button">
-                                                                                <i class="glyphicon glyphicon-share-alt">
-                                                                                </i>
-                                                                            </a>
-                                                                        </p>
+                                                                    <td>
+                                                                        <input class="btn btn-primary" type="submit" name="opcion" value="control" >
+                                                                        <input type="hidden" name="opc" value="1" >
+                                                                        <input type="hidden" name="idContrato" value="<%=per.getIdContrato()%>" >
+                                                                        <input type="hidden" name="nombres" value="<%=per.getNombres()%>&nbsp;<%=per.getApellidos()%>" >                                                                    
                                                                     </td>
                                                                 </tr>
-
                                                                 <%}%>
-                                                                <%=mensaje%>
                                                             </tbody>
                                                         </table>
                                                     </div>

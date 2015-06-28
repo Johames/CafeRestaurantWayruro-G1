@@ -18,6 +18,7 @@ import proy.modelo.entidad.Producto;
 import proy.modelo.dao.Productodao;
 import proy.modelo.entidad.Categoria;
 import proy.modelo.entidad.Listar_pensionista;
+import proy.modelo.entidad.Pmasvendido;
 import proy.modelo.util.HibernateUtil;
 
 
@@ -101,49 +102,6 @@ public class ProductodaoImpl implements Productodao{
     }
 
     @Override
-    public List<Categoria> ListarCategoria() {
-        List<Categoria> lista = null;
-        SessionFactory sf = null;
-        Session session = null;
-        try {
-            sf = HibernateUtil.getSessionFactory();
-            session = sf.openSession();
-            lista = new ArrayList<Categoria>();
-            Query query = session.createQuery("FROM Categoria");
-            lista = query.list();
-            session.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            session.close();
-        }
-        return lista;
-    }
-
-    @Override
-    public boolean AgregarCategoria(Categoria cat) {
-        boolean estado = false;
-        Statement st= null;
-        String query="insert into CATEGORIA values ('', '"+cat.getNombreCat()+"') ";
-        try {
-            st = abrirConexion().createStatement();
-            st.executeUpdate(query);
-            guardar();
-            cerrarConexion();
-            estado = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-            try {
-                revertir();
-                cerrarConexion();
-                estado = false;
-            } catch (Exception ex) {
-            }
-        }
-        return estado;
-    }
-
-    @Override
     public List<Producto> ListarProductos() {
         List<Producto> list = new ArrayList<Producto>();
         Statement st = null;
@@ -156,7 +114,7 @@ public class ProductodaoImpl implements Productodao{
             rs = st.executeQuery(query);
             while (rs.next()) {
                 pro = new Producto();
-                pro.setIdProducto(rs.getShort("id"));
+                pro.setIdProducto(rs.getString("id"));
                 pro.setNombreProducto(rs.getString("producto"));
                 pro.setPrecio(rs.getString("precio"));
                 list.add(pro);
@@ -200,6 +158,40 @@ public class ProductodaoImpl implements Productodao{
             }
         }
         return lista;
+    }
+
+    @Override
+    public List<Pmasvendido> PmasVendido() {
+        List<Pmasvendido> list = new ArrayList<Pmasvendido>();
+        Statement st = null;
+        ResultSet rs = null;
+        Pmasvendido pmv = null;
+        String query = " select p.nombre_producto as nombre, coalesce(to_char(v.fecha_venta, 'dd/mm/yyyy'),' ') as fecha, count(p.id_producto) as total " +
+                        " from producto p, venta v, venta_detalle dv " +
+                        " where  p.id_producto=dv.id_producto and dv.id_venta=v.id_venta " +
+                        " group by p.nombre_producto, v.fecha_venta " +
+                        " order by v.fecha_venta ";
+
+        try {
+            st = abrirConexion().createStatement();
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                pmv = new Pmasvendido();
+                pmv.setNombreprod(rs.getString("nombre"));
+                pmv.setFechaventa(rs.getString("fecha"));
+                pmv.setCantidad(rs.getString("total"));
+                list.add(pmv);
+            }
+            abrirConexion().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                abrirConexion().close();
+            } catch (Exception ex) {
+                
+            }
+        }
+        return list;
     }
         
 }

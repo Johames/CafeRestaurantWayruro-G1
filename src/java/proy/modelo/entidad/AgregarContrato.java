@@ -10,6 +10,7 @@ package proy.modelo.entidad;
  * @author TOSHIBA
  */
 public class AgregarContrato {
+    
     private String nombre;
     private String apellido;
     private String dn;
@@ -19,6 +20,7 @@ public class AgregarContrato {
     private String precio;
     private String stado;
     private String idusuario;
+    private String tip;
 
     public AgregarContrato() {
     }
@@ -93,6 +95,14 @@ public class AgregarContrato {
 
     public void setIdusuario(String idusuario) {
         this.idusuario = idusuario;
+    }
+
+    public String getTip() {
+        return tip;
+    }
+
+    public void setTip(String tip) {
+        this.tip = tip;
     }
     
 }

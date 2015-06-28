@@ -27,7 +27,7 @@
         <%
             Usuario us = new Usuario();
             
-            if(idUsuario == null){
+            if(idUsuario.equals("")){
                 response.sendRedirect("error.jsp");
             }
             
@@ -44,15 +44,17 @@
             String fechini = request.getParameter("fechini"); fechini = fechini == null?"":fechini;
             String precio = request.getParameter("precio"); precio = precio == null?"":precio;
             String stado = request.getParameter("stado"); stado = stado == null?"":stado;
+            String tip = request.getParameter("tip"); tip = tip == null?"":tip;
             String mensaje = "";
             String alert = "";
             
-            if(!idpersona.equals("") & !fechini.equals("") & !precio.equals("") & !stado.equals("")){
+            if(!idpersona.equals("") & !fechini.equals("") & !precio.equals("") & !stado.equals("") & !tip.equals("")){
                 renovarContrato.setIdpersona(Integer.parseInt(idpersona));
                 renovarContrato.setFechini(fechini);
                 renovarContrato.setPrecio(precio);
                 renovarContrato.setStado(stado);
                 renovarContrato.setIdusuario(idUsuario);
+                renovarContrato.setTip(tip);
                 if(persona.RenovarContrato(renovarContrato)){
                     alert = "info";
                     mensaje = "El Contrato se renovó correctamente...";
@@ -74,7 +76,7 @@
                     </button>
                     <a class="navbar-brand" href="#">Café Restaurant "Wayruro"</a>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="index.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
+                        <li class="active"><a href="inicio.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
                     </ul>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">

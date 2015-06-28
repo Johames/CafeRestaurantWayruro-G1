@@ -1,4 +1,54 @@
+
+<%@page import="proy.modelo.daoImpl.ControldaoImpl"%>
+<%@page import="proy.modelo.dao.Controldao"%>
+<%@page import="proy.modelo.entidad.Controldia"%>
 <%@include file="WEB-INF/detalleventa/detalleventatop.jspf" %>
+
+<%
+    detalledao dao = new detalledaoImpl();
+    Ventadao venta = new VentadaoImpl();
+    Controldao concontroldao = new ControldaoImpl();
+    Controldia control = new Controldia();
+    Detalle detalle = new Detalle();
+    Producto producto = new Producto();
+        
+    String opcion = request.getParameter("opcion"); opcion = opcion == null?"":opcion;
+    String opc = request.getParameter("opc"); opc = opc == null?"":opc;
+    
+    String nombres = request.getParameter("nombres"); nombres = nombres == null?"":nombres;
+    String idContrato = request.getParameter("idContrato"); idContrato = idContrato == null?"":idContrato;
+            
+    String idProducto = request.getParameter("idProducto"); idProducto = idProducto == null?"":idProducto;
+    String nombreProducto = request.getParameter("nombreProducto"); nombreProducto = nombreProducto == null?"":nombreProducto;
+    String precio = request.getParameter("precio"); precio = precio == null?"":precio;
+    String cantidad = request.getParameter("cantidad"); cantidad = cantidad == null?"":cantidad;
+    String idventa = request.getParameter("idventa"); idventa = idventa == null?"":idventa;
+    String idv = request.getParameter("idv"); idv = idv == null?"":idv;
+    String idp = request.getParameter("idp"); idp = idp == null?"":idp;
+    
+    if(!opc.equals("") && !idContrato.equals("")){
+        control.setOpc(opc);
+        control.setIdContrato(idContrato);
+        concontroldao.AgregarControl(control);
+    }
+    if(idProducto != ""){
+        producto = dao.BuscarProducto(idProducto);
+    }
+if(opcion.equals("agrega")){
+        detalle.setIdVenta(idventa);
+        detalle.setIdProducto(idProducto);
+        detalle.setPrecioUnitario(precio);
+        detalle.setCantProducto(cantidad);
+        dao.AgregarDetalle(detalle);
+        
+    }
+
+    if (opcion.equals("delete")) {
+        if(dao.EliminarDetalle(idv, idp)){
+            response.sendRedirect("detalleventa.jsp?idventa="+idventa);
+        }
+    }
+%>
 
 <div class="container">
     <div class="form-group"> 
@@ -22,33 +72,27 @@
                         <tbody>
                             <tr>
                             <td class="col-xs-6">
-                                <form class="form-horizontal" action="" name="form2">
+                                    <%
+                                        if(opcion.equals("control")){
+                                    %>
                                     <div class="title">
                                         <div class="tipo">
                                             <h3><b>Control de Pensionistas</b></h3>
                                             <br>
                                         </div>
                                     </div>
-                                    
-                                    
-                                    <div class="form-horizontal" action="">
+                                    <div class="form-horizontal">
                                         <div class="form-group">
                                             <label class="control-label col-xs-3">Id Contrato:</label>
                                             <div class="col-xs-6">
-                                                <input type="text" class="form-control" value="<%=idContrato%>" name="idContrato" readonly="">
+                                                <input type="text" class="form-control" value="<%=idContrato%>" name="idContrato" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-xs-3">Nombres:</label>
                                             <div class="col-xs-6">
-                                                <input type="text" class="form-control" value="<%=nombres%>&nbsp;<%=apellidos%>" readonly="">
+                                                <input type="text" class="form-control" value="<%=nombres%>" readonly>
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-xs-3">Fecha :</label>
-                                            <div class="col-xs-4">
-                                                <input type="date" class="form-control">
-                                            </div> 
                                         </div>
                                         <div>
                                             <table class="table table-striped well">
@@ -64,48 +108,49 @@
                                                     <tr>
                                                     <td></td>
                                                     <td>
-                                                        <input type="checkbox" class="" name="Desayuno" value="1">
+                                                        <input type="checkbox" name="opc" value="2">
                                                     </td>
                                                     <td>
-                                                        <input type="checkbox" class="" name="Almuerzo" value="1">
+                                                        <input type="checkbox" name="opc" value="3">
                                                     </td>
                                                     <td>
-                                                        <input type="checkbox" class="" name="Cena" value="1">
+                                                        <input type="checkbox" name="opc" value="4">
                                                     </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
-                                            
-                                            
-                                    <div class="form-horizontal">
-                                        <div class="col-md-10"> 
-                                            <label class="control-label col-xs-2"></label>
-                                            <div class="form-group col-md-6">
-                                                <input type="text" class="form-control" value="<%=nombres%>"> 
-                                            </div>
-                                            <label class="control-label col-xs-1"></label>
-                                        </div>
-                                        <br><br><br>
+                                    <%}%>
+                                <%
+                                    if(opcion.equals("Agregar")){
+                                %>
+                                <form action="detalleventa.jsp" method="get">
+                                    <input type="hidden" name="idventa" value="<%=idventa%>" >
+                                    <input type="hidden" name="idProducto" value="<%=idProducto%>" >
+                                    <input type="hidden" name="opcion" value="agrega" >
+                                    <div class="table-responsive">
+                                        <table class="table table-striped well">
+                                            <thead>
+                                                <tr>
+                                                <th>Producto</th>
+                                                <th>Precio</th>
+                                                <th>Cantidad</th>
+                                                <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                <td><%=nombreProducto%></td>
+                                                <td><input class="form-control col-md-1" type="text" name="precio" value="<%=precio%>" readonly></td>
+                                                <td><input class="form-control col-md-1" type="number" name="cantidad"></td>
+                                                <td><input class="btn btn-primary" type="submit" value="OK"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                          
-                                            
-                                    <div class="form-horizontal" action="" name="form1">
-                                        <div> 
-                                            <div class="form-group col-md-7">
-                                                <input type="text" class="form-control" name="" placeholder="Nombre del Producto" readonly> 
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-4">
-                                            <input type="number" title="Solo Números" pattern="[0-9]{1,10}" class="form-control" placeholder="Cant.">
-                                        </div>
-                                        <div class="col-xs-1">
-                                            <button class="btn btn-primary" type="submit">OK</button>
-                                        </div><br><br><br>
-                                    </div>
-
-                                            
+                                </form>
+                                 <%}%>   
                                     <div class="table-responsive">
                                         <table class="table table-striped well">
                                             <thead>
@@ -120,19 +165,25 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <%
+                                                        int count = 0;
+                                                        for(int i=0; i<dao.ListarDetalle(idventa).size(); i++){
+                                                            detalle = dao.ListarDetalle(idventa).get(i);
+                                                                count++;
+                                                %>
                                                 <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td hidden><%=idProducto%></td>
-                                                <td><%=nombreProducto%></td>
-                                                <td><%=precio%></td>
-                                                <td></td>
+                                                <td><%=count%></td>
+                                                <td><%=detalle.getNombreProducto()%></td>
+                                                <td><%=detalle.getPrecioUnitario()%></td>
+                                                <td><%=detalle.getCantProducto()%></td>
+                                                <td><%=detalle.getSubtotal()%></td>
                                                 <td>
                                                     <p>
                                                         <a title="Editar" href="#"><i class="glyphicon glyphicon-pencil"></i></a>&nbsp;&nbsp;
-                                                        <a title="Eliminar" href="detalleventa.jsp?idProducto=&nombreProducto=&precio="><i class="glyphicon glyphicon-trash"></i></a>
+                                                        <a title="Eliminar" onclick="if(!confirm('¿Esta seguro de eliminar este producto de la venta?'))return false" href="detalleventa.jsp?opcion=delete&idv=<%=idventa%>&idp=<%=idProducto%>"><i class="glyphicon glyphicon-trash"></i></a>
                                                     </p>
                                                 </td>
+                                                <%}%>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -145,23 +196,9 @@
                                             <input type="submit" class="btn btn-default" value="Cancelar">
                                         </div>
                                     </div>
-                                </form>
                             </td>
                             <td class="col-xs-5">
-                                <form class="form-horizontal" action="" name="form">
                                     <div class="form-group">
-                                        <label class="control-label col-xs-3">Buscar por:</label>
-                                        <div class="col-md-4">
-                                            <select class="form-control" name="categoria">
-                                                <option selected="selected" hidden>Seleccionar</option>
-                                                <%                                                        int count = 0;
-                                                    for (Categoria cat : productodao.ListarCategoria()) {
-                                                        count++;
-                                                %>
-                                                <option value="<%=cat.getIdCategoria()%>"><%=cat.getNombreCat()%></option>
-                                                <%}%>
-                                            </select>
-                                        </div>
                                         <script type="text/javascript">
                                             function filter(phrase, _id) {
                                                 var words = phrase.value.toLowerCase().split(" ");
@@ -203,25 +240,27 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <%                                                            int coun = 0;
+                                                    <%                                                            
+                                                        int u = 0;
                                                         List<Producto> lista = productodao.ListarProductos();
-                                                        for (Producto producto : lista) {
-                                                            coun++;
+                                                        for (Producto prod : lista) {
+                                                            u++;
 
                                                     %>
                                                     <tr>
-                                                    <td><%=coun%></td>
-                                                    <td hidden><%=producto.getIdProducto()%></td>
-                                                    <td><%=producto.getNombreProducto()%></td>
-                                                    <td hidden><%=producto.getPrecio()%></td>
-                                                    <td><p><a class="btn btn-primary" title="Agregar a la Venta" href="detalleventa.jsp?idProducto=<%=producto.getIdProducto()%>&nombreProducto=<%=producto.getNombreProducto()%>&precio=<%=producto.getPrecio()%>" role="button"><i class="glyphicon glyphicon-share-alt"></i></a></p></td>
+                                                    <td><%=u%></td>
+                                                    <td hidden><%=prod.getIdProducto()%></td>
+                                                    <td><%=prod.getNombreProducto()%></td>
+                                                    <td hidden><%=prod.getPrecio()%></td>
+                                                    <td>
+                                                        <a href="detalleventa.jsp?idProducto=<%=prod.getIdProducto()%>&nombreProducto=<%=prod.getNombreProducto()%>&precio=<%=prod.getPrecio()%>&idventa=<%=idventa%>&opcion=Agregar"><i class="glyphicon glyphicon-send"></i></a>
+                                                    </td>
                                                     </tr>
                                                     <%}%>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
-                                </form>
                             </td>
                             </tr>
                         </tbody>

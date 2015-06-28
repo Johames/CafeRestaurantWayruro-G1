@@ -8,6 +8,7 @@ package proy.modelo.dao;
 import java.util.List;
 import proy.modelo.entidad.AgregarContrato;
 import proy.modelo.entidad.ContratoPensionista;
+import proy.modelo.entidad.Listar_Asistencias;
 import proy.modelo.entidad.Listar_pensionista;
 import proy.modelo.entidad.Persona;
 import proy.modelo.entidad.RenovarContrato;
@@ -19,8 +20,11 @@ import proy.modelo.entidad.RenovarContrato;
 public interface Pensionistadao {
     
     public List<Listar_pensionista> ListarPensionista();
-    public boolean EliminarPensionista(int id);
+    public boolean EliminarPensionista(String idcontrato);
     public boolean RenovarContrato(RenovarContrato renovarContrato);
     public boolean agregarContrato(AgregarContrato agregarContrato);
     public List<Listar_pensionista> ListarInactivos();
+    public List<Listar_Asistencias> ListarAsistenciasDia();
+    public List<Listar_Asistencias> ListarAsistenciasMes();
+    public List<Listar_Asistencias> ListarAsistencias();
 }

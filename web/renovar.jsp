@@ -23,7 +23,7 @@
             </div>
             <div class="formu">
                 <form class="form-horizontal" action="renovar.jsp" method="post">
-                    <div class="form-group">
+                    <div class="form-group" hidden>
                         <label class="control-label col-xs-3">id :</label>
                         <div class="col-xs-6">
                             <input type="tex" class="form-control" name="idpersona" value="<%=idpersona%>" readonly>
@@ -74,17 +74,23 @@
                     <div class="form-group">
                         <label class="control-label col-xs-3">Pago? :</label>
                         <div class="col-xs-4">
-                            <select class="form-control" name="estado">
-                                <option selected="selected" hidden="">Seleccionar</option>
+                            <select class="form-control" name="stado">
+                                <option selected="selected" hidden>Seleccionar</option>
                                 <option value="1">Si</option>
                                 <option value="0">No</option>
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" hidden>
                         <label class="control-label col-xs-3">id Usuario :</label>
                         <div class="col-xs-6">
                             <input type="number" class="form-control" name="idusuario" value="<%=idUsuario%>" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group" hidden>
+                        <label class="control-label col-xs-3">Tipo :</label>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" name="tip" value="c" readonly>
                         </div>
                     </div>
                     <div class="form-group">

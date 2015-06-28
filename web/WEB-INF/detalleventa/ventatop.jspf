@@ -1,7 +1,11 @@
-<%@page import="proy.modelo.entidad.ControlPensionista"%>
-<%@page import="proy.modelo.entidad.Listar_pensionista"%>
+<%@page import="proy.modelo.entidad.Producto"%>
 <%@page import="proy.modelo.daoImpl.PensionistadoaImpl"%>
 <%@page import="proy.modelo.dao.Pensionistadao"%>
+<%@page import="proy.modelo.daoImpl.ProductodaoImpl"%>
+<%@page import="proy.modelo.dao.Productodao"%>
+<%@page import="proy.modelo.entidad.Categoria"%>
+<%@page import="proy.modelo.entidad.Listar_pensionista"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -10,6 +14,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
+        <meta name="keywords" content="Javascript,table filter" />
         <meta name="author" content="">
         <link rel="icon" href="recursos/ico/favicon.ico">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,21 +26,18 @@
     </head>
     <body>
         <%
-            
-            if(idUsuario.equals("")){
+
+            String mensaje = "";
+
+            Productodao productodao = new ProductodaoImpl();
+
+            if (idUsuario == null) {
                 response.sendRedirect("error.jsp");
             }
-            
-            Pensionistadao dao = new PensionistadoaImpl();
-            Listar_pensionista per = new Listar_pensionista();
-            ControlPensionista controlPensionista = new ControlPensionista();
-            
-            String idContrato = request.getParameter("idContrato"); idContrato = idContrato == null?"":idContrato;
-            String nombres = request.getParameter("nombres"); nombres = nombres == null?"":nombres;
-            String apellidos = request.getParameter("apellidos"); apellidos = apellidos == null?"":apellidos;
-            
-            
-            
+
+            String nombres = request.getParameter("nombres");
+            nombres = nombres == null ? "" : nombres;
+
         %>
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
@@ -51,26 +53,11 @@
                         <li class="active"><a href="inicio.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
                     </ul>
                 </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <form class="navbar-form navbar-right">
-                        <label for="buscar" class="sr-only">Buscar</label>
-                        <div class="col-lg-pull-0">
-                            <div class="input-group">
-                                <input type="text" class="form-control" title="Solo Números (8 en total)" pattern="[0-9]{8}" placeholder="Buscar Pensionista (DNI)" size="20">
-                                <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i></button>
-                                </span>
-                            </div>
-                        </div>
-                    </form>
-                    <div id="navbar" class="navbar-collapse collapse">
-                        <form class="navbar-form navbar-right">
-                            <a class="btn btn-primary" href="venta.jsp" role="button">Volver a la Venta &emsp;<i class="glyphicon glyphicon-list-alt"></i></a>
-                        </form>
-                    </div>
-                </div>
             </div>
         </nav>
+        <br>
+        <br>
+        <br>
         <br>
         <br>
         <br>

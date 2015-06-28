@@ -1,3 +1,8 @@
+<%@page import="proy.modelo.daoImpl.VentadaoImpl"%>
+<%@page import="proy.modelo.dao.Ventadao"%>
+<%@page import="proy.modelo.entidad.Detalle"%>
+<%@page import="proy.modelo.dao.detalledao"%>
+<%@page import="proy.modelo.daoImpl.detalledaoImpl"%>
 <%@page import="proy.modelo.entidad.Producto"%>
 <%@page import="proy.modelo.daoImpl.PensionistadoaImpl"%>
 <%@page import="proy.modelo.dao.Pensionistadao"%>
@@ -6,6 +11,8 @@
 <%@page import="proy.modelo.entidad.Categoria"%>
 <%@page import="proy.modelo.entidad.Listar_pensionista"%>
 <%@page import="java.util.List"%>
+<%@page import="proy.modelo.daoImpl.CategoriadaoImpl"%>
+<%@page import="proy.modelo.dao.Categoriadao"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -28,21 +35,13 @@
         <%
             
             String mensaje = "";
+            String alert = "";
             
             Productodao productodao = new ProductodaoImpl();
             
-            if(idUsuario == null){
+            if(idUsuario.equals("")){
                 response.sendRedirect("error.jsp");
             }
-            
-            String nombres = request.getParameter("nombres"); nombres = nombres == null?"":nombres;
-            String apellidos = request.getParameter("apellidos"); apellidos = apellidos == null?"":apellidos;
-            String idContrato = request.getParameter("idContrato"); idContrato = idContrato == null?"":idContrato;
-            
-            String idProducto = request.getParameter("idProducto"); idProducto = idProducto == null?"":idProducto;
-            String nombreProducto = request.getParameter("nombreProducto"); nombreProducto = nombreProducto == null?"":nombreProducto;
-            String precio = request.getParameter("precio"); precio = precio == null?"":precio;
-            
         %>
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
@@ -55,12 +54,12 @@
                     </button>
                     <a class="navbar-brand" href="#">Café Restaurant "Wayruro"</a>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="index.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
+                        <li class="active"><a href="inicio.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
                     </ul>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <form class="navbar-form navbar-right">
-                        <a class="btn btn-primary" href="venta.jsp" role="button">Volver a la Lista &emsp;<i class="glyphicon glyphicon-list-alt"></i></a>
+                        <a class="btn btn-primary" href="venta.jsp" role="button">Volver... &emsp;<i class="glyphicon glyphicon-list-alt"></i></a>
                     </form>
                 </div>
             </div>

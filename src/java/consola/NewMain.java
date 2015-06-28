@@ -7,13 +7,21 @@ package consola;
 
 
 import com.mchange.v2.c3p0.test.ListTablesTest;
+import java.util.ArrayList;
+import java.util.List;
+import proy.modelo.dao.Categoriadao;
 import proy.modelo.entidad.Usuario;
 import proy.modelo.dao.Pensionistadao;
+import proy.modelo.dao.Productodao;
 import proy.modelo.dao.Usuariodao;
+import proy.modelo.daoImpl.CategoriadaoImpl;
 import proy.modelo.daoImpl.PensionistadoaImpl;
+import proy.modelo.daoImpl.ProductodaoImpl;
 import proy.modelo.daoImpl.UsuariodaoImpl;
+import proy.modelo.entidad.Categoria;
 import proy.modelo.entidad.Listar_pensionista;
 import proy.modelo.entidad.Persona;
+import proy.modelo.entidad.Producto;
 
 /**
  *
@@ -30,7 +38,8 @@ public class NewMain {
         
         //main.agregar();
         //main.comprobar();
-        main.buscar();
+        //main.buscar();
+        main.listar();
         
     }
     
@@ -71,6 +80,19 @@ public class NewMain {
         for (Listar_pensionista pensionista : dao.ListarPensionista()) {
             System.out.println(pensionista.getNombres());
         }
+    }
+    
+    public void listar(){
+        List<Categoria> dao = new ArrayList();
+        Categoriadao da2 = new CategoriadaoImpl();
+        dao = da2.ListarCategoria();
+        
+        for(Categoria cat : dao){
+            System.out.println(cat.getIdCategoria());
+            System.out.println(cat.getNombreCat());
+        }
+       
+        
     }
     
     
