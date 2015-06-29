@@ -20,7 +20,11 @@
 
     <body>
         <%
-            
+              
+        String opcion = request.getParameter("opcion"); opcion = opcion == null?"":opcion;
+        String alert = "";
+        String mensaje = "";
+
             if (idUsuario.equals("")) {
                 response.sendRedirect("error.jsp");
             }

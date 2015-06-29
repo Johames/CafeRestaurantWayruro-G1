@@ -193,5 +193,37 @@ public class ProductodaoImpl implements Productodao{
         }
         return list;
     }
+
+     @Override
+    public boolean UpdateProducto(Producto producto) {
+    
+     boolean estado = false;
+        Statement st = null;
+        String query = "update producto set "
+                +"  idProducto=upper('"+producto.getIdProducto()
+                +"'),nombreproducto=upper('"+producto.getNombreProducto()
+                +"'),precio='"+producto.getPrecio()
+                +"',idCategoria="+producto.getIdCategoria()
+                +",idUsuario='"+producto.getIdUsuario()+"'";
+       
+        try {
+            st = abrirConexion().createStatement();
+            st.executeQuery(query);
+            abrirConexion().commit();
+            abrirConexion().close();
+            estado=true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                abrirConexion().rollback();
+                abrirConexion().close();
+                estado=false;
+            } catch (Exception ex) {
+            }
+        }
+        
+        return estado;
+    }
+      
         
 }

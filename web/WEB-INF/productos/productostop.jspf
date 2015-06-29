@@ -26,7 +26,11 @@
             }
 
             String idCategoria = request.getParameter("idCategoria"); idCategoria = idCategoria == null?"":idCategoria;
+            String idProducto = request.getParameter("idProducto"); idProducto = idProducto == null?"":idProducto;
+            String nombrePro = request.getParameter("nombrePro"); nombrePro = nombrePro == null?"":nombrePro;
             String nombreCat = request.getParameter("nombreCat"); nombreCat = nombreCat == null?"":nombreCat;
+            String opcion = request.getParameter("opcion"); opcion=opcion ==null?"":opcion;
+            String mensaje = "";
 
         %>
         <nav class="navbar navbar-inverse navbar-fixed-top">

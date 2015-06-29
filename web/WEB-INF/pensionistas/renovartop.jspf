@@ -26,45 +26,59 @@
     <body>
         <%
             Usuario us = new Usuario();
-            
-            if(idUsuario.equals("")){
+
+            if (idUsuario.equals("")) {
                 response.sendRedirect("error.jsp");
             }
-            
+
             Pensionistadao persona = new PensionistadoaImpl();
-            Listar_pensionista listar =  new Listar_pensionista();
+            Listar_pensionista listar = new Listar_pensionista();
             RenovarContrato renovarContrato = new RenovarContrato();
+           
+            String idpersona = request.getParameter("idpersona");
+            idpersona = idpersona == null ? "" : idpersona;
+            String nombres = request.getParameter("nombres");
+            nombres = nombres == null ? "" : nombres;
+            String apellidos = request.getParameter("apellidos");
+            apellidos = apellidos == null ? "" : apellidos;
+            String dni = request.getParameter("dni");
+            dni = dni == null ? "" : dni;
+            String NCelular = request.getParameter("ncelular");
+            NCelular = NCelular == null ? "" : NCelular;
+            String direccion = request.getParameter("direcciones");
+            direccion = direccion == null ? "" : direccion;
+            String fechini = request.getParameter("fechini");
+            fechini = fechini == null ? "" : fechini;
+            String precio = request.getParameter("precio");
+            precio = precio == null ? "" : precio;
+            String stado = request.getParameter("stado");
+            stado = stado == null ? "" : stado;
+            String tip = request.getParameter("tip");
+            tip = tip == null ? "" : tip;
             
-            String idpersona = request.getParameter("idpersona"); idpersona = idpersona == null ? "" : idpersona;
-            String nombres = request.getParameter("nombres"); nombres = nombres == null?"":nombres;
-            String apellidos = request.getParameter("apellidos"); apellidos = apellidos == null?"":apellidos;
-            String dni = request.getParameter("dni"); dni = dni == null?"":dni;
-            String NCelular = request.getParameter("ncelular"); NCelular = NCelular == null?"":NCelular;
-            String direccion = request.getParameter("direcciones"); direccion = direccion == null?"":direccion;
-            String fechini = request.getParameter("fechini"); fechini = fechini == null?"":fechini;
-            String precio = request.getParameter("precio"); precio = precio == null?"":precio;
-            String stado = request.getParameter("stado"); stado = stado == null?"":stado;
-            String tip = request.getParameter("tip"); tip = tip == null?"":tip;
+            String opcion = request.getParameter("opcion");
+            opcion = opcion == null ? "" : opcion;
             String mensaje = "";
             String alert = "";
-            
-            if(!idpersona.equals("") & !fechini.equals("") & !precio.equals("") & !stado.equals("") & !tip.equals("")){
+
+            if (!idpersona.equals("") & !fechini.equals("") & !precio.equals("") & !stado.equals("") & !tip.equals("")) {
                 renovarContrato.setIdpersona(Integer.parseInt(idpersona));
                 renovarContrato.setFechini(fechini);
                 renovarContrato.setPrecio(precio);
                 renovarContrato.setStado(stado);
                 renovarContrato.setIdusuario(idUsuario);
                 renovarContrato.setTip(tip);
-                if(persona.RenovarContrato(renovarContrato)){
+                if (persona.RenovarContrato(renovarContrato)) {
                     alert = "info";
                     mensaje = "El Contrato se renovó correctamente...";
-                }else{
+                } else {
                     alert = "danger";
                     mensaje = "No se pudo renovar el Contrato";
                 }
+
             }
-            
-        %>
+
+           %>
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">

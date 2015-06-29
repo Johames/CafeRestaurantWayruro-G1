@@ -44,8 +44,8 @@
             if(!nombreprod.equals("") && !precios.equals("") && !categoria.equals("")){
                 producto.setNombreProducto(nombreprod);
                 producto.setPrecio(precios);
-                producto.setIdCategoria(Integer.parseInt(categoria));
-                producto.setIdUsuario(Integer.parseInt(IdU));
+                producto.setIdCategoria(categoria);
+                producto.setIdUsuario(IdU);
                 if(productodao.AgregarProducto(producto)){
                     alert = "info";
                     mensaje = "El Producto se añadió correctamente...<br><br><a class='btn btn-primary' href='addproducto.jsp'>[Registrar más >>]</a>";

@@ -21,6 +21,7 @@ public class Agregar_Venta {
         this.idpersona = idpersona;
     }
 
+     
     public String getTipo() {
         return tipo;
     }

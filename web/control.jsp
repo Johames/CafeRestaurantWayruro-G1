@@ -11,7 +11,7 @@
                 </form>
             </div>
             <div class="formu">
-                <form class="form-horizontal" action="">
+                <form class="form-horizontal" action="" method="post">
                     <div class="form-group">
                         <label class="control-label col-xs-3">Id Contrato:</label>
                         <div class="col-xs-6">
@@ -21,7 +21,7 @@
                     <div class="form-group">
                         <label class="control-label col-xs-3">Nombres:</label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" value="<%=nombres%><%=apellidos%>" readonly="">
+                            <input type="text" class="form-control" value="<%=nombres%> <%=apellidos%>" readonly="">
                         </div>
                     </div>
                     <div class="form-group">

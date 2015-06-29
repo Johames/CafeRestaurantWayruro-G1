@@ -55,8 +55,8 @@ public class PensionistadoaImpl implements Pensionistadao {
                 + " p.n_celular as celu, p.direccion as dire, cp.fecha_inicio as fi, cp.fecha_fin as ff, cp.precio_pension as pp, coalesce(to_char(cp.fecha_pago, 'dd/mm/yyyy'),' ') as fp, "
                 + " trunc(to_date(cp.fecha_fin))-trunc(to_date(to_char(sysdate, 'dd/mm/yyyy'))) as vigencia "
                 + " from persona p, CONTRATO_PENSIONISTA cp "
-                + " where p.id_persona=cp.id_persona and " 
-                + " (select to_char(sysdate,'dd/mm/yyyy')from dual)>=(cp.fecha_inicio) " 
+                + " where p.id_persona=cp.id_persona and "
+                + " (select to_char(sysdate,'dd/mm/yyyy')from dual)>=(cp.fecha_inicio) "
                 + " and (select to_char(sysdate,'dd/mm/yyyy')from dual)<=(cp.fecha_fin) order by cp.id_contrato desc ";
 
         try {
@@ -89,17 +89,17 @@ public class PensionistadoaImpl implements Pensionistadao {
 
         return lista;
     }
-    
+
     @Override
     public boolean EliminarPensionista(String idcontrato) {
         boolean flat = false;
         Statement st = null;
-        String query = "begin eliminarcontrato ('"+idcontrato+"');end; ";
-        
+        String query = "begin eliminarcontrato ('" + idcontrato + "');end; ";
+
         try {
             st = abrirConexion().createStatement();
             st.executeUpdate(query);
-            guardar(); 
+            guardar();
             cerrarConexion();
             flat = true;
         } catch (Exception e) {
@@ -114,17 +114,16 @@ public class PensionistadoaImpl implements Pensionistadao {
             }
         }
         return flat;
-    
-    }
 
+    }
 
     @Override
     public boolean RenovarContrato(RenovarContrato renovarContrato) {
         boolean estado = false;
-        Statement st= null;
-        String query = " begin renovarcontrato("+renovarContrato.getIdpersona()+" "
-                + " ,to_date('"+renovarContrato.getFechini()+"', 'yyyy-mm-dd'),'"+renovarContrato.getPrecio()+"' "
-                + " , '"+renovarContrato.getStado()+"',"+renovarContrato.getIdusuario()+", '"+renovarContrato.getTip()+"');end; ";
+        Statement st = null;
+        String query = " begin renovarcontrato(" + renovarContrato.getIdpersona() + " "
+                + " ,to_date('" + renovarContrato.getFechini() + "', 'yyyy-mm-dd'),'" + renovarContrato.getPrecio() + "' "
+                + " , '" + renovarContrato.getStado() + "'," + renovarContrato.getIdusuario() + ", '" + renovarContrato.getTip() + "');end; ";
         try {
             st = abrirConexion().createStatement();
             st.executeUpdate(query);
@@ -147,11 +146,17 @@ public class PensionistadoaImpl implements Pensionistadao {
     @Override
     public boolean agregarContrato(AgregarContrato agregarContrato) {
         boolean flat = false;
-        Statement st= null;
-        String query = " begin registrarcontrato('"+agregarContrato.getNombre()+"','"+agregarContrato.getApellido()+"' "
-                + " , '"+agregarContrato.getDn()+"','"+agregarContrato.getNcelular()+"','"+agregarContrato.getDirecciones()+"' "
-                + " , to_date('"+agregarContrato.getFechini()+"', 'yyyy-mm-dd'),'"+agregarContrato.getPrecio()+"','"+agregarContrato.getStado()+"' "
-                + " , "+agregarContrato.getIdusuario()+", '"+agregarContrato.getTip()+"');end; ";
+        Statement st = null;
+        String query = " begin registrarcontrato('" + agregarContrato.getNombre() + "',"
+                + "'" + agregarContrato.getApellido() + "' "
+                + " , '" + agregarContrato.getDn() + "',"
+                + "'" + agregarContrato.getNcelular() + "',"
+                + "'" + agregarContrato.getDirecciones() + "' "
+                + " , to_date('" + agregarContrato.getFechini() + "', "
+                + "'yyyy-mm-dd'),'" + agregarContrato.getPrecio() + "',"
+                + "'" + agregarContrato.getStado() + "' "
+                + " , " + agregarContrato.getIdusuario() + ", "
+                + "'" + agregarContrato.getTip() + "');end; ";
         try {
             st = abrirConexion().createStatement();
             st.executeUpdate(query);
@@ -180,8 +185,8 @@ public class PensionistadoaImpl implements Pensionistadao {
         String query = " select cp.id_contrato as idc, cp.id_persona as id, p.nombres as name, p.apellidos as ape, p.dni as dn, "
                 + " p.n_celular as celu, p.direccion as dire, cp.fecha_inicio as fi, cp.fecha_fin as ff, cp.precio_pension as pp, cp.fecha_pago as fp "
                 + " from persona p, CONTRATO_PENSIONISTA cp "
-                + " where p.id_persona=cp.id_persona and " 
-                + " (select to_char(sysdate,'dd/mm/yyyy')from dual)>=(cp.fecha_inicio) " 
+                + " where p.id_persona=cp.id_persona and "
+                + " (select to_char(sysdate,'dd/mm/yyyy')from dual)>=(cp.fecha_inicio) "
                 + " and (select to_char(sysdate,'dd/mm/yyyy')from dual)>=(cp.fecha_fin) order by cp.id_contrato desc ";
 
         try {
@@ -220,23 +225,23 @@ public class PensionistadoaImpl implements Pensionistadao {
         Statement st = null;
         ResultSet rs = null;
         Listar_Asistencias la = null;
-        String query = " select nombres, apellidos, id_contrato, fecha, " +
-                        " case de " +
-                        "	when '0' then 'no Desayuno' " +
-                        "	when '1' then 'Desayuno' " +
-                        "	else 'ninguno' " +
-                        " end as desayuno, " +
-                        " case al " +
-                        "	when '0' then 'no Almorzó' " +
-                        "	when '1' then 'Almorzó' " +
-                        "	else 'ninguno' " +
-                        " end as almuerzo, " +
-                        " case ce " +
-                        "	when '0' then 'no Cenó' " +
-                        "	when '1' then 'Cenó' " +
-                        "	else 'ninguno' " +
-                        " end as cena " +
-                        " from view_controldia ";
+        String query = " select nombres, apellidos, id_contrato, fecha, "
+                + " case de "
+                + "	when '0' then 'no Desayuno' "
+                + "	when '1' then 'Desayuno' "
+                + "	else 'ninguno' "
+                + " end as desayuno, "
+                + " case al "
+                + "	when '0' then 'no Almorzó' "
+                + "	when '1' then 'Almorzó' "
+                + "	else 'ninguno' "
+                + " end as almuerzo, "
+                + " case ce "
+                + "	when '0' then 'no Cenó' "
+                + "	when '1' then 'Cenó' "
+                + "	else 'ninguno' "
+                + " end as cena "
+                + " from view_controldia ";
 
         try {
             st = abrirConexion().createStatement();
@@ -270,23 +275,23 @@ public class PensionistadoaImpl implements Pensionistadao {
         Statement st = null;
         ResultSet rs = null;
         Listar_Asistencias la = null;
-        String query = " select nombres, apellidos, id_contrato, fecha, " +
-                        " case de " +
-                        "	when '0' then 'no Desayuno' " +
-                        "	when '1' then 'Desayuno' " +
-                        "	else 'ninguno' " +
-                        " end as desayuno, " +
-                        " case al " +
-                        "	when '0' then 'no Almorzó' " +
-                        "	when '1' then 'Almorzó' " +
-                        "	else 'ninguno' " +
-                        " end as almuerzo, " +
-                        " case ce " +
-                        "	when '0' then 'no Cenó' " +
-                        "	when '1' then 'Cenó' " +
-                        "	else 'ninguno' " +
-                        " end as cena " +
-                        " from view_controlmes ";
+        String query = " select nombres, apellidos, id_contrato, fecha, "
+                + " case de "
+                + "	when '0' then 'no Desayuno' "
+                + "	when '1' then 'Desayuno' "
+                + "	else 'ninguno' "
+                + " end as desayuno, "
+                + " case al "
+                + "	when '0' then 'no Almorzó' "
+                + "	when '1' then 'Almorzó' "
+                + "	else 'ninguno' "
+                + " end as almuerzo, "
+                + " case ce "
+                + "	when '0' then 'no Cenó' "
+                + "	when '1' then 'Cenó' "
+                + "	else 'ninguno' "
+                + " end as cena "
+                + " from view_controlmes ";
 
         try {
             st = abrirConexion().createStatement();
@@ -320,23 +325,23 @@ public class PensionistadoaImpl implements Pensionistadao {
         Statement st = null;
         ResultSet rs = null;
         Listar_Asistencias la = null;
-        String query = " select nombres, apellidos, id_contrato, fecha, " +
-                        " case de " +
-                        "	when '0' then 'no Desayuno' " +
-                        "	when '1' then 'Desayuno' " +
-                        "	else 'ninguno' " +
-                        " end as desayuno, " +
-                        " case al " +
-                        "	when '0' then 'no Almorzó' " +
-                        "	when '1' then 'Almorzó' " +
-                        "	else 'ninguno' " +
-                        " end as almuerzo, " +
-                        " case ce " +
-                        "	when '0' then 'no Cenó' " +
-                        "	when '1' then 'Cenó' " +
-                        "	else 'ninguno' " +
-                        " end as cena " +
-                        " from view_control ";
+        String query = " select nombres, apellidos, id_contrato, fecha, "
+                + " case de "
+                + "	when '0' then 'no Desayuno' "
+                + "	when '1' then 'Desayuno' "
+                + "	else 'ninguno' "
+                + " end as desayuno, "
+                + " case al "
+                + "	when '0' then 'no Almorzó' "
+                + "	when '1' then 'Almorzó' "
+                + "	else 'ninguno' "
+                + " end as almuerzo, "
+                + " case ce "
+                + "	when '0' then 'no Cenó' "
+                + "	when '1' then 'Cenó' "
+                + "	else 'ninguno' "
+                + " end as cena "
+                + " from view_control ";
 
         try {
             st = abrirConexion().createStatement();
@@ -364,5 +369,30 @@ public class PensionistadoaImpl implements Pensionistadao {
         return list;
     }
 
-    
+    @Override
+    public boolean ModificarFechaP(String idpersona) {
+        boolean flat = false;
+        Statement st = null;
+        String query = " update CONTRATO_PENSIONISTA set estado='1', "
+                + "fecha_pago= (select to_char(sysdate, 'dd/mm/yyyy')from dual) "
+                + "where id_contrato='"+idpersona+"'";
+        try {
+            st = abrirConexion().createStatement();
+            st.executeUpdate(query);
+            guardar();
+            cerrarConexion();
+            flat = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            try {
+                revertir();
+                cerrarConexion();
+                flat = false;
+            } catch (Exception ex) {
+            }
+        }
+        return flat;
+    }
+
 }
