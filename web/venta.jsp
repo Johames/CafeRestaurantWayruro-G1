@@ -24,7 +24,6 @@
     }
     
 %>
-
         <div class="container">
             <div class="form-group"> 
                 <div class="row">
@@ -120,10 +119,7 @@
                                                                     <td hidden><%=per.getIdContrato()%></td>
                                                                     <td><%=per.getNombres()%>&nbsp;<%=per.getApellidos()%></td>
                                                                     <td>
-                                                                        <input class="btn btn-primary" type="submit" name="opcion" value="control" >
-                                                                        <input type="hidden" name="opc" value="1" >
-                                                                        <input type="hidden" name="idContrato" value="<%=per.getIdContrato()%>" >
-                                                                        <input type="hidden" name="nombres" value="<%=per.getNombres()%>&nbsp;<%=per.getApellidos()%>" >                                                                    
+                                                                        <a class="btn btn-primary" href="detalleventa.jsp?opcion=control&idContrato=<%=per.getIdContrato()%>&nombres=<%=per.getNombres()%> <%=per.getApellidos()%>&opc=1&tipo=r">Control</a>                                                                    
                                                                     </td>
                                                                 </tr>
                                                                 <%}%>

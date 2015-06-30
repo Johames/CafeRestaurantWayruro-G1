@@ -16,6 +16,8 @@ public class Detalle {
     private String cantProducto;
     private String nombreProducto;
     private String subtotal;
+    private String total;
+    private String tipo;
 
     public Detalle() {
     }
@@ -66,6 +68,22 @@ public class Detalle {
 
     public void setSubtotal(String subtotal) {
         this.subtotal = subtotal;
+    }
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
     
 }

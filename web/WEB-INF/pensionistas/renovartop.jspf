@@ -69,8 +69,7 @@
                 renovarContrato.setIdusuario(idUsuario);
                 renovarContrato.setTip(tip);
                 if (persona.RenovarContrato(renovarContrato)) {
-                    alert = "info";
-                    mensaje = "El Contrato se renovó correctamente...";
+                    response.sendRedirect("pensionistas.jsp");
                 } else {
                     alert = "danger";
                     mensaje = "No se pudo renovar el Contrato";

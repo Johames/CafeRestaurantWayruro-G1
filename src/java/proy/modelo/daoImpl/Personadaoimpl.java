@@ -56,7 +56,7 @@ public Connection abrirConexion() {
             rs = st.executeQuery(query);
             while (rs.next()) {
                 listar = new Persona();
-                listar.setIdPersona(rs.getShort("id_persona"));
+                listar.setIdPersona(rs.getString("id_persona"));
                 listar.setNombres(rs.getString("nombres"));
                 listar.setApellidos(rs.getString("apellidos"));
                 listar.setDni(rs.getString("dni"));

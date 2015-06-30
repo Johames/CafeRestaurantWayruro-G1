@@ -51,7 +51,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" hidden>
                         <label class="control-label col-xs-3">Usuario :</label>
                         <div class="col-xs-6">
                             <input type="number" class="form-control" value="<%=idUsuario%>" name="idUsuario" readonly>
