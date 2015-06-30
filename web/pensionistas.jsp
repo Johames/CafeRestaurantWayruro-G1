@@ -68,7 +68,7 @@
                     <td>S/.&nbsp;<%=listar_pensionista.getPrecioPension()%></td>
                     <td><%=listar_pensionista.getFechaPago()%></td>
                     <td><%=listar_pensionista.getVigencia()%>&nbsp;Días</td>
-                    <td><p><a class="btn btn-primary" title="Modificar Contrato del Pensionista" href="modificarcontrato.jsp?idcontrato=<%=listar_pensionista.getIdContrato()%>&idpersona=<%=listar_pensionista.getIdPersona()%>&nombres=<%=listar_pensionista.getNombres()%>&apellidos=<%=listar_pensionista.getApellidos()%>&dni=<%=listar_pensionista.getDni()%>&ncelular=<%=listar_pensionista.getNCelular()%>&direcciones=<%=listar_pensionista.getDireccion()%>" role="button"><i class="glyphicon glyphicon-refresh"></i></a></p></td>
+                    <td><p><a class="btn btn-primary" title="Modificar Contrato del Pensionista" href="modificarcontrato.jsp?idcontrato=<%=listar_pensionista.getIdContrato()%>&idpersona=<%=listar_pensionista.getIdPersona()%>&nombres=<%=listar_pensionista.getNombres()%>&apellidos=<%=listar_pensionista.getApellidos()%>&dni=<%=listar_pensionista.getDni()%>&ncelular=<%=listar_pensionista.getNCelular()%>&direcciones=<%=listar_pensionista.getDireccion()%>" role="button"><i class="glyphicon glyphicon-pencil"></i></a></p></td>
                     <td><p><a class="btn btn-danger" title="Eliminar" onclick="if(!confirm('Esta seguro de eliminar a <%=listar_pensionista.getNombres()%> <%=listar_pensionista.getApellidos()%> y todos sus registros'))return false" role="button" href="pensionistas.jsp?opcion=delete&idcontrato=<%=listar_pensionista.getIdContrato()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
                 </tr>
                 <%}%>

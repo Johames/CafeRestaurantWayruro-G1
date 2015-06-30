@@ -1,4 +1,10 @@
 
+<%@page import="proy.modelo.entidad.AgregarVenta"%>
+<%@page import="proy.modelo.entidad.Tipo_Venta"%>
+<%@page import="proy.modelo.entidad.Total_venta"%>
+<%@page import="proy.modelo.entidad.AgregarMov"%>
+<%@page import="proy.modelo.daoImpl.MovimientosdaoImpl"%>
+<%@page import="proy.modelo.dao.Movimientosdao"%>
 <%@page import="proy.modelo.daoImpl.ControldaoImpl"%>
 <%@page import="proy.modelo.dao.Controldao"%>
 <%@page import="proy.modelo.entidad.Controldia"%>
@@ -6,11 +12,14 @@
 
 <%
     detalledao dao = new detalledaoImpl();
-    Ventadao venta = new VentadaoImpl();
+    Ventadao ventadao = new VentadaoImpl();
     Controldao concontroldao = new ControldaoImpl();
     Controldia control = new Controldia();
     Detalle detalle = new Detalle();
     Producto producto = new Producto();
+    Movimientosdao mov = new MovimientosdaoImpl();
+    AgregarMov agregarMov = new AgregarMov();
+    AgregarVenta venta = new AgregarVenta();
         
     String opcion = request.getParameter("opcion"); opcion = opcion == null?"":opcion;
     String opc = request.getParameter("opc"); opc = opc == null?"":opc;
@@ -25,11 +34,31 @@
     String idventa = request.getParameter("idventa"); idventa = idventa == null?"":idventa;
     String idv = request.getParameter("idv"); idv = idv == null?"":idv;
     String idp = request.getParameter("idp"); idp = idp == null?"":idp;
-    
-    if(!opc.equals("") && !idContrato.equals("")){
-        control.setOpc(opc);
-        control.setIdContrato(idContrato);
-        concontroldao.AgregarControl(control);
+    String tipo = request.getParameter("tipo"); tipo = tipo == null?"":tipo;
+    String total = request.getParameter("total"); total = total == null?"":total;
+    if(opcion.equals("control")){
+        if(!opc.equals("") && !idContrato.equals("")){
+            control.setOpc(opc);
+            control.setIdContrato(idContrato);
+            concontroldao.AgregarControl(control);
+        }
+        if(!tipo.equals("")){
+            venta.setTipo(tipo);
+            venta.setIdUsuario(idUsuario);
+            if(ventadao.Agregar(venta)){
+                idventa = ventadao.BuscarId();
+                response.sendRedirect("detalleventa.jsp?opcion=control&nombres="+nombres+"&idContrato="+idContrato+"&idventa="+idventa);
+            }
+        }
+    }
+    if(opcion.equals("controlar")){
+        if(!opc.equals("") && !idContrato.equals("")){
+            control.setOpc(opc);
+            control.setIdContrato(idContrato);
+            if(concontroldao.AgregarControl(control)){
+                response.sendRedirect("detalleventa.jsp?idventa="+idventa);
+            }
+        }
     }
     if(idProducto != ""){
         producto = dao.BuscarProducto(idProducto);
@@ -40,13 +69,31 @@ if(opcion.equals("agrega")){
         detalle.setPrecioUnitario(precio);
         detalle.setCantProducto(cantidad);
         dao.AgregarDetalle(detalle);
-        
     }
-
     if (opcion.equals("delete")) {
-        if(dao.EliminarDetalle(idv, idp)){
-            response.sendRedirect("detalleventa.jsp?idventa="+idventa);
+        dao.EliminarDetalle(idv, idp);
+    }
+    if(opcion.equals("editar")){
+        detalle.setCantProducto(cantidad);
+        dao.ModificarDetalle(detalle, idp, idv);
+    }
+    if(opcion.equals("cancelar")){
+        dao.EliminarVenta(idv);
+        response.sendRedirect("venta.jsp");
+    }
+    if(opcion.equals("confirmar")){
+        if(!tipo.equals("") && !total.equals("") && !idventa.equals("")){
+            agregarMov.setIdventa(idventa);
+            agregarMov.setTipo(tipo);
+            agregarMov.setTotal(total);
+            agregarMov.setIdu(idUsuario);
+            if(mov.AgregarMovimiento(agregarMov)){
+                response.sendRedirect("venta.jsp");
+            }
         }
+    }
+    if(opcion.equals("control")){
+        
     }
 %>
 
@@ -83,42 +130,41 @@ if(opcion.equals("agrega")){
                                     </div>
                                     <div class="form-horizontal">
                                         <div class="form-group">
-                                            <label class="control-label col-xs-3">Id Contrato:</label>
-                                            <div class="col-xs-6">
-                                                <input type="text" class="form-control" value="<%=idContrato%>" name="idContrato" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
                                             <label class="control-label col-xs-3">Nombres:</label>
                                             <div class="col-xs-6">
                                                 <input type="text" class="form-control" value="<%=nombres%>" readonly>
                                             </div>
                                         </div>
                                         <div>
-                                            <table class="table table-striped well">
-                                                <thead>
-                                                    <tr>
-                                                    <th>Registrar</th>
-                                                    <th>Desayuno</th>
-                                                    <th>Almuerzo</th>
-                                                    <th>Cena</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                    <td></td>
-                                                    <td>
-                                                        <input type="checkbox" name="opc" value="2">
-                                                    </td>
-                                                    <td>
-                                                        <input type="checkbox" name="opc" value="3">
-                                                    </td>
-                                                    <td>
-                                                        <input type="checkbox" name="opc" value="4">
-                                                    </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            <form action="detalleventa.jsp" method="post">
+                                                <input type="hidden" name="opcion" value="controlar">
+                                                <input type="hidden" name="idventa" value="<%=idventa%>">
+                                                <input type="hidden" name="idContrato" value="<%=idContrato%>">
+                                                <table class="table table-striped well">
+                                                    <thead>
+                                                        <tr>
+                                                        <th>Desayuno</th>
+                                                        <th>Almuerzo</th>
+                                                        <th>Cena</th>
+                                                        <th>Registrar</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                        <td>
+                                                            <input type="checkbox" name="opc" value="2">
+                                                        </td>
+                                                        <td>
+                                                            <input type="checkbox" name="opc" value="3">
+                                                        </td>
+                                                        <td>
+                                                            <input type="checkbox" name="opc" value="4">
+                                                        </td>
+                                                        <td><input type="submit" value="Enviar"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </form>
                                         </div>
                                     </div>
                                     <%}%>
@@ -156,10 +202,10 @@ if(opcion.equals("agrega")){
                                             <thead>
                                                 <tr>
                                                 <th>#</th>
-                                                <th>Cantidad</th>
-                                                <th hidden>Id Producto</th>
                                                 <th>Producto</th>
+                                                <th hidden>Id Producto</th>
                                                 <th>Precio</th>
+                                                <th>Cantidad</th>
                                                 <th>Sub Total</th>
                                                 <th>Acciones</th>
                                                 </tr>
@@ -179,21 +225,72 @@ if(opcion.equals("agrega")){
                                                 <td><%=detalle.getSubtotal()%></td>
                                                 <td>
                                                     <p>
-                                                        <a title="Editar" href="#"><i class="glyphicon glyphicon-pencil"></i></a>&nbsp;&nbsp;
-                                                        <a title="Eliminar" onclick="if(!confirm('¿Esta seguro de eliminar este producto de la venta?'))return false" href="detalleventa.jsp?opcion=delete&idv=<%=idventa%>&idp=<%=idProducto%>"><i class="glyphicon glyphicon-trash"></i></a>
+                                                        <a title="Editar" href="detalleventa.jsp?opcion=update&idv=<%=idventa%>&idp=<%=detalle.getIdProducto()%>&idventa=<%=idventa%>"><i class="glyphicon glyphicon-pencil"></i></a>&nbsp;&nbsp;
+                                                        <a title="Eliminar" onclick="if(!confirm('¿Esta seguro de eliminar este producto de la venta?'))return false" href="detalleventa.jsp?opcion=delete&idv=<%=idventa%>&idp=<%=detalle.getIdProducto()%>&idventa=<%=idventa%>"><i class="glyphicon glyphicon-trash"></i></a>
                                                     </p>
                                                 </td>
                                                 <%}%>
+                                                <%
+                                                    Total_venta tv = new Total_venta();
+                                                    tv = dao.total(idventa);
+                                                %>
+                                                <tr>             
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td><b>TOTAL</b></td>
+                                                    <td><b><%=tv.getTotal()%></b></td> 
+                                                    <td></td>
+                                                    <td></td>             
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
+                                    <br><br>
+                                    <%
+                                        if(opcion.equals("update")){
+                                            detalle = dao.BuscarProductoVendido(idv, idp);
+                                    %>
+                                    <form action="detalleventa.jsp" method="get">
+                                        <input type="hidden" name="idventa" value="<%=idventa%>">
+                                        <input type="hidden" name="idProducto" value="<%=detalle.getIdProducto()%>">
+                                        <input type="hidden" name="idv" value="<%=idventa%>">
+                                        <input type="hidden" name="idp" value="<%=detalle.getIdProducto()%>">
+                                        <input type="hidden" name="opcion" value="editar" >
+                                        <div class="table-responsive">
+                                            <table class="table table-striped well">
+                                                <thead>
+                                                    <tr>
+                                                    <th>Producto</th>
+                                                    <th>Precio</th>
+                                                    <th>Cantidad</th>
+                                                    <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                    <td><%=detalle.getNombreProducto()%></td>
+                                                    <td><input class="form-control col-md-1" type="text" name="" value="<%=detalle.getPrecioUnitario()%>" readonly></td>
+                                                    <td><input class="form-control col-md-1" type="number" name="cantidad" value="<%=detalle.getCantProducto()%>"></td>
+                                                    <td><input class="btn btn-primary" type="submit" value="Actualizar"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </form>
+                                     <%}%>
                                     <br>
                                     <div class="form-group">
-                                        <div class="input-group col-lg-5">
-                                            <label class="form-group col-xs-2"></label>
-                                            <input type="submit" class="btn btn-primary" value="Confirmar Venta">&nbsp;
-                                            <input type="submit" class="btn btn-default" value="Cancelar">
+                                        <div class="input-group col-lg-3">
+                                            <label class="form-group col-xs-1"></label>
+                                            <form action="detalleventa.jsp" method="post">
+                                                <input type="hidden" name="opcion" value="confirmar">
+                                                <input type="submit" class="btn btn-primary" value="Confirmar Venta">&nbsp;
+                                            </form>
+                                            <form action="detalleventa.jsp" method="post">
+                                                <input type="hidden" name="opcion" value="cancelar">
+                                                <input type="hidden" name="idv" value="<%=idventa%>">
+                                                <input type="submit" class="btn btn-default" value="Cancelar">
+                                            </form>
                                         </div>
                                     </div>
                             </td>

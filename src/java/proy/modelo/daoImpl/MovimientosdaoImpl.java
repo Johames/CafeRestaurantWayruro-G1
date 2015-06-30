@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import proy.modelo.dao.Movimientosdao;
+import proy.modelo.entidad.AgregarMov;
 import proy.modelo.entidad.Listar_Movimientos;
 import proy.modelo.entidad.Listar_pensionista;
 import proy.modelo.entidad.Movimiento;
@@ -118,6 +119,30 @@ public class MovimientosdaoImpl implements Movimientosdao{
         }
 
         return list;
+    }
+
+    @Override
+    public boolean AgregarMovimiento(AgregarMov agregarMov) {
+        boolean estado = false;
+        Statement st= null;
+        String query = " begin renovarcontrato('"+agregarMov.getIdventa()+"', '"+agregarMov.getTipo()+"', '"+agregarMov.getTotal()+"', '"+agregarMov.getIdu()+"');end; ";
+        try {
+            st = abrirConexion().createStatement();
+            st.executeUpdate(query);
+            guardar();
+            cerrarConexion();
+            estado = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            try {
+                revertir();
+                cerrarConexion();
+                estado = false;
+            } catch (Exception ex) {
+            }
+        }
+        return estado;
     }
     
 }

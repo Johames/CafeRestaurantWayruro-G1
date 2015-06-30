@@ -6,7 +6,9 @@
 package proy.modelo.dao;
 
 import java.util.List;
+import proy.modelo.entidad.AgregarMov;
 import proy.modelo.entidad.Listar_Movimientos;
+import proy.modelo.entidad.Movimiento;
 
 /**
  *
@@ -15,4 +17,5 @@ import proy.modelo.entidad.Listar_Movimientos;
 public interface Movimientosdao {
     public List<Listar_Movimientos> Listar();
     public List<Listar_Movimientos> MovdelMes();
+    public boolean AgregarMovimiento(AgregarMov agregarMov);
 }
