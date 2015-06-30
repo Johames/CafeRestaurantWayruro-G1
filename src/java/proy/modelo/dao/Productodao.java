@@ -21,5 +21,5 @@ public interface Productodao {
     public List<Producto> ListarProductos();
     public List<Producto> Listar(String idCategoria);
     public List<Pmasvendido> PmasVendido();
-    public boolean UpdateProducto(Producto producto);
+    public boolean UpdateProducto(Producto producto, String id);
 }

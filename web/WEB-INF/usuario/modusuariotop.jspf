@@ -1,3 +1,4 @@
+<%@page import="proy.modelo.entidad.Usuario"%>
 <%@page import="proy.modelo.entidad.Rol"%>
 <%@page import="proy.modelo.daoImpl.UsuariodaoImpl"%>
 <%@page import="proy.modelo.dao.Usuariodao"%>
@@ -24,6 +25,7 @@
             if(idUsuario.equals("")){
                 response.sendRedirect("error.jsp");
             }
+            
         %>
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
@@ -41,7 +43,7 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <form class="navbar-form navbar-right">
-                        <a class="btn btn-primary" href="javascript:window.back(-1);" role="button">Volver a la Lista &emsp;<i class="glyphicon glyphicon-list-alt"></i></a>
+                        <a class="btn btn-primary" href="Usuario.jsp" role="button">Volver a la Lista &emsp;<i class="glyphicon glyphicon-list-alt"></i></a>
                     </form>
                 </div>
             </div>

@@ -3,20 +3,20 @@ package proy.modelo.entidad;
 public class Usuario {
 
 
-     private int idUsuario;
+     private String idUsuario;
      private String usuario;
      private String contrasena;
      private String estado;
-     private int idRol;
+     private String idRol;
 
     public Usuario() {
     }
 
-    public int getIdUsuario() {
+    public String getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(String idUsuario) {
         this.idUsuario = idUsuario;
     }
 
@@ -44,11 +44,11 @@ public class Usuario {
         this.estado = estado;
     }
 
-    public int getIdRol() {
+    public String getIdRol() {
         return idRol;
     }
 
-    public void setIdRol(int idRol) {
+    public void setIdRol(String idRol) {
         this.idRol = idRol;
     }
      

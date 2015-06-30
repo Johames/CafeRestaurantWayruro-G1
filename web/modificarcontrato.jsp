@@ -4,11 +4,12 @@
     <div class="col-md-3"></div>
     <div class="col-md-6" id="aler">
         <br>
-        <%
-         ContratoPensionista cp= new ContratoPensionista();
-        String idcontrato = request.getParameter("idcontrato"); idcontrato = idcontrato == null ? "" : idcontrato;
-         if (opcion.equals("modificar")) {
-             if (persona.ModificarFechaP(idcontrato)) {
+        <%            ContratoPensionista cp = new ContratoPensionista();
+            String idcontrato = request.getParameter("idcontrato");
+            idcontrato = idcontrato == null ? "" : idcontrato;
+            if (opcion.equals("modificar")) {
+
+                if (persona.ModificarFechaP(idcontrato)) {
                     alert = "info";
                     mensaje = "El Contrato se modifico correctamente...";
                     response.sendRedirect("pensionistas.jsp");
@@ -18,16 +19,34 @@
                 }
             }
 
-            if(!mensaje.equals("")){
+            if (!mensaje.equals("")) {
         %>
         <div class="alert alert-<%=alert%>"><%=mensaje%></div>
         <%}%>
     </div>
 </div>
 <div class="container">
+
     <div class="row">
+
+
         <div class="col-md-2"></div>
+
         <div class="col-md-8 well">
+            <div class="container">
+                <div class="form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-3 " >
+                    <input type="hidden" class="btn btn-primary" name="opcion" value="persona">
+                    <input type="submit" class="btn btn-default" value="Persona">
+                    </div>
+                    <div class="col-md-3 " >
+                    <input type="hidden" class="btn btn-primary" name="opcion" value="contrato">
+                    <input type="submit" class="btn btn-default" value="Contrato">
+                </div>
+                </div>
+            </div>
+
             <div class="title">
                 <form class="tipo">
                     <h2><b>Modificar Contrato</b></h2>

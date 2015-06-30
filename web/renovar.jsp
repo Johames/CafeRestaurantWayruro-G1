@@ -21,7 +21,7 @@
                     <br>
                 </form>
             </div>
-            <div class="formu">
+             <div class="formu">
                 <form class="form-horizontal" action="renovar.jsp" method="post">
                     <div class="form-group" hidden>
                         <label class="control-label col-xs-3">id :</label>

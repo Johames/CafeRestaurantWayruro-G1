@@ -109,7 +109,7 @@ public class UsuariodaoImpl implements Usuariodao {
         Statement st = null;
         ResultSet rs = null;
         Listar_Usuario listar = null;
-        String query = " select p.nombres as nombres, p.apellidos as apellidos, us.usuario as usuario, r.nombre_rol as rol "
+        String query = " select us.id_usuario, p.nombres as nombres, p.apellidos as apellidos, us.usuario as usuario, us.contrasena,us.estado as stado, r.nombre_rol as rol "
                 + " from persona p, usuario us, rol r "
                 + " where p.id_persona=us.id_usuario and us.id_rol=r.id_rol ";
         try {
@@ -118,9 +118,12 @@ public class UsuariodaoImpl implements Usuariodao {
             while (rs.next()) {
                 listar = new Listar_Usuario();
                 
+                listar.setIdUsuario(rs.getString("id_usuario"));
                 listar.setNombres(rs.getString("nombres"));
                 listar.setApellidos(rs.getString("apellidos"));
                 listar.setUsuario(rs.getString("usuario"));
+                listar.setContrasena(rs.getString("contrasena"));
+                listar.setEstado(rs.getString("stado"));
                 listar.setNombre_rol(rs.getString("rol"));
 
                 lista.add(listar);
@@ -138,27 +141,26 @@ public class UsuariodaoImpl implements Usuariodao {
     }
 
     @Override
-    public boolean EliminarUsuario(int id) {
-        boolean flat = false;
+    public boolean EliminarUsuario(String id_usuario) {
+        boolean estad = false;
         Statement st = null;
-        String query = "delete FROM USUARIO WHERE ID_USUARIO =" + id;
-
+        String query = "update USUARIO  set estado='0' where id_usuario='" + id_usuario + "'";
         try {
             st = abrirConexion().createStatement();
-            st.executeUpdate(query);
-            guardar();
-            cerrarConexion();
-            flat = true;
+            st.executeUpdate(query); 
+            abrirConexion().commit();
+            abrirConexion().close();
+            estad = true;
         } catch (Exception e) {
             e.printStackTrace();
-            flat = false;
             try {
-                revertir();
-                cerrarConexion();
+                abrirConexion().rollback();
+                estad = false;
+                abrirConexion().close();
             } catch (Exception ex) {
             }
         }
-        return flat;
+        return estad;
     }
 
     @Override
@@ -191,4 +193,29 @@ public class UsuariodaoImpl implements Usuariodao {
         return lista;
     }
 
+    @Override
+    public boolean ModificarUsuario(Usuario usuario, String id) { 
+     boolean estad = false;
+        Statement st = null;
+        String query = "update usuario set usuario='"+usuario.getUsuario()+"',contrasena='"+usuario.getContrasena()+"', id_rol='"+usuario.getIdRol()+"' where id_usuario='"+id+"'";
+        try {
+            st = abrirConexion().createStatement();
+            st.executeUpdate(query); 
+            abrirConexion().commit();
+            abrirConexion().close();
+            estad = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            try {
+                abrirConexion().rollback();
+                estad = false;
+                abrirConexion().close();
+            } catch (Exception ex) {
+            }
+        }
+        return estad;    
+       
+    }
+   
 }

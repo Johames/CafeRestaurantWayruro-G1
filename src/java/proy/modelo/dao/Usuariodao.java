@@ -19,6 +19,7 @@ public interface Usuariodao {
     public String ComprobarUsuario(String usuario, String contrasena);
     public List<Listar_Usuario> ListarUsuario();
     public boolean AgregarUsuario(Agregar_Usuario agregar_Usuario);
-    public boolean EliminarUsuario(int id);
+    public boolean EliminarUsuario(String id_usuario);
     public List<Rol> ListarRol();
+    public boolean ModificarUsuario(Usuario usuario, String id);
 }

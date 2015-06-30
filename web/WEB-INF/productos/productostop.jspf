@@ -28,7 +28,9 @@
             String idCategoria = request.getParameter("idCategoria"); idCategoria = idCategoria == null?"":idCategoria;
             String idProducto = request.getParameter("idProducto"); idProducto = idProducto == null?"":idProducto;
             String nombrePro = request.getParameter("nombrePro"); nombrePro = nombrePro == null?"":nombrePro;
+            String precio = request.getParameter("precio"); precio = precio == null?"":precio;
             String nombreCat = request.getParameter("nombreCat"); nombreCat = nombreCat == null?"":nombreCat;
+            String id= request.getParameter("id"); id=id==null?"": id;              
             String opcion = request.getParameter("opcion"); opcion=opcion ==null?"":opcion;
             String mensaje = "";
 

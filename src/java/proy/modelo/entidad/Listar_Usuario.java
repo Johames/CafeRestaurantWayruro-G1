@@ -12,6 +12,7 @@ public class Listar_Usuario {
     private String idUsuario;
     private String usuario;    
     private String contrasena;
+    private String estado;
     private String idRol;
     private String nombre_rol;
 
@@ -66,6 +67,15 @@ public class Listar_Usuario {
         this.contrasena = contrasena;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
+    
     public String getIdRol() {
         return idRol;
     }

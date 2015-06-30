@@ -6,8 +6,11 @@
         <thead>
             <tr>
                 <th>#</th>
+                <th hidden>ID </th>
                 <th>Nombre del Plato</th>
                 <th>Precio </th>
+                <th hidden>IDC </th>
+                <th hidden>IDU </th>
                 <th>Modificar</th>
                 <th>Eliminar</th>                                    
             </tr>
@@ -19,24 +22,15 @@
                 for (Producto prod : dao.Listar(idCategoria)) {
                     coun++;
                     
-                      if(opcion.equals("modificar")){
-                    Producto producto = new Producto();
-                    producto.setIdProducto(idProducto);
-                    if(dao.UpdateProducto(producto)){
-                        mensaje=" Se actualizo Correctamente <a href='platos.jsp'>Lista</a>";
-                    }else{
-                        mensaje = "no se pudo actualizar";
-                    }
-                    
-                        
-                    }
-
             %>
             <tr>
                 <td><%=coun%>.</td>
+                <td hidden><%=prod.getIdProducto()%></td>
                 <td><%=prod.getNombreProducto()%></td>
                 <td><%=prod.getPrecio()%></td>
-                <td><p><a class="btn btn-primary" href="platos.jspopcion=modificar&id=<%=prod.getIdProducto()%>" title="Modificar" role="button" ><i class="glyphicon glyphicon-edit" ></i></a></p></td>
+                <td hidden><%=prod.getIdCategoria()%></td>
+                <td hidden><%=prod.getIdUsuario()%></td>
+                <td><p><a class="btn btn-primary" href="modproducto.jsp?idProducto=<%=prod.getIdProducto()%>&nombrePro=<%=prod.getNombreProducto()%>&precio=<%=prod.getPrecio()%>" title="Modificar" role="button" ><i class="glyphicon glyphicon-edit" ></i></a></p></td>
                 <td><p><a class="btn btn-danger" onclick="if(!confirm('¿Esta seguro de eliminar este Producto?'))return false" role="button" title="Eliminar" href="platos.jsp?opcion=delete&id=<%=prod.getIdProducto()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
             </tr>
             

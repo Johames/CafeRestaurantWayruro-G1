@@ -18,16 +18,15 @@
         }
     }
 %>
-
-<div class="container-fluid">
-    <div class="col-md-6" id="aler">
+<div class="col-md-6" id="aler">
         <br>
         <%
             if(!mensaje.equals("")){
         %>
         <div class="alert alert-<%=alert%>"><%=mensaje%></div>
         <%}%>
-    </div>
+</div>
+<div class="container-fluid">
     <h1 class="sub-header">Lista de Pensionistas Activos<label class="col-lg-offset-0"></label>&nbsp;&nbsp;<label class="col-lg-offset-6"></label><a href="pensionistasinactivos.jsp" class="btn btn-primary right">Pensionistas Inactivos</a></h1>
     <div class="table-responsive">
         <table id="tj" class="table table-striped well">

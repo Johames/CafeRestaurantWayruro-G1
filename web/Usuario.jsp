@@ -3,15 +3,13 @@
 <div class="container">
     <%
         
-        String opcion = request.getParameter("opcion");
-        opcion = opcion == null ? "" : opcion;
-        String id = request.getParameter("id");
-        id = id == null ? "" : id;
+        String opcion = request.getParameter("opcion");opcion = opcion == null ? "" : opcion;
+        String id = request.getParameter("id");id = id == null ? "" : id;
         String mensaje = "";
 
         if (opcion.equals("delete")) {
 
-            if (usuariodao.EliminarUsuario(Integer.parseInt(id))) {
+            if (usuariodao.EliminarUsuario(id)) {
 
                 mensaje = "Se elimino correctamente";
 
@@ -30,6 +28,8 @@
                     <th>#</th>
                     <th>Nombres</th>
                     <th>Usuario</th>
+                    <th hidden>Contraseña</th>
+                    <th hidden>Estado</th>
                     <th>Rol</th>
                     <th>Modificar</th>
                     <th>Eliminar</th>                                   
@@ -45,10 +45,13 @@
                 %>
                 <tr>
                     <td><%=coun%>.</td>
+                    <td hidden><%=user.getIdUsuario()%></td>
                     <td><%=user.getNombres()%>&nbsp;<%=user.getApellidos()%></td>
                     <td><%=user.getUsuario()%></td>
+                    <td hidden><%=user.getContrasena()%></td>
+                    <td hidden><%=user.getEstado()%></td>
                     <td><%=user.getNombre_rol()%></td>
-                    <td><p><a class="btn btn-primary" href="modusuario.jsp?id=<%=user.getIdPersona()%>" role="button"><i class="glyphicon glyphicon-pencil"></i></a></p></td>
+                    <td><p><a class="btn btn-primary" href="modusuario.jsp?idu=<%=user.getIdUsuario()%>&usuario=<%=user.getUsuario()%>&contra=<%=user.getContrasena()%>&estado=<%=user.getEstado()%>" role="button"><i class="glyphicon glyphicon-pencil"></i></a></p></td>
                     <td><p><a class="btn btn-danger" onclick="if(!confirm('Esta seguro de eliminar a <%=user.getNombres()%><%=user.getApellidos()%>'))return false" role="button" href="Usuario.jsp?opcion=delete&id=<%=user.getIdPersona()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
                 </tr>
                 <%}%>

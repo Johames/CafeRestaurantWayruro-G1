@@ -107,7 +107,8 @@ public class ProductodaoImpl implements Productodao{
         Statement st = null;
         ResultSet rs = null;
         Producto pro = null;
-        String query = "select id_producto as id, nombre_producto as producto, precio from producto ";
+        String query = "select id_producto as id, nombre_producto as producto, precio, id_categoria as idc,"
+                + " id_usuario as idu from producto ";
 
         try {
             st = abrirConexion().createStatement();
@@ -117,6 +118,8 @@ public class ProductodaoImpl implements Productodao{
                 pro.setIdProducto(rs.getString("id"));
                 pro.setNombreProducto(rs.getString("producto"));
                 pro.setPrecio(rs.getString("precio"));
+                pro.setIdCategoria(rs.getString("idc"));
+                pro.setIdUsuario(rs.getString("idu"));
                 list.add(pro);
             }
             abrirConexion().close();
@@ -137,15 +140,19 @@ public class ProductodaoImpl implements Productodao{
         Statement st = null;
         ResultSet rs = null;
         Producto pro = null;
-        String query = "select nombre_producto as producto, precio from producto where id_categoria='"+idCategoria+"' ";
+        String query = "select id_producto as id, nombre_producto as producto, precio, id_categoria as idc,"
+                + " id_usuario as idu from producto where id_categoria='"+idCategoria+"' ";
 
         try {
             st = abrirConexion().createStatement();
             rs = st.executeQuery(query);
             while (rs.next()) {
                 pro = new Producto();
+                 pro.setIdProducto(rs.getString("id"));
                 pro.setNombreProducto(rs.getString("producto"));
                 pro.setPrecio(rs.getString("precio"));
+                pro.setIdCategoria(rs.getString("idc"));
+                pro.setIdUsuario(rs.getString("idu"));
                 lista.add(pro);
             }
             abrirConexion().close();
@@ -195,29 +202,27 @@ public class ProductodaoImpl implements Productodao{
     }
 
      @Override
-    public boolean UpdateProducto(Producto producto) {
+    public boolean UpdateProducto(Producto producto, String id) {
     
      boolean estado = false;
         Statement st = null;
-        String query = "update producto set "
-                +"  idProducto=upper('"+producto.getIdProducto()
-                +"'),nombreproducto=upper('"+producto.getNombreProducto()
-                +"'),precio='"+producto.getPrecio()
-                +"',idCategoria="+producto.getIdCategoria()
-                +",idUsuario='"+producto.getIdUsuario()+"'";
+        String query = "update producto set nombre_producto='"+producto.getNombreProducto()
+                +"',precio='"+producto.getPrecio()+"',id_categoria="+producto.getIdCategoria()
+                +",id_usuario='"+producto.getIdUsuario()+"' where id_producto='"+id+"'";
        
         try {
             st = abrirConexion().createStatement();
-            st.executeQuery(query);
+            st.executeUpdate(query); 
             abrirConexion().commit();
             abrirConexion().close();
-            estado=true;
+            estado = true;
         } catch (Exception e) {
             e.printStackTrace();
             try {
                 abrirConexion().rollback();
-                abrirConexion().close();
                 estado=false;
+                abrirConexion().close();
+                
             } catch (Exception ex) {
             }
         }
