@@ -18,6 +18,7 @@
         <link href="css/dashboard.css" rel="stylesheet">
         <script src="bootstrap/js/ie-emulation-modes-warning.js"></script>
         <jsp:useBean id="idUsuario" scope="session" class="java.lang.String" />
+        <jsp:useBean id="listainac" scope="request" type="java.util.List" />
     </head>
 
     <body>
@@ -45,7 +46,7 @@
                     </button>
                     <a class="navbar-brand" href="pensionistas.jsp">Café Restaurant "Wayruro"</a>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="inicio.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
+                        <li class="active"><a href="ocultar?action=volver">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
                     </ul>  
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
@@ -76,14 +77,32 @@
                     </form>
                     <div id="navbar" class="navbar-collapse collapse">
                         <form class="navbar-form navbar-right">
-                            <a class="btn btn-primary" href="pensionistas.jsp" role="button">Volver &emsp;<i class="glyphicon glyphicon-list-alt"></i></a>
+                            <a class="btn btn-primary" href="crud?action=listarpen" role="button">Volver &emsp;<i class="glyphicon glyphicon-list-alt"></i></a>
                         </form>
                     </div>
                 </div>
             </div>
         </nav>
-
-        <input type="hidden" name="idPersona" value="<%=idPersona%>" size="10">
+<% 
+      String opcion = request.getParameter("opcion"); opcion=opcion==null?"":opcion;
+      String alert="";
+      String mensaje="";
+        if (opcion.equals("delete")) {
+    
+        String idcontrato = request.getParameter("idcontrato"); idcontrato = idcontrato == null ? "" : idcontrato;
+    
+        Pensionistadao pensionistadao = new PensionistadoaImpl();
+        
+        if (pensionistadao.EliminarPensionista(idcontrato)) {
+            alert="info";
+            mensaje="Se eliminó correctamente";
+        } else {
+            alert = "danger";
+            mensaje = "No se puede eliminar. ";
+        }
+    }
+%>
+        
 
         <div class="container-fluid">
             <h1 class="sub-header">Lista de Pensionistas Inactivos</h1>
@@ -95,7 +114,7 @@
                             <th hidden>ID</th>
                             <th>Nombres y Apellidos</th>
                             <th>Dni</th> 
-                            <th>N_Celular</th> 
+                            <th>N° Celular</th> 
                             <th>Direccion</th> 
                             <th>Inicio de Pension</th>
                             <th>Fin de Pension</th>  
@@ -108,7 +127,7 @@
                         <%
                             int count = 0;
                             Pensionistadao dao = new PensionistadoaImpl();
-                            List<Listar_pensionista> list = dao.ListarInactivos();
+                            List<Listar_pensionista> list = listainac;
                             for (Listar_pensionista per : list) {
                                 count++;
 
@@ -125,7 +144,7 @@
                             <td>$.&nbsp;<%=per.getPrecioPension()%></td>
                             <td><%=per.getFechaPago().substring(0, 10)%></td>
                             <td><p><a class="btn btn-primary" title="Renovar Contrato del Pencionista" href="renovar.jsp?idpersona=<%=per.getIdPersona()%>&nombres=<%=per.getNombres()%>&apellidos=<%=per.getApellidos()%>&dni=<%=per.getDni()%>&ncelular=<%=per.getNCelular()%>&direcciones=<%=per.getDireccion()%>&precio=<%=per.getPrecioPension()%>&pago=<%=per.getFechaPago().substring(0, 10)%>" role="button"><i class="glyphicon glyphicon-refresh"></i></a></p></td>
-                            <td><p><a class="btn btn-danger" title="Eliminar" onclick="if (!confirm('Esta seguro de eliminar a <%=per.getNombres()%> <%=per.getApellidos()%>'))return false" role="button" href="pensionistas.jsp?opcion=delete&id=<%=per.getIdContrato()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
+                            <td><p><a class="btn btn-danger" title="Eliminar" onclick="if (!confirm('Esta seguro de eliminar a <%=per.getNombres()%> <%=per.getApellidos()%>'))return false" role="button" href="crud?action=listarinac&opcion=delete&idcontrato=<%=per.getIdContrato()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
                         </tr>
                         <%}%>
                     </tbody>

@@ -395,4 +395,109 @@ public class PensionistadoaImpl implements Pensionistadao {
         return flat;
     }
 
+    @Override
+    public Persona MostrarPersona(String idpersona) {
+        Persona per = null;
+        Statement st = null;
+        ResultSet rs = null;
+        String query = " select p.id_persona as id, p.nombres, p.apellidos, p.dni, p.n_celular, p.direccion from persona p where id_persona='"+idpersona+"' ";
+        try {
+            st = abrirConexion().createStatement();
+            rs = st.executeQuery(query);
+            cerrarConexion();
+            if (rs.next()) {
+                per = new Persona();
+                per.setIdPersona(rs.getString("id"));
+                per.setNombres(rs.getString("nombres"));
+                per.setApellidos(rs.getString("apellidos"));
+                per.setDni(rs.getString("dni"));
+                per.setNCelular(rs.getString("n_celular"));
+                per.setDireccion(rs.getString("direccion"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                cerrarConexion();
+            } catch (Exception ex) {
+            }
+        }
+        return per;
+    }
+
+    @Override
+    public boolean ModificarPersona(Persona per, String idpersona) {
+        boolean estado = true;
+        Statement st = null;
+        String query = " update persona set nombres='"+per.getNombres()+"', apellidos='"+per.getApellidos()+"', dni='"+per.getDni()+"', n_celular='"+per.getNCelular()+"', direccion='"+per.getDireccion()+"' where id_persona="+idpersona+" ";
+        try {
+            st = abrirConexion().createStatement();
+            st.executeUpdate(query);
+            guardar();
+            cerrarConexion();
+            estado = true;
+            System.out.println(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+            estado = false;
+            try {
+                revertir();
+                cerrarConexion();
+            } catch (Exception ex) {
+            }
+        }
+        return estado;
+    }
+
+    @Override
+    public ContratoPensionista MostrarContrato(String idcontrato) {
+        ContratoPensionista conp = null;
+        Statement st = null;
+        ResultSet rs = null;
+        String query = " select to_char(fecha_inicio, 'yyyy-mm-dd') as fecha_inicio, to_char(fecha_fin, 'yyyy-mm-dd') as fecha_fin, cp.precio_pension, cp.estado, cp.id_usuario from contrato_pensionista cp where id_contrato='"+idcontrato+"' ";
+        try {
+            st = abrirConexion().createStatement();
+            rs = st.executeQuery(query);
+            cerrarConexion();
+            if (rs.next()) {
+                conp = new ContratoPensionista();
+                conp.setFechaInicio(rs.getString("fecha_inicio"));
+                conp.setFechaFin(rs.getString("fecha_fin"));
+                conp.setPrecioPension(rs.getString("precio_pension"));
+                conp.setEstado(rs.getString("estado"));
+                conp.setIdusuario(rs.getString("id_usuario"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                cerrarConexion();
+            } catch (Exception ex) {
+            }
+        }
+        return conp;
+    }
+
+    @Override
+    public boolean ModificarContrato(ContratoPensionista conp, String idcontrato) {
+        boolean estado = true;
+        Statement st = null;
+        String query = " begin modificarcontrato('"+idcontrato+"', to_date('"+conp.getFechaInicio()+"', 'yyyy-mm-dd'), to_date('"+conp.getFechaFin()+"', 'yyyy-mm-dd'), '"+conp.getPrecioPension()+"', '"+conp.getEstado()+"', '"+conp.getIdusuario()+"');end; ";
+        try {
+            st = abrirConexion().createStatement();
+            st.executeUpdate(query);
+            guardar();
+            cerrarConexion();
+            estado = true;
+            System.out.println(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+            estado = false;
+            try {
+                revertir();
+                cerrarConexion();
+            } catch (Exception ex) {
+            }
+        }
+        return estado;
+    }
+
 }

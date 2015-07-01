@@ -3,31 +3,31 @@ package proy.modelo.entidad;
 public class ContratoPensionista {
 
 
-     private int idContrato;
-     private int idpersona;    
+     private String idContrato;
+     private String idpersona;    
      private String fechaInicio;
      private String fechaFin;
      private String precioPension;
      private String fechaPago;
      private String estado;
-     private int idusuario;
+     private String idusuario;
 
     public ContratoPensionista() {
     }
 
-    public int getIdContrato() {
+    public String getIdContrato() {
         return idContrato;
     }
 
-    public void setIdContrato(int idContrato) {
+    public void setIdContrato(String idContrato) {
         this.idContrato = idContrato;
     }
 
-    public int getIdpersona() {
+    public String getIdpersona() {
         return idpersona;
     }
 
-    public void setIdpersona(int idpersona) {
+    public void setIdpersona(String idpersona) {
         this.idpersona = idpersona;
     }
 
@@ -71,11 +71,11 @@ public class ContratoPensionista {
         this.estado = estado;
     }
 
-    public int getIdusuario() {
+    public String getIdusuario() {
         return idusuario;
     }
 
-    public void setIdusuario(int idusuario) {
+    public void setIdusuario(String idusuario) {
         this.idusuario = idusuario;
     }
     

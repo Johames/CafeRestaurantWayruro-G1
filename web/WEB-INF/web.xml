@@ -12,6 +12,14 @@
         <servlet-name>Producto</servlet-name>
         <servlet-class>proy.controlador.Producto</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Ocultar</servlet-name>
+        <servlet-class>proy.controlador.Ocultar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Crud</servlet-name>
+        <servlet-class>proy.controlador.Crud</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>validar</servlet-name>
         <url-pattern>/valid</url-pattern>
@@ -24,9 +32,17 @@
         <servlet-name>Producto</servlet-name>
         <url-pattern>/prod</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Ocultar</servlet-name>
+        <url-pattern>/ocultar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Crud</servlet-name>
+        <url-pattern>/crud</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
-            15
+            30
         </session-timeout>
     </session-config>
 </web-app>

@@ -10,11 +10,13 @@ import com.mchange.v2.c3p0.test.ListTablesTest;
 import java.util.ArrayList;
 import java.util.List;
 import proy.modelo.dao.Categoriadao;
+import proy.modelo.dao.Controldao;
 import proy.modelo.entidad.Usuario;
 import proy.modelo.dao.Pensionistadao;
 import proy.modelo.dao.Productodao;
 import proy.modelo.dao.Usuariodao;
 import proy.modelo.daoImpl.CategoriadaoImpl;
+import proy.modelo.daoImpl.ControldaoImpl;
 import proy.modelo.daoImpl.PensionistadoaImpl;
 import proy.modelo.daoImpl.ProductodaoImpl;
 import proy.modelo.daoImpl.UsuariodaoImpl;
@@ -39,7 +41,8 @@ public class NewMain {
         //main.agregar();
         //main.comprobar();
         //main.buscar();
-        main.listar();
+//        main.listar();
+        main.control();
         
     }
     
@@ -72,6 +75,13 @@ public class NewMain {
         //usuario us = new usuario();
         id_usuario = user.ComprobarUsuario("admin", "1234");
         System.out.println("ID : "+id_usuario);
+    }
+    
+    public void control(){
+        Controldao dao = new ControldaoImpl();
+        String control = "";
+        control = dao.ComprobarControl("1");
+        System.out.println("Control : "+control);
     }
     
     public void buscar(){

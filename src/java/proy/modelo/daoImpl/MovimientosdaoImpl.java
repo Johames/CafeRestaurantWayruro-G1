@@ -53,7 +53,7 @@ public class MovimientosdaoImpl implements Movimientosdao{
         Statement st = null;
         ResultSet rs = null;
         Listar_Movimientos mov = null;
-        String query = "select m.id_movimiento as idm, decode(m.tipo, 'c', 'Contrato', 'venta') as registro, "
+        String query = "select m.id_movimiento as idm, decode(m.tipo, 'c', 'Contrato', 'r', 'Venta(Registro)', 'venta') as registro, "
                 + " m.id_documento as idc, m.fecha as fec, m.importe as imp, u.usuario as us "
                 + " from movimiento m, usuario u "
                 + " where m.id_usuario=u.id_usuario "
@@ -123,9 +123,9 @@ public class MovimientosdaoImpl implements Movimientosdao{
 
     @Override
     public boolean AgregarMovimiento(AgregarMov agregarMov) {
-        boolean estado = false;
+        boolean estado = true;
         Statement st= null;
-        String query = " begin renovarcontrato('"+agregarMov.getIdventa()+"', '"+agregarMov.getTipo()+"', '"+agregarMov.getTotal()+"', '"+agregarMov.getIdu()+"');end; ";
+        String query = " begin registromovimiento('"+agregarMov.getIdventa()+"', '"+agregarMov.getTipo()+"', '"+agregarMov.getTotal()+"', '"+agregarMov.getIdu()+"');end; ";
         try {
             st = abrirConexion().createStatement();
             st.executeUpdate(query);

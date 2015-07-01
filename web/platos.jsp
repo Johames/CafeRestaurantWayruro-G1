@@ -31,7 +31,7 @@
                 <td hidden><%=prod.getIdCategoria()%></td>
                 <td hidden><%=prod.getIdUsuario()%></td>
                 <td><p><a class="btn btn-primary" href="modproducto.jsp?idProducto=<%=prod.getIdProducto()%>&nombrePro=<%=prod.getNombreProducto()%>&precio=<%=prod.getPrecio()%>" title="Modificar" role="button" ><i class="glyphicon glyphicon-edit" ></i></a></p></td>
-                <td><p><a class="btn btn-danger" onclick="if(!confirm('¿Esta seguro de eliminar este Producto?'))return false" role="button" title="Eliminar" href="platos.jsp?opcion=delete&id=<%=prod.getIdProducto()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
+                <td><p><a class="btn btn-danger"  role="button" title="Eliminar" href="#"><i class="glyphicon glyphicon-trash"></i></a></p></td>
             </tr>
             
             

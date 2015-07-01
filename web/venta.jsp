@@ -45,7 +45,7 @@
                                             <br>
                                             <br>
                                             <br>
-                                            <form>
+                                            <form action="venta.jsp" method="post">
                                             <div class="row">
                                                 <div class="col-xs-12 col-sm-3 col-md-4"></div>
                                                 <div class="col-xs-12 col-sm-6 col-md-4">
@@ -97,34 +97,36 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="table-responsive">
-                                                        <table id="tabj" class="table table-striped well">
-                                                            <thead>
-                                                                <tr hidden>
-                                                                    <th>#</th>
-                                                                    <th>Id Contrato</th>
-                                                                    <th>Nombres y Apellidos</th>
-                                                                    <th>Seleccionar</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <%
-                                                                    int count = 0;
-
-                                                                    for (Listar_pensionista per : dao.ListarPensionista()) {
-                                                                        count++;
-                                                                %>
-                                                                <tr>
-                                                                    <td><%=count%>.</td>
-                                                                    <td hidden><%=per.getIdContrato()%></td>
-                                                                    <td><%=per.getNombres()%>&nbsp;<%=per.getApellidos()%></td>
-                                                                    <td>
-                                                                        <a class="btn btn-primary" href="detalleventa.jsp?opcion=control&idContrato=<%=per.getIdContrato()%>&nombres=<%=per.getNombres()%> <%=per.getApellidos()%>&opc=1&tipo=r">Control</a>                                                                    
-                                                                    </td>
-                                                                </tr>
-                                                                <%}%>
-                                                            </tbody>
-                                                        </table>
+                                                    <div style="overflow:scroll;height:300px;width:500px;"> 
+                                                        <div class="table-responsive">
+                                                            <table id="tabj" class="table table-striped well">
+                                                                <thead>
+                                                                    <tr hidden>
+                                                                        <th>#</th>
+                                                                        <th>Id Contrato</th>
+                                                                        <th>Nombres y Apellidos</th>
+                                                                        <th>Seleccionar</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <%
+                                                                        int count = 0;
+                                                                        List<Listar_pensionista> lista = dao.ListarPensionista();
+                                                                        for (Listar_pensionista per : lista) {
+                                                                            count++;
+                                                                    %>
+                                                                    <tr>
+                                                                        <td><%=count%>.</td>
+                                                                        <td hidden><%=per.getIdContrato()%></td>
+                                                                        <td><%=per.getNombres()%>&nbsp;<%=per.getApellidos()%></td>
+                                                                        <td>
+                                                                            <a class="btn btn-primary" href="detalleventa.jsp?opcion=control&idContrato=<%=per.getIdContrato()%>&nombres=<%=per.getNombres()%> <%=per.getApellidos()%>&opc=1&tipo=r">Control</a>                                                                    
+                                                                        </td>
+                                                                    </tr>
+                                                                    <%}%>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
                                                     </div>
                                                 </form>
                                             </div>

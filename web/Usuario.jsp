@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@include file="WEB-INF/usuario/usuariotop.jspf" %>
 
 <div class="container">
@@ -36,10 +37,11 @@
                 </tr>
             </thead>
             <tbody>
-                <%
-                    Usuariodao dao = new UsuariodaoImpl();
+                <%  
+        
                     int coun = 0;
-                    for (Listar_Usuario user : dao.ListarUsuario()) {
+                    List<Listar_Usuario> lista = listaus;
+                    for (Listar_Usuario user : lista) {
                         coun++;
 
                 %>
@@ -52,7 +54,7 @@
                     <td hidden><%=user.getEstado()%></td>
                     <td><%=user.getNombre_rol()%></td>
                     <td><p><a class="btn btn-primary" href="modusuario.jsp?idu=<%=user.getIdUsuario()%>&usuario=<%=user.getUsuario()%>&contra=<%=user.getContrasena()%>&estado=<%=user.getEstado()%>" role="button"><i class="glyphicon glyphicon-pencil"></i></a></p></td>
-                    <td><p><a class="btn btn-danger" onclick="if(!confirm('Esta seguro de eliminar a <%=user.getNombres()%><%=user.getApellidos()%>'))return false" role="button" href="Usuario.jsp?opcion=delete&id=<%=user.getIdPersona()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
+                    <td><p><a class="btn btn-danger" href="#" ><i class="glyphicon glyphicon-trash"></i></a></p></td>
                 </tr>
                 <%}%>
             </tbody>

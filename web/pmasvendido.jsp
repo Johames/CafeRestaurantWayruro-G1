@@ -19,6 +19,7 @@
         <link href="css/dashboard.css" rel="stylesheet">
         <script src="bootstrap/js/ie-emulation-modes-warning.js"></script>
         <jsp:useBean id="idUsuario" scope="session" class="java.lang.String" />
+        <jsp:useBean id="pmasven" scope="request" type="java.util.List" />
     </head>
 
     <body>
@@ -40,7 +41,7 @@
                     </button>
                     <a class="navbar-brand" href="pensionistas.jsp">Café Restaurant "Wayruro"</a>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="inicio.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
+                        <li class="active"><a href="ocultar?action=volver">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
                     </ul>  
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
@@ -86,8 +87,7 @@
                     <tbody>
                         <%                    
                             int count = 0;
-                            Productodao dao = new ProductodaoImpl();
-                            List<Pmasvendido> lista = dao.PmasVendido();
+                            List<Pmasvendido> lista = pmasven;
                             for (Pmasvendido pmv : lista) {
                                 count++;
 

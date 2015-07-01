@@ -10,6 +10,7 @@ import proy.modelo.entidad.AgregarContrato;
 import proy.modelo.entidad.ContratoPensionista;
 import proy.modelo.entidad.Listar_Asistencias;
 import proy.modelo.entidad.Listar_pensionista;
+import proy.modelo.entidad.Persona;
 import proy.modelo.entidad.RenovarContrato;
 
 /**
@@ -27,4 +28,8 @@ public interface Pensionistadao {
     public List<Listar_Asistencias> ListarAsistenciasMes();
     public List<Listar_Asistencias> ListarAsistencias();
     public boolean ModificarFechaP (String idpersona);
+    public Persona MostrarPersona(String idpersona);
+    public boolean ModificarPersona(Persona per, String idpersona);
+    public ContratoPensionista MostrarContrato(String idcontrato);
+    public boolean ModificarContrato(ContratoPensionista conp, String idcontrato);
 }

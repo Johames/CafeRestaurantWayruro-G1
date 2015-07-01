@@ -20,7 +20,7 @@
                 us.setEstado(estado);
                 us.setIdRol(idrol);
                 if(dao.ModificarUsuario(us, id)){
-                    response.sendRedirect("Usuario.jsp");
+                    response.sendRedirect("crud?action=listarus");
                     
                 }else{
                   alert = "danger";

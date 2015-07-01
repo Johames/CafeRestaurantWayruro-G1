@@ -5,17 +5,23 @@
         <div class="col-lg-4">
             <img class="img-circle" src="recursos/img/pensionistas.png" alt="Generic placeholder image" width="140" height="140">
             <h2>Pensionistas</h2>
-            <p><a class="btn btn-primary" href="pensionistas.jsp" role="button">Ver Lista »</a></p>
+            <p><a class="btn btn-primary" href="crud?action=listarpen" role="button">Ver Lista »</a></p>
+        </div>
+        <div class="col-lg-4">
+            <div class="tab-pane fade active in" id="map-acercade">
+                  <div class="row-fluid">
+                    <div class="span11">
+                        <div class="tab-pane active" id="maptarapoto">
+	                    <iframe width="100%" height="220" scrolling="auto" frameborder="1px" src="http://www.sudoku-online.org/" name="window"></iframe>
+	                </div>
+                    </div>
+                  </div>
+          </div>
         </div>
         <div class="col-lg-4">
             <img class="img-circle" src="recursos/img/pedido.png" alt="Generic placeholder image" width="140" height="140">
             <h2>Ventas</h2>
-            <p><a class="btn btn-primary" href="venta.jsp" role="button">Iniciar Venta »</a></p>
-        </div>
-        <div class="col-lg-4">
-            <img class="img-circle" src="recursos/img/reserva.png" alt="Generic placeholder image" width="140" height="140">
-            <h2>Control de Pensionistas</h2>
-            <p><a class="btn btn-primary" href="control.jsp" role="button">Registrar Control »</a></p>
+            <p><a class="btn btn-primary" href="ocultar?action=venta" role="button">Iniciar Venta »</a></p>
         </div>
     </div>
 

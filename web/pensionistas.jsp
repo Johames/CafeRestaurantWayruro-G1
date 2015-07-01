@@ -1,6 +1,5 @@
 
 <%@include file="WEB-INF/pensionistas/pensionistastop.jspf" %>
-
 <% 
       
         if (opcion.equals("delete")) {
@@ -10,8 +9,8 @@
         Pensionistadao pensionistadao = new PensionistadoaImpl();
         
         if (pensionistadao.EliminarPensionista(idcontrato)) {
-            alert = "info";
-            mensaje = "Se eliminó correctamente.";
+            alert="info";
+            mensaje="Se eliminó correctamente";
         } else {
             alert = "danger";
             mensaje = "No se puede eliminar. ";
@@ -27,7 +26,7 @@
         <%}%>
 </div>
 <div class="container-fluid">
-    <h1 class="sub-header">Lista de Pensionistas Activos<label class="col-lg-offset-0"></label>&nbsp;&nbsp;<label class="col-lg-offset-6"></label><a href="pensionistasinactivos.jsp" class="btn btn-primary right">Pensionistas Inactivos</a></h1>
+    <h1 class="sub-header">Lista de Pensionistas Activos<label class="col-lg-offset-0"></label>&nbsp;&nbsp;<label class="col-lg-offset-6"></label><a href="crud?action=listarinac" class="btn btn-primary right">Pensionistas Inactivos</a></h1>
     <div class="table-responsive">
         <table id="tj" class="table table-striped well">
             <thead>
@@ -36,7 +35,7 @@
                     <th hidden>ID</th>
                     <th>Nombres y Apellidos</th>
                     <th>Dni</th> 
-                    <th>N_Celular</th> 
+                    <th>N° Celular</th> 
                     <th>Direccion</th> 
                     <th>Inicio de Pension</th>
                     <th>Fin de Pension</th>  
@@ -49,8 +48,7 @@
             <tbody>
                 <%
                     int count = 0;
-                    Pensionistadao dao = new PensionistadoaImpl();
-                    List<Listar_pensionista> lista = dao.ListarPensionista();
+                    List<Listar_pensionista> lista = listapen;
                     for (Listar_pensionista listar_pensionista : lista) {
                         count++;
                     
@@ -68,8 +66,8 @@
                     <td>S/.&nbsp;<%=listar_pensionista.getPrecioPension()%></td>
                     <td><%=listar_pensionista.getFechaPago()%></td>
                     <td><%=listar_pensionista.getVigencia()%>&nbsp;Días</td>
-                    <td><p><a class="btn btn-primary" title="Modificar Contrato del Pensionista" href="modificarcontrato.jsp?idcontrato=<%=listar_pensionista.getIdContrato()%>&idpersona=<%=listar_pensionista.getIdPersona()%>&nombres=<%=listar_pensionista.getNombres()%>&apellidos=<%=listar_pensionista.getApellidos()%>&dni=<%=listar_pensionista.getDni()%>&ncelular=<%=listar_pensionista.getNCelular()%>&direcciones=<%=listar_pensionista.getDireccion()%>" role="button"><i class="glyphicon glyphicon-pencil"></i></a></p></td>
-                    <td><p><a class="btn btn-danger" title="Eliminar" onclick="if(!confirm('Esta seguro de eliminar a <%=listar_pensionista.getNombres()%> <%=listar_pensionista.getApellidos()%> y todos sus registros'))return false" role="button" href="pensionistas.jsp?opcion=delete&idcontrato=<%=listar_pensionista.getIdContrato()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
+                    <td><p><a class="btn btn-primary" title="Modificar Contrato del Pensionista" href="modificarcontrato.jsp?idcontrato=<%=listar_pensionista.getIdContrato()%>&idpersona=<%=listar_pensionista.getIdPersona()%>" role="button"><i class="glyphicon glyphicon-pencil"></i></a></p></td>
+                    <td><p><a class="btn btn-danger" title="Eliminar" onclick="if(!confirm('Esta seguro de eliminar a <%=listar_pensionista.getNombres()%> <%=listar_pensionista.getApellidos()%> y todos sus registros'))return false" role="button" href="crud?action=listarpen&opcion=delete&idcontrato=<%=listar_pensionista.getIdContrato()%>"><i class="glyphicon glyphicon-trash"></i></a></p></td>
                 </tr>
                 <%}%>
             </tbody>

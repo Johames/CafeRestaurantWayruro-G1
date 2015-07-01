@@ -13,4 +13,5 @@ import proy.modelo.entidad.Controldia;
  */
 public interface Controldao {
     public boolean AgregarControl(Controldia control);
+    public String ComprobarControl(String idc);
 }

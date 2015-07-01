@@ -6,6 +6,7 @@
 package proy.modelo.daoImpl;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import proy.modelo.dao.Controldao;
 import proy.modelo.entidad.Controldia;
@@ -63,6 +64,30 @@ public class ControldaoImpl implements Controldao{
             }
         }
         return flat;
+    }
+
+    @Override
+    public String ComprobarControl(String idc) {
+        String control = null;
+        String query = "select control from control_pensionista where id_contrato='"+idc+"' and fecha= (select to_char(sysdate, 'dd/mm/yyyy') from dual) ";
+        Statement st = null;
+        ResultSet rs = null;
+        try {
+            st = abrirConexion().createStatement();
+            rs = st.executeQuery(query);
+            if (rs.next()) {
+                control = rs.getString("control");
+            }
+            cerrarConexion();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            try {
+                cerrarConexion();
+            } catch (Exception ex) {
+            }
+        }
+        return control;
     }
     
 }

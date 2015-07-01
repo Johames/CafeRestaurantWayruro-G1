@@ -16,6 +16,7 @@
         <link href="css/dashboard.css" rel="stylesheet">
         <script src="bootstrap/js/ie-emulation-modes-warning.js"></script>
         <jsp:useBean id="idUsuario" scope="session" class="java.lang.String" />
+        <jsp:useBean id="asdia" scope="request" type="java.util.List" />
     </head>
 
     <body>
@@ -37,7 +38,7 @@
                     </button>
                     <a class="navbar-brand" href="pensionistas.jsp">Café Restaurant "Wayruro"</a>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="inicio.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
+                        <li class="active"><a href="ocultar?action=volver">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
                     </ul>  
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
@@ -69,7 +70,7 @@
                 </div>
             </div>
         </nav><div class="container-fluid">
-            <h1 class="sub-header">Asistencias del Día<label class="col-lg-offset-0"></label>&nbsp;&nbsp;<label class="col-lg-offset-6"></label><a href="AsistenciaMes.jsp" class="btn btn-primary right">Asistencia del Mes</a>&nbsp;&nbsp;&nbsp;<a href="Asistencias.jsp" class="btn btn-primary right">Todas las Asistencias</a></h1>
+            <h1 class="sub-header">Asistencias del Día<label class="col-lg-offset-0"></label>&nbsp;&nbsp;<label class="col-lg-offset-6"></label><a href="crud?action=asismes" class="btn btn-primary right">Asistencia del Mes</a>&nbsp;&nbsp;&nbsp;<a href="crud?action=asiscom" class="btn btn-primary right">Todas las Asistencias</a></h1>
             <div class="table-responsive">
                 <table id="tabA" class="table table-striped well">
                     <thead>
@@ -84,8 +85,7 @@
                     <tbody>
                         <%                    
                             int count = 0;
-                            Pensionistadao dao = new PensionistadoaImpl();
-                            List<Listar_Asistencias> lista = dao.ListarAsistenciasDia();
+                            List<Listar_Asistencias> lista = asdia;
                             for (Listar_Asistencias la : lista) {
                                 count++;
 

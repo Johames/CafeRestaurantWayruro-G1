@@ -1,4 +1,4 @@
-
+f
 <%@page import="proy.modelo.entidad.AgregarVenta"%>
 <%@page import="proy.modelo.entidad.Tipo_Venta"%>
 <%@page import="proy.modelo.entidad.Total_venta"%>
@@ -36,18 +36,31 @@
     String idp = request.getParameter("idp"); idp = idp == null?"":idp;
     String tipo = request.getParameter("tipo"); tipo = tipo == null?"":tipo;
     String total = request.getParameter("total"); total = total == null?"":total;
+    String idc = request.getParameter("idc"); idc = idc == null?"":idc;
+    
     if(opcion.equals("control")){
-        if(!opc.equals("") && !idContrato.equals("")){
-            control.setOpc(opc);
-            control.setIdContrato(idContrato);
-            concontroldao.AgregarControl(control);
-        }
-        if(!tipo.equals("")){
-            venta.setTipo(tipo);
-            venta.setIdUsuario(idUsuario);
-            if(ventadao.Agregar(venta)){
-                idventa = ventadao.BuscarId();
-                response.sendRedirect("detalleventa.jsp?opcion=control&nombres="+nombres+"&idContrato="+idContrato+"&idventa="+idventa);
+        if(concontroldao.ComprobarControl(idContrato) == null){
+            if(!opc.equals("") && !idContrato.equals("")){
+                control.setOpc(opc);
+                control.setIdContrato(idContrato);
+                concontroldao.AgregarControl(control);
+            }
+            if(!tipo.equals("")){
+                venta.setTipo(tipo);
+                venta.setIdUsuario(idUsuario);
+                if(ventadao.Agregar(venta)){
+                    idventa = ventadao.BuscarId();
+                    response.sendRedirect("detalleventa.jsp?opcion=control&nombres="+nombres+"&idContrato="+idContrato+"&idventa="+idventa);
+                }
+            }
+        }else {
+            if(!tipo.equals("")){
+                venta.setTipo(tipo);
+                venta.setIdUsuario(idUsuario);
+                if(ventadao.Agregar(venta)){
+                    idventa = ventadao.BuscarId();
+                    response.sendRedirect("detalleventa.jsp?opcion=control&nombres="+nombres+"&idContrato="+idContrato+"&idventa="+idventa);
+                }
             }
         }
     }
@@ -79,10 +92,10 @@ if(opcion.equals("agrega")){
     }
     if(opcion.equals("cancelar")){
         dao.EliminarVenta(idv);
-        response.sendRedirect("venta.jsp");
+        response.sendRedirect("ocultar?action=venta");
     }
     if(opcion.equals("confirmar")){
-        if(!tipo.equals("") && !total.equals("") && !idventa.equals("")){
+        
             agregarMov.setIdventa(idventa);
             agregarMov.setTipo(tipo);
             agregarMov.setTotal(total);
@@ -90,9 +103,6 @@ if(opcion.equals("agrega")){
             if(mov.AgregarMovimiento(agregarMov)){
                 response.sendRedirect("venta.jsp");
             }
-        }
-    }
-    if(opcion.equals("control")){
         
     }
 %>
@@ -213,20 +223,19 @@ if(opcion.equals("agrega")){
                                             <tbody>
                                                 <%
                                                         int count = 0;
-                                                        for(int i=0; i<dao.ListarDetalle(idventa).size(); i++){
-                                                            detalle = dao.ListarDetalle(idventa).get(i);
+                                                            for (Detalle deta : dao.ListarDetalle(idventa)) {
                                                                 count++;
                                                 %>
                                                 <tr>
                                                 <td><%=count%></td>
-                                                <td><%=detalle.getNombreProducto()%></td>
-                                                <td><%=detalle.getPrecioUnitario()%></td>
-                                                <td><%=detalle.getCantProducto()%></td>
-                                                <td><%=detalle.getSubtotal()%></td>
+                                                <td><%=deta.getNombreProducto()%></td>
+                                                <td><%=deta.getPrecioUnitario()%></td>
+                                                <td><%=deta.getCantProducto()%></td>
+                                                <td><%=deta.getSubtotal()%></td>
                                                 <td>
                                                     <p>
-                                                        <a title="Editar" href="detalleventa.jsp?opcion=update&idv=<%=idventa%>&idp=<%=detalle.getIdProducto()%>&idventa=<%=idventa%>"><i class="glyphicon glyphicon-pencil"></i></a>&nbsp;&nbsp;
-                                                        <a title="Eliminar" onclick="if(!confirm('¿Esta seguro de eliminar este producto de la venta?'))return false" href="detalleventa.jsp?opcion=delete&idv=<%=idventa%>&idp=<%=detalle.getIdProducto()%>&idventa=<%=idventa%>"><i class="glyphicon glyphicon-trash"></i></a>
+                                                        <a title="Editar" href="detalleventa.jsp?opcion=update&idv=<%=idventa%>&idp=<%=deta.getIdProducto()%>&idventa=<%=idventa%>"><i class="glyphicon glyphicon-pencil"></i></a>&nbsp;&nbsp;
+                                                        <a title="Eliminar" onclick="if(!confirm('¿Esta seguro de eliminar este producto de la venta?'))return false" href="detalleventa.jsp?opcion=delete&idv=<%=idventa%>&idp=<%=deta.getIdProducto()%>&idventa=<%=idventa%>"><i class="glyphicon glyphicon-trash"></i></a>
                                                     </p>
                                                 </td>
                                                 <%}%>
@@ -279,18 +288,24 @@ if(opcion.equals("agrega")){
                                     </form>
                                      <%}%>
                                     <br>
-                                    <div class="form-group">
-                                        <div class="input-group col-lg-3">
-                                            <label class="form-group col-xs-1"></label>
-                                            <form action="detalleventa.jsp" method="post">
-                                                <input type="hidden" name="opcion" value="confirmar">
-                                                <input type="submit" class="btn btn-primary" value="Confirmar Venta">&nbsp;
-                                            </form>
-                                            <form action="detalleventa.jsp" method="post">
-                                                <input type="hidden" name="opcion" value="cancelar">
-                                                <input type="hidden" name="idv" value="<%=idventa%>">
-                                                <input type="submit" class="btn btn-default" value="Cancelar">
-                                            </form>
+                                    <div>
+                                        <div>
+                                                <form action="detalleventa.jsp" method="get">
+                                                    <%
+                                                        Tipo_Venta tip = new Tipo_Venta();
+                                                        tip = dao.Tipo(idventa);
+                                                    %>
+                                                    <input type="hidden" name="idventa" value="<%=idventa%>">
+                                                    <input type="hidden" name="tipo" value="<%=tip.getTipo()%>">
+                                                    <input type="hidden" name="total" value="<%=tv.getTotal()%>">
+                                                    <input type="hidden" name="opcion" value="confirmar">
+                                                    <input type="submit" class="btn btn-primary" value="Confirmar Venta">
+                                                </form>
+                                                <form action="detalleventa.jsp" method="get">
+                                                    <input type="hidden" name="opcion" value="cancelar">
+                                                    <input type="hidden" name="idv" value="<%=idventa%>">
+                                                    <input type="submit" class="btn btn-default" value="Cancelar">
+                                                </form>
                                         </div>
                                     </div>
                             </td>
@@ -325,37 +340,39 @@ if(opcion.equals("agrega")){
                                         </div>
                                     </div>
                                     <div class="formu">
-                                        <div class="table-responsive">
-                                            <table id="jt" class="table table-striped well">
-                                                <thead>
-                                                    <tr hidden>
-                                                    <th>#</th>
-                                                    <th>Id Producto</th>
-                                                    <th>Productos</th>
-                                                    <th>Precio</th>
-                                                    <th>Enviar</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <%                                                            
-                                                        int u = 0;
-                                                        List<Producto> lista = productodao.ListarProductos();
-                                                        for (Producto prod : lista) {
-                                                            u++;
+                                        <div style="overflow:scroll;height:300px;width:500px;">
+                                            <div class="table-responsive">
+                                                <table id="jt" class="table table-striped well">
+                                                    <thead>
+                                                        <tr hidden>
+                                                        <th>#</th>
+                                                        <th>Id Producto</th>
+                                                        <th>Productos</th>
+                                                        <th>Precio</th>
+                                                        <th>Enviar</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <%                                                            
+                                                            int u = 0;
+                                                            List<Producto> lista = productodao.ListarProductos();
+                                                            for (Producto prod : lista) {
+                                                                u++;
 
-                                                    %>
-                                                    <tr>
-                                                    <td><%=u%></td>
-                                                    <td hidden><%=prod.getIdProducto()%></td>
-                                                    <td><%=prod.getNombreProducto()%></td>
-                                                    <td hidden><%=prod.getPrecio()%></td>
-                                                    <td>
-                                                        <a href="detalleventa.jsp?idProducto=<%=prod.getIdProducto()%>&nombreProducto=<%=prod.getNombreProducto()%>&precio=<%=prod.getPrecio()%>&idventa=<%=idventa%>&opcion=Agregar"><i class="glyphicon glyphicon-send"></i></a>
-                                                    </td>
-                                                    </tr>
-                                                    <%}%>
-                                                </tbody>
-                                            </table>
+                                                        %>
+                                                        <tr>
+                                                        <td><%=u%></td>
+                                                        <td hidden><%=prod.getIdProducto()%></td>
+                                                        <td><%=prod.getNombreProducto()%></td>
+                                                        <td hidden><%=prod.getPrecio()%></td>
+                                                        <td>
+                                                            <a href="detalleventa.jsp?idProducto=<%=prod.getIdProducto()%>&nombreProducto=<%=prod.getNombreProducto()%>&precio=<%=prod.getPrecio()%>&idventa=<%=idventa%>&opcion=Agregar"><i class="glyphicon glyphicon-send"></i></a>
+                                                        </td>
+                                                        </tr>
+                                                        <%}%>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                             </td>

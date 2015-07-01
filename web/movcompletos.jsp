@@ -16,9 +16,9 @@
                 </tr>
             </thead>
             <tbody>
-                <%                    int count = 0;
-                    Movimientosdao dao = new MovimientosdaoImpl();
-                    List<Listar_Movimientos> lista = dao.Listar();
+                <%                    
+                    int count = 0;
+                    List<Listar_Movimientos> lista = movcompletos;
                     for (Listar_Movimientos list : lista) {
                         count++;
 

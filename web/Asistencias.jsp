@@ -16,6 +16,7 @@
         <link href="css/dashboard.css" rel="stylesheet">
         <script src="bootstrap/js/ie-emulation-modes-warning.js"></script>
         <jsp:useBean id="idUsuario" scope="session" class="java.lang.String" />
+        <jsp:useBean id="ascom" scope="request" type="java.util.List" />
     </head>
 
     <body>
@@ -37,7 +38,7 @@
                     </button>
                     <a class="navbar-brand" href="pensionistas.jsp">Café Restaurant "Wayruro"</a>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="inicio.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
+                        <li class="active"><a href="ocultar?action=volver">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
                     </ul>  
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
@@ -68,7 +69,7 @@
                     </form>
                     <div id="navbar" class="navbar-collapse collapse">
                         <form class="navbar-form navbar-right">
-                            <a class="btn btn-primary" href="AsistenciaDia.jsp" role="button">Volver &emsp;<i class="glyphicon glyphicon-list-alt"></i></a>
+                            <a class="btn btn-primary" href="crud?action=asisdia" role="button">Volver &emsp;<i class="glyphicon glyphicon-list-alt"></i></a>
                         </form>
                     </div>
                 </div>
@@ -89,8 +90,7 @@
                     <tbody>
                         <%                    
                             int count = 0;
-                            Pensionistadao dao = new PensionistadoaImpl();
-                            List<Listar_Asistencias> lista = dao.ListarAsistencias();
+                            List<Listar_Asistencias> lista = ascom;
                             for (Listar_Asistencias la : lista) {
                                 count++;
 

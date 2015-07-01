@@ -38,20 +38,29 @@
                         </div>
                         <div id="navbar" class="navbar-collapse collapse">
                             <ul class="nav navbar-nav">
-                                <li class="active"><a href="inicio.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
+                                <li class="active"><a href="ocultar?action=volver">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Listas &emsp;<i class="glyphicon glyphicon-list"></i></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li class="dropdown-header">Lista de Reportes</li>
-                                        <li><a href="movimientos.jsp">Movimientos</a></li>
-                                        <li><a href="pmasvendido.jsp">Producto más Vendido</a></li>
-                                        <li><a href="AsistenciaDia.jsp">Asistencias del Día</a></li>
-                                        <li class="divider"></li>
-                                        <li class="dropdown-header">Listas de Poductos</li>
                                         <li><a href="platos.jsp?idCategoria=1&nombreCat=Menu">Productos</a></li>
-                                        <li class="divider"></li>
-                                        <li class="dropdown-header">Listas de Usuarios</li>
-                                        <li><a href="Usuario.jsp">Usuarios</a></li>
+                                        <li><a href="crud?action=listarus">Usuarios</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Reportes &emsp;<i class="glyphicon glyphicon-list"></i></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="crud?action=listarmov">Movimientos</a></li>
+                                        <li><a href="crud?action=pmvend">Producto más Vendido</a></li>
+                                        <li><a href="crud?action=asisdia">Asistencias del Día</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Registrar &emsp;<i class="glyphicon glyphicon-list"></i></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="ocultar?action=agregarpen">Agregar Pensionistas</a></li>
+                                        <li><a href="ocultar?action=agregarusuario">Agregar Usuario</a></li>
+                                        <li><a href="ocultar?action=addcategoria">Agregar Categoria</a></li>
+                                        <li><a href="ocultar?action=addproducto">Agregar Producto</a></li>
                                     </ul>
                                 </li>
                             </ul>

@@ -1,6 +1,7 @@
 <%@page import="proy.modelo.entidad.RenovarContrato"%>
 <%@page import="javafx.util.converter.DateTimeStringConverter"%>
 <%@page import="java.sql.Date"%>
+<%@page import="proy.modelo.entidad.Persona"%>
 <%@page import="proy.modelo.entidad.ContratoPensionista"%>
 <%@page import="proy.modelo.entidad.Usuario"%>
 <%@page import="proy.modelo.entidad.Listar_pensionista"%>
@@ -34,27 +35,20 @@
             Pensionistadao persona = new PensionistadoaImpl();
             Listar_pensionista listar = new Listar_pensionista();
             RenovarContrato renovarContrato = new RenovarContrato();
-           
-            String idpersona = request.getParameter("idpersona");
-            idpersona = idpersona == null ? "" : idpersona;
-            String nombres = request.getParameter("nombres");
-            nombres = nombres == null ? "" : nombres;
-            String apellidos = request.getParameter("apellidos");
-            apellidos = apellidos == null ? "" : apellidos;
-            String dni = request.getParameter("dni");
-            dni = dni == null ? "" : dni;
-            String NCelular = request.getParameter("ncelular");
-            NCelular = NCelular == null ? "" : NCelular;
-            String direccion = request.getParameter("direcciones");
-            direccion = direccion == null ? "" : direccion;
-            String fechini = request.getParameter("fechini");
-            fechini = fechini == null ? "" : fechini;
-            String precio = request.getParameter("precio");
-            precio = precio == null ? "" : precio;
-            String stado = request.getParameter("stado");
-            stado = stado == null ? "" : stado;
-            String tip = request.getParameter("tip");
-            tip = tip == null ? "" : tip;
+            ContratoPensionista cp = new ContratoPensionista();
+            
+            String idcontrato = request.getParameter("idcontrato"); idcontrato = idcontrato == null ? "" : idcontrato;
+            String idpersona = request.getParameter("idpersona"); idpersona = idpersona == null ? "" : idpersona;
+            String nombres = request.getParameter("nombres"); nombres = nombres == null ? "" : nombres;
+            String apellidos = request.getParameter("apellidos"); apellidos = apellidos == null ? "" : apellidos;
+            String dni = request.getParameter("dni"); dni = dni == null ? "" : dni;
+            String NCelular = request.getParameter("ncelular"); NCelular = NCelular == null ? "" : NCelular;
+            String direccion = request.getParameter("direcciones"); direccion = direccion == null ? "" : direccion;
+            String fechini = request.getParameter("fechini"); fechini = fechini == null ? "" : fechini;
+            String fechfin = request.getParameter("fechfin"); fechfin = fechfin == null ? "" : fechfin;
+            String precio = request.getParameter("precio"); precio = precio == null ? "" : precio;
+            String stado = request.getParameter("stado"); stado = stado == null ? "" : stado;
+            String tip = request.getParameter("tip"); tip = tip == null ? "" : tip;
             
             String opcion = request.getParameter("opcion");
             opcion = opcion == null ? "" : opcion;
@@ -69,7 +63,7 @@
                 renovarContrato.setIdusuario(idUsuario);
                 renovarContrato.setTip(tip);
                 if (persona.RenovarContrato(renovarContrato)) {
-                    response.sendRedirect("pensionistas.jsp");
+                    response.sendRedirect("crud?action=listarpen");
                 } else {
                     alert = "danger";
                     mensaje = "No se pudo renovar el Contrato";
@@ -89,12 +83,12 @@
                     </button>
                     <a class="navbar-brand" href="#">Café Restaurant "Wayruro"</a>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="inicio.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
+                        <li class="active"><a href="ocultar?action=volver">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
                     </ul>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <form class="navbar-form navbar-right">
-                        <a class="btn btn-primary" href="pensionistas.jsp" role="button">Volver a la Lista &emsp;<i class="glyphicon glyphicon-list-alt"></i></a>
+                        <a class="btn btn-primary" href="crud?action=listarpen" role="button">Volver a la Lista &emsp;<i class="glyphicon glyphicon-list-alt"></i></a>
                     </form>
                 </div>
             </div>

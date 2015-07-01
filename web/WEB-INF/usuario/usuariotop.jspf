@@ -2,6 +2,7 @@
 <%@page import="proy.modelo.entidad.Usuario"%>
 <%@page import="proy.modelo.daoImpl.UsuariodaoImpl"%>
 <%@page import="proy.modelo.dao.Usuariodao"%>
+<jsp:useBean id="listaus" scope="request" type="java.util.List" />
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,6 +15,7 @@
         <link href="css/dashboard.css" rel="stylesheet">
         <script src="bootstrap/js/ie-emulation-modes-warning.js"></script>
         <jsp:useBean id="idUsuario" scope="session" class="java.lang.String" />
+        
     </head>
 
     <body>
@@ -52,12 +54,12 @@
                     </button>
                     <a class="navbar-brand" href="pensionistas.jsp">Café Restaurant "Wayruro"</a>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="inicio.jsp">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
+                        <li class="active"><a href="ocultar?action=volver">Inicio <i class="glyphicon glyphicon-home"></i></a></li>
                     </ul>  
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <form class="navbar-form navbar-right">
-                        <a class="btn btn-primary" href="agregarusuario.jsp" role="button">Agregar &emsp;<i class="glyphicon glyphicon-floppy-disk"></i></a>
+                        <a class="btn btn-primary" href="ocultar?action=agregarusuario" role="button">Agregar &emsp;<i class="glyphicon glyphicon-floppy-disk"></i></a>
                     </form>
                 </div>
             </div>
